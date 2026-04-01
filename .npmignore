@@ -1,0 +1,25 @@
+# Development and CI files
+.github/
+.husky/
+__tests__/
+coverage/
+node_modules/
+
+# Source and tooling configs (package ships from dist)
+src/
+tsconfig.json
+tsconfig.test.json
+tsconfig*.json
+jest.config.js
+tsup.config.ts
+.oxlintrc.json
+.prettierignore
+.prettierrc
+
+# Local/environment noise
+*.log
+.DS_Store
+
+# Docs not required at runtime
+DEVELOP.md
+CHANGE.md
