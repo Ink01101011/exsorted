@@ -6,6 +6,7 @@ import { quickSort } from '../sorted/quickSort';
 import { heapSort } from '../sorted/heapSort';
 import { CompareFn } from '../types/function-type';
 import * as sortedExports from '../sorted';
+import { compareBy } from '../utils/compareBy';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
@@ -90,6 +91,13 @@ describe.each(ALGORITHMS)('%s', (name, sortFn) => {
       expect(result.map((p) => p.name)).toEqual(['Bob', 'Alice', 'Charlie']);
     });
   });
+
+  describe('objects (without custom comparator)', () => {
+    it('sorts deterministically with the default comparator', () => {
+      const input = [{ id: 2 }, { id: 1 }];
+      expect((sortFn as SortFn<{ id: number }>)(input)).toEqual([{ id: 1 }, { id: 2 }]);
+    });
+  });
 });
 
 // Verify that in-place algorithms mutate the original array
@@ -126,5 +134,37 @@ describe('sorted index exports', () => {
     expect(sortedExports.mergeSort).toBe(mergeSort);
     expect(sortedExports.quickSort).toBe(quickSort);
     expect(sortedExports.heapSort).toBe(heapSort);
+    expect(sortedExports.compareBy).toBe(compareBy);
+  });
+});
+
+describe('compareBy helper', () => {
+  it('builds a typed comparator from a selector', () => {
+    const people = [
+      { name: 'Alice', age: 30 },
+      { name: 'Bob', age: 25 },
+      { name: 'Charlie', age: 35 },
+    ];
+
+    const result = quickSort(
+      people,
+      compareBy((p) => p.age),
+    );
+    expect(result.map((p) => p.name)).toEqual(['Bob', 'Alice', 'Charlie']);
+  });
+
+  it('supports a custom key comparator', () => {
+    const people = [
+      { name: 'Alice', age: 30 },
+      { name: 'Bob', age: 25 },
+      { name: 'Charlie', age: 35 },
+    ];
+
+    const byAgeDesc = compareBy(
+      (p: { name: string; age: number }) => p.age,
+      (a, b) => b - a,
+    );
+    const result = heapSort(people, byAgeDesc);
+    expect(result.map((p) => p.name)).toEqual(['Charlie', 'Alice', 'Bob']);
   });
 });
