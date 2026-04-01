@@ -1,0 +1,46 @@
+{
+  "name": "exsort",
+  "version": "1.0.0",
+  "description": "A TypeScript sorting algorithms library",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ink01101011/exsort.git"
+  },
+  "keywords": [
+    "sort",
+    "sorting",
+    "algorithms",
+    "typescript",
+    "bubble-sort",
+    "merge-sort",
+    "quick-sort",
+    "heap-sort",
+    "insertion-sort",
+    "selection-sort"
+  ],
+  "author": "Ink01101011",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ink01101011/exsort/issues"
+  },
+  "homepage": "https://github.com/Ink01101011/exsort#readme",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.5.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.8",
+    "typescript": "^6.0.2"
+  }
+}
