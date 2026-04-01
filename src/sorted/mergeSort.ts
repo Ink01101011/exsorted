@@ -1,4 +1,4 @@
-import { CompareFn, ReturnedSortFn } from '../types/function-type';
+import { CompareFn, SortedArray } from '../types/function-type';
 import { defaultCompareFn } from '../utils/defaultCompareFn';
 
 /**
@@ -14,7 +14,7 @@ import { defaultCompareFn } from '../utils/defaultCompareFn';
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns A new sorted array
  */
-export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): ReturnedSortFn<T> {
+export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
   if (arr.length <= 1) return arr.slice();
 
   const mid = Math.floor(arr.length / 2);

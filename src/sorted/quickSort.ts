@@ -1,4 +1,4 @@
-import { CompareFn, ReturnedSortFn } from '../types/function-type';
+import { CompareFn, SortedArray } from '../types/function-type';
 import { defaultCompareFn } from '../utils/defaultCompareFn';
 
 /**
@@ -15,7 +15,7 @@ import { defaultCompareFn } from '../utils/defaultCompareFn';
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns The sorted array
  */
-export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): ReturnedSortFn<T> {
+export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
   _quickSort(arr, 0, arr.length - 1, compareFn);
   return arr;
 }

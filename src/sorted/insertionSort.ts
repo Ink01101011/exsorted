@@ -1,4 +1,4 @@
-import { CompareFn, ReturnedSortFn } from '../types/function-type';
+import { CompareFn, SortedArray } from '../types/function-type';
 import { defaultCompareFn } from '../utils/defaultCompareFn';
 
 /**
@@ -14,7 +14,7 @@ import { defaultCompareFn } from '../utils/defaultCompareFn';
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns The sorted array
  */
-export function insertionSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): ReturnedSortFn<T> {
+export function insertionSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
   for (let i = 1; i < arr.length; i++) {
     const key = arr[i];
     let j = i - 1;
