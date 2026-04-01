@@ -1,10 +1,11 @@
-import { bubbleSort } from '../src/sorted/bubbleSort';
-import { insertionSort } from '../src/sorted/insertionSort';
-import { selectionSort } from '../src/sorted/selectionSort';
-import { mergeSort } from '../src/sorted/mergeSort';
-import { quickSort } from '../src/sorted/quickSort';
-import { heapSort } from '../src/sorted/heapSort';
-import { CompareFn } from '../src/types/function-type';
+import { bubbleSort } from '../sorted/bubbleSort';
+import { insertionSort } from '../sorted/insertionSort';
+import { selectionSort } from '../sorted/selectionSort';
+import { mergeSort } from '../sorted/mergeSort';
+import { quickSort } from '../sorted/quickSort';
+import { heapSort } from '../sorted/heapSort';
+import { CompareFn } from '../types/function-type';
+import * as sortedExports from '../sorted';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
@@ -114,5 +115,16 @@ describe('mergeSort returns a new array', () => {
     expect(result).not.toBe(arr);
     expect(arr).toEqual([3, 1, 2]);
     expect(result).toEqual([1, 2, 3]);
+  });
+});
+
+describe('sorted index exports', () => {
+  it('re-exports all sorting functions', () => {
+    expect(sortedExports.bubbleSort).toBe(bubbleSort);
+    expect(sortedExports.insertionSort).toBe(insertionSort);
+    expect(sortedExports.selectionSort).toBe(selectionSort);
+    expect(sortedExports.mergeSort).toBe(mergeSort);
+    expect(sortedExports.quickSort).toBe(quickSort);
+    expect(sortedExports.heapSort).toBe(heapSort);
   });
 });
