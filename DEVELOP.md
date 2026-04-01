@@ -2,32 +2,32 @@
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Build
-npm run build
+pnpm run build
 
 # Build (minified output)
-npm run minify
+pnpm run minify
 
 # Run tests
-npm test
+pnpm jest --ci
 
 # Lint with OXC
-npm run lint
+pnpm run lint
 
 # Type-check without emitting
-npm run typecheck
+pnpm run typecheck
 
 # Format files
-npm run format
+pnpm run format
 
 # Check formatting in CI
-npm run format:check
+pnpm run format:check
 ```
 
 ## Quality Gates
 
 - `husky` + `lint-staged` run on pre-commit to auto-format and apply OXC fixes to staged files.
 - GitHub Actions `CI` workflow runs format check, lint, typecheck, tests, and build.
-- GitHub Actions `Security` workflow runs dependency review on PRs and scheduled `npm audit` checks for CVEs.
+- GitHub Actions `Security` workflow runs scheduled and PR `pnpm audit` checks for CVEs.
