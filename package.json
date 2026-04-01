@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "minify": "npm run build",
+    "minify": "tsup --config tsup.config.ts --minify",
     "test": "jest",
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
@@ -26,7 +26,7 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run minify"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}": [

@@ -97,6 +97,16 @@ describe.each(ALGORITHMS)('%s', (name, sortFn) => {
       const input = [{ id: 2 }, { id: 1 }];
       expect((sortFn as SortFn<{ id: number }>)(input)).toEqual([{ id: 1 }, { id: 2 }]);
     });
+
+    it('handles cyclic object graphs without stack overflow', () => {
+      const a: { id: number; self?: unknown } = { id: 2 };
+      const b: { id: number; self?: unknown } = { id: 1 };
+      a.self = a;
+      b.self = b;
+
+      const result = (sortFn as SortFn<typeof a>)([a, b]);
+      expect(result.map((item) => item.id)).toEqual([1, 2]);
+    });
   });
 });
 
