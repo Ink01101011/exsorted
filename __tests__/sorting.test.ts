@@ -1,11 +1,12 @@
-import { bubbleSort } from '../src/bubbleSort';
-import { insertionSort } from '../src/insertionSort';
-import { selectionSort } from '../src/selectionSort';
-import { mergeSort } from '../src/mergeSort';
-import { quickSort } from '../src/quickSort';
-import { heapSort } from '../src/heapSort';
+import { bubbleSort } from '../src/sorted/bubbleSort';
+import { insertionSort } from '../src/sorted/insertionSort';
+import { selectionSort } from '../src/sorted/selectionSort';
+import { mergeSort } from '../src/sorted/mergeSort';
+import { quickSort } from '../src/sorted/quickSort';
+import { heapSort } from '../src/sorted/heapSort';
+import { CompareFn } from '../src/types/function-type';
 
-type SortFn<T> = (arr: T[], compareFn?: (a: T, b: T) => number) => T[];
+type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
 const ALGORITHMS: Array<[string, SortFn<unknown>]> = [
   ['bubbleSort', bubbleSort as SortFn<unknown>],
