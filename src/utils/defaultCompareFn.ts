@@ -62,21 +62,32 @@ function normalizeComplexValue(value: unknown): string {
   return stableSerialize(value);
 }
 
-function stableSerialize(value: unknown): string {
+function stableSerialize(value: unknown, seen: WeakSet<object> = new WeakSet()): string {
   if (value === null || typeof value !== 'object') {
     return String(value);
   }
 
+  if (seen.has(value)) {
+    return '[Circular]';
+  }
+
+  seen.add(value);
+
   if (value instanceof Date) {
-    return `Date:${value.toISOString()}`;
+    const iso = value.toISOString();
+    seen.delete(value);
+    return `Date:${iso}`;
   }
 
   if (Array.isArray(value)) {
-    return `[${value.map((item) => stableSerialize(item)).join(',')}]`;
+    const serialized = `[${value.map((item) => stableSerialize(item, seen)).join(',')}]`;
+    seen.delete(value);
+    return serialized;
   }
 
   const entries = Object.entries(value as Record<string, unknown>)
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-    .map(([k, v]) => `${k}:${stableSerialize(v)}`);
+    .map(([k, v]) => `${k}:${stableSerialize(v, seen)}`);
+  seen.delete(value);
   return `{${entries.join(',')}}`;
 }
