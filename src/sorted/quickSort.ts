@@ -35,6 +35,9 @@ function partition<T>(arr: T[], low: number, high: number, compareFn: CompareFn<
   if (compareFn(arr[high], arr[low]) < 0) [arr[low], arr[high]] = [arr[high], arr[low]];
   if (compareFn(arr[mid], arr[high]) > 0) [arr[mid], arr[high]] = [arr[high], arr[mid]];
 
+  // Move the median candidate to the end so Lomuto partition uses it as pivot.
+  [arr[mid], arr[high]] = [arr[high], arr[mid]];
+
   const pivot = arr[high];
   let i = low - 1;
 
