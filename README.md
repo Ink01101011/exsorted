@@ -1,5 +1,13 @@
 # exsorted
 
+[![npm version](https://img.shields.io/npm/v/exsorted.svg)](https://www.npmjs.com/package/exsorted)
+[![npm downloads](https://img.shields.io/npm/dm/exsorted.svg)](https://www.npmjs.com/package/exsorted)
+[![CI](https://github.com/Ink01101011/exsorted/actions/workflows/ci.yml/badge.svg)](https://github.com/Ink01101011/exsorted/actions/workflows/ci.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/exsorted)](https://bundlephobia.com/package/exsorted)
+[![Node.js](https://img.shields.io/node/v/exsorted)](https://www.npmjs.com/package/exsorted)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A lightweight, fully-typed TypeScript library of sorting algorithms — ready to use in any TypeScript or JavaScript project.
 
 ## Algorithms
