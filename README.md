@@ -4,14 +4,14 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 
 ## Algorithms
 
-| Algorithm       | Average Time | Worst Time | Space   | Stable | In-place |
-|-----------------|--------------|------------|---------|--------|----------|
-| Bubble Sort     | O(n²)        | O(n²)      | O(1)    | ✅     | ✅       |
-| Insertion Sort  | O(n²)        | O(n²)      | O(1)    | ✅     | ✅       |
-| Selection Sort  | O(n²)        | O(n²)      | O(1)    | ❌     | ✅       |
-| Merge Sort      | O(n log n)   | O(n log n) | O(n)    | ✅     | ❌       |
-| Quick Sort      | O(n log n)   | O(n²)      | O(log n)| ❌     | ✅       |
-| Heap Sort       | O(n log n)   | O(n log n) | O(1)    | ❌     | ✅       |
+| Algorithm      | Average Time | Worst Time | Space    | Stable | In-place |
+| -------------- | ------------ | ---------- | -------- | ------ | -------- |
+| Bubble Sort    | O(n²)        | O(n²)      | O(1)     | ✅     | ✅       |
+| Insertion Sort | O(n²)        | O(n²)      | O(1)     | ✅     | ✅       |
+| Selection Sort | O(n²)        | O(n²)      | O(1)     | ❌     | ✅       |
+| Merge Sort     | O(n log n)   | O(n log n) | O(n)     | ✅     | ❌       |
+| Quick Sort     | O(n log n)   | O(n²)      | O(log n) | ❌     | ✅       |
+| Heap Sort      | O(n log n)   | O(n log n) | O(1)     | ❌     | ✅       |
 
 ## Installation
 
@@ -22,18 +22,11 @@ npm install exsorted
 ## Usage
 
 ```typescript
-import {
-  bubbleSort,
-  insertionSort,
-  selectionSort,
-  mergeSort,
-  quickSort,
-  heapSort,
-} from 'exsorted';
+import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort } from 'exsorted';
 
 // Sort numbers ascending (default)
-bubbleSort([5, 3, 8, 1, 2]);    // [1, 2, 3, 5, 8]
-mergeSort([5, 3, 8, 1, 2]);     // [1, 2, 3, 5, 8]
+bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+mergeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
 // Sort numbers descending (custom comparator)
 quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
@@ -42,10 +35,13 @@ quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
 insertionSort(['banana', 'apple', 'cherry']); // ['apple', 'banana', 'cherry']
 
 // Sort objects
-interface Person { name: string; age: number }
+interface Person {
+  name: string;
+  age: number;
+}
 const people: Person[] = [
   { name: 'Alice', age: 30 },
-  { name: 'Bob',   age: 25 },
+  { name: 'Bob', age: 25 },
   { name: 'Charlie', age: 35 },
 ];
 heapSort(people, (a, b) => a.age - b.age);
@@ -64,28 +60,12 @@ function <algorithmName><T>(
 ```
 
 - **`arr`** — the array to sort.  
-  *Most algorithms sort in-place (mutate `arr`). `mergeSort` is the exception — it returns a new array and leaves the original untouched.*
-- **`compareFn`** *(optional)* — behaves like the native `Array.prototype.sort` comparator:
+  _Most algorithms sort in-place (mutate `arr`). `mergeSort` is the exception — it returns a new array and leaves the original untouched._
+- **`compareFn`** _(optional)_ — behaves like the native `Array.prototype.sort` comparator:
   - return **negative** if `a` should come before `b`
   - return **positive** if `a` should come after `b`
   - return **0** if order does not matter  
-  Defaults to ascending natural order (`<` / `>` comparison).
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Build
-npm run build
-
-# Run tests
-npm test
-
-# Type-check without emitting
-npm run lint
-```
+    Defaults to ascending natural order (`<` / `>` comparison).
 
 ## License
 
