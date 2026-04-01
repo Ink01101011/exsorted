@@ -1,3 +1,6 @@
+import { CompareFn, ReturnedSortFn } from '../types/function-type';
+import { defaultCompareFn } from '../utils/defaultCompareFn';
+
 /**
  * Heap Sort
  *
@@ -11,10 +14,7 @@
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns The sorted array
  */
-export function heapSort<T>(
-  arr: T[],
-  compareFn: (a: T, b: T) => number = defaultCompareFn,
-): T[] {
+export function heapSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): ReturnedSortFn<T> {
   const n = arr.length;
 
   // Build max-heap
@@ -31,12 +31,7 @@ export function heapSort<T>(
   return arr;
 }
 
-function heapify<T>(
-  arr: T[],
-  n: number,
-  rootIdx: number,
-  compareFn: (a: T, b: T) => number,
-): void {
+function heapify<T>(arr: T[], n: number, rootIdx: number, compareFn: CompareFn<T>): void {
   let largest = rootIdx;
   const left = 2 * rootIdx + 1;
   const right = 2 * rootIdx + 2;
@@ -53,10 +48,4 @@ function heapify<T>(
     [arr[rootIdx], arr[largest]] = [arr[largest], arr[rootIdx]];
     heapify(arr, n, largest, compareFn);
   }
-}
-
-function defaultCompareFn<T>(a: T, b: T): number {
-  if (a < b) return -1;
-  if (a > b) return 1;
-  return 0;
 }

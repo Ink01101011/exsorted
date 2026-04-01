@@ -1,3 +1,6 @@
+import { CompareFn, ReturnedSortFn } from '../types/function-type';
+import { defaultCompareFn } from '../utils/defaultCompareFn';
+
 /**
  * Quick Sort
  *
@@ -12,20 +15,12 @@
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns The sorted array
  */
-export function quickSort<T>(
-  arr: T[],
-  compareFn: (a: T, b: T) => number = defaultCompareFn,
-): T[] {
+export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): ReturnedSortFn<T> {
   _quickSort(arr, 0, arr.length - 1, compareFn);
   return arr;
 }
 
-function _quickSort<T>(
-  arr: T[],
-  low: number,
-  high: number,
-  compareFn: (a: T, b: T) => number,
-): void {
+function _quickSort<T>(arr: T[], low: number, high: number, compareFn: CompareFn<T>): void {
   if (low < high) {
     const pivotIdx = partition(arr, low, high, compareFn);
     _quickSort(arr, low, pivotIdx - 1, compareFn);
@@ -33,17 +28,12 @@ function _quickSort<T>(
   }
 }
 
-function partition<T>(
-  arr: T[],
-  low: number,
-  high: number,
-  compareFn: (a: T, b: T) => number,
-): number {
+function partition<T>(arr: T[], low: number, high: number, compareFn: CompareFn<T>): number {
   // Median-of-three pivot selection for better average performance
   const mid = Math.floor((low + high) / 2);
   if (compareFn(arr[mid], arr[low]) < 0) [arr[low], arr[mid]] = [arr[mid], arr[low]];
   if (compareFn(arr[high], arr[low]) < 0) [arr[low], arr[high]] = [arr[high], arr[low]];
-  if (compareFn(arr[mid], arr[high]) < 0) [arr[mid], arr[high]] = [arr[high], arr[mid]];
+  if (compareFn(arr[mid], arr[high]) > 0) [arr[mid], arr[high]] = [arr[high], arr[mid]];
 
   const pivot = arr[high];
   let i = low - 1;
@@ -57,10 +47,4 @@ function partition<T>(
 
   [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
   return i + 1;
-}
-
-function defaultCompareFn<T>(a: T, b: T): number {
-  if (a < b) return -1;
-  if (a > b) return 1;
-  return 0;
 }
