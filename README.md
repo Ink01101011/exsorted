@@ -1,4 +1,4 @@
-# exsort
+# exsorted
 
 A lightweight, fully-typed TypeScript library of sorting algorithms — ready to use in any TypeScript or JavaScript project.
 
@@ -16,7 +16,7 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 ## Installation
 
 ```bash
-npm install exsort
+npm install exsorted
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ import {
   mergeSort,
   quickSort,
   heapSort,
-} from 'exsort';
+} from 'exsorted';
 
 // Sort numbers ascending (default)
 bubbleSort([5, 3, 8, 1, 2]);    // [1, 2, 3, 5, 8]

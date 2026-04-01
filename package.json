@@ -1,5 +1,5 @@
 {
-  "name": "exsort",
+  "name": "exsorted",
   "version": "1.0.0",
   "description": "A TypeScript sorting algorithms library",
   "main": "dist/index.js",
