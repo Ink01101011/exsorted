@@ -30,7 +30,7 @@ npm install exsorted
 ## Usage
 
 ```typescript
-import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort } from 'exsorted';
+import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort, compareBy } from 'exsorted';
 
 // Sort numbers ascending (default)
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
@@ -54,6 +54,12 @@ const people: Person[] = [
 ];
 heapSort(people, (a, b) => a.age - b.age);
 // [{ name: 'Bob', age: 25 }, { name: 'Alice', age: 30 }, { name: 'Charlie', age: 35 }]
+
+// Or use compareBy helper for cleaner typed comparators
+quickSort(
+  people,
+  compareBy((p) => p.age),
+);
 ```
 
 ### API
@@ -73,7 +79,11 @@ function <algorithmName><T>(
   - return **negative** if `a` should come before `b`
   - return **positive** if `a` should come after `b`
   - return **0** if order does not matter  
-    Defaults to ascending natural order (`<` / `>` comparison).
+    Defaults to a dynamic deterministic comparator:
+    supports `number`, `string`, `bigint`, `boolean`, `Date`, arrays, and objects.
+    For domain-specific object ordering, passing an explicit `compareFn` is still recommended.
+
+  `compareBy(selector, compareFn?)` helper is exported to build typed object comparators.
 
 ## License
 
