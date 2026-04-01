@@ -4,14 +4,14 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 
 ## Algorithms
 
-| Algorithm       | Average Time | Worst Time | Space  | Stable | In-place |
-|-----------------|-------------|-----------|--------|--------|----------|
-| Bubble Sort     | O(n²)       | O(n²)     | O(1)   | ✅     | ✅       |
-| Insertion Sort  | O(n²)       | O(n²)     | O(1)   | ✅     | ✅       |
-| Selection Sort  | O(n²)       | O(n²)     | O(1)   | ❌     | ✅       |
-| Merge Sort      | O(n log n)  | O(n log n)| O(n)   | ✅     | ❌       |
-| Quick Sort      | O(n log n)  | O(n²)     | O(log n)| ❌    | ✅       |
-| Heap Sort       | O(n log n)  | O(n log n)| O(1)   | ❌     | ✅       |
+| Algorithm       | Average Time | Worst Time | Space   | Stable | In-place |
+|-----------------|--------------|------------|---------|--------|----------|
+| Bubble Sort     | O(n²)        | O(n²)      | O(1)    | ✅     | ✅       |
+| Insertion Sort  | O(n²)        | O(n²)      | O(1)    | ✅     | ✅       |
+| Selection Sort  | O(n²)        | O(n²)      | O(1)    | ❌     | ✅       |
+| Merge Sort      | O(n log n)   | O(n log n) | O(n)    | ✅     | ❌       |
+| Quick Sort      | O(n log n)   | O(n²)      | O(log n)| ❌     | ✅       |
+| Heap Sort       | O(n log n)   | O(n log n) | O(1)    | ❌     | ✅       |
 
 ## Installation
 

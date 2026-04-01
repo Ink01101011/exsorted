@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ink01101011/exsort.git"
+    "url": "git+https://github.com/Ink01101011/exsorted.git"
   },
   "keywords": [
     "sort",
@@ -33,9 +33,9 @@
   "license": "MIT",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Ink01101011/exsort/issues"
+    "url": "https://github.com/Ink01101011/exsorted/issues"
   },
-  "homepage": "https://github.com/Ink01101011/exsort#readme",
+  "homepage": "https://github.com/Ink01101011/exsorted#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.5.0",
