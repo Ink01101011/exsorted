@@ -5,57 +5,6 @@
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./base": {
-      "types": "./dist/base/index.d.ts",
-      "import": "./dist/base/index.mjs",
-      "require": "./dist/base/index.cjs"
-    },
-    "./bubble": {
-      "types": "./dist/base/bubble.d.ts",
-      "import": "./dist/base/bubble.mjs",
-      "require": "./dist/base/bubble.cjs"
-    },
-    "./insertion": {
-      "types": "./dist/base/insertion.d.ts",
-      "import": "./dist/base/insertion.mjs",
-      "require": "./dist/base/insertion.cjs"
-    },
-    "./selection": {
-      "types": "./dist/base/selection.d.ts",
-      "import": "./dist/base/selection.mjs",
-      "require": "./dist/base/selection.cjs"
-    },
-    "./merge": {
-      "types": "./dist/base/merge.d.ts",
-      "import": "./dist/base/merge.mjs",
-      "require": "./dist/base/merge.cjs"
-    },
-    "./quick": {
-      "types": "./dist/base/quick.d.ts",
-      "import": "./dist/base/quick.mjs",
-      "require": "./dist/base/quick.cjs"
-    },
-    "./heap": {
-      "types": "./dist/base/heap.d.ts",
-      "import": "./dist/base/heap.mjs",
-      "require": "./dist/base/heap.cjs"
-    },
-    "./meme": {
-      "types": "./dist/meme/index.d.ts",
-      "import": "./dist/meme/index.mjs",
-      "require": "./dist/meme/index.cjs"
-    }
-  },
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
     "minify": "tsup --config tsup.config.ts --minify",
@@ -68,6 +17,62 @@
     "prepare": "husky",
     "prepublishOnly": "pnpm run minify"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.mjs",
+      "require": "./dist/types/index.cjs"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.mjs",
+      "require": "./dist/utils/index.cjs"
+    },
+    "./bubble": {
+      "types": "./dist/sorted/base/bubble.d.ts",
+      "import": "./dist/sorted/base/bubble.mjs",
+      "require": "./dist/sorted/base/bubble.cjs"
+    },
+    "./insertion": {
+      "types": "./dist/sorted/base/insertion.d.ts",
+      "import": "./dist/sorted/base/insertion.mjs",
+      "require": "./dist/sorted/base/insertion.cjs"
+    },
+    "./selection": {
+      "types": "./dist/sorted/base/selection.d.ts",
+      "import": "./dist/sorted/base/selection.mjs",
+      "require": "./dist/sorted/base/selection.cjs"
+    },
+    "./merge": {
+      "types": "./dist/sorted/base/merge.d.ts",
+      "import": "./dist/sorted/base/merge.mjs",
+      "require": "./dist/sorted/base/merge.cjs"
+    },
+    "./quick": {
+      "types": "./dist/sorted/base/quick.d.ts",
+      "import": "./dist/sorted/base/quick.mjs",
+      "require": "./dist/sorted/base/quick.cjs"
+    },
+    "./heap": {
+      "types": "./dist/sorted/base/heap.d.ts",
+      "import": "./dist/sorted/base/heap.mjs",
+      "require": "./dist/sorted/base/heap.cjs"
+    },
+    "./meme": {
+      "types": "./dist/sorted/meme/index.d.ts",
+      "import": "./dist/sorted/meme/index.mjs",
+      "require": "./dist/sorted/meme/index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "lint-staged": {
     "*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}": [
       "prettier --write"

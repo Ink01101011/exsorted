@@ -1,6 +1,6 @@
-import { quickSort } from '../sorted/base/quick/quickSort';
-import { heapSort } from '../sorted/base/heap/heapSort';
-import { compareBy } from '../utils/compareBy';
+import { quickSort } from '../src/sorted/base/quick/quickSort';
+import { heapSort } from '../src/sorted/base/heap/heapSort';
+import { compareBy } from '../src/utils/compareBy';
 
 describe('compareBy helper', () => {
   it('builds a typed comparator from a selector', () => {
