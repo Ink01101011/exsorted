@@ -67,10 +67,7 @@ quickSort(
 Every function shares the same signature:
 
 ```typescript
-function <algorithmName><T>(
-  arr: T[],
-  compareFn?: (a: T, b: T) => number,
-): T[]
+function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 ```
 
 - **`arr`** — the array to sort.  

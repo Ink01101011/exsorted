@@ -11,7 +11,7 @@ pnpm run build
 pnpm run minify
 
 # Run tests
-pnpm jest --ci
+pnpm test --ci
 
 # Lint with OXC
 pnpm run lint

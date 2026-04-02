@@ -40,7 +40,7 @@ This file summarizes all diffs currently introduced in this working tree.
 - README.md
   - Applied formatting normalization.
   - Kept project docs and quality gates.
-  - Removed in-file DEVELOP section and replaced it with a pointer to DEVELOP.md.
+  - Removed in-file DEVELOP section; its content was moved into DEVELOP.md.
 
 ## Removed Files
 
