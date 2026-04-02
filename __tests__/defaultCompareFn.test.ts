@@ -1,4 +1,4 @@
-import { defaultCompareFn } from '../utils/defaultCompareFn';
+import { defaultCompareFn } from '../src/utils/defaultCompareFn';
 
 // ---------------------------------------------------------------------------
 // Basic graph handling — shared refs vs genuine cycles

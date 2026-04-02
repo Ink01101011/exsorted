@@ -1,15 +1,15 @@
-import { bubbleSort } from '../sorted/base/bubble/bubbleSort';
-import { insertionSort } from '../sorted/base/insertion/insertionSort';
-import { selectionSort } from '../sorted/base/selection';
-import { mergeSort } from '../sorted/base/merge';
-import { quickSort } from '../sorted/base/quick/quickSort';
-import { heapSort } from '../sorted/base/heap/heapSort';
-import { CompareFn } from '../types/function-type';
-import * as sortedExports from '../sorted';
-import { compareBy } from '../utils/compareBy';
-import { defaultCompareFn } from '../utils/defaultCompareFn';
-import { selectionSort as selectionNamed } from '../base/selection';
-import { bubbleSort as bubbleNamed } from '../base/bubble';
+import { bubbleSort } from '../src/sorted/base/bubble/bubbleSort';
+import { insertionSort } from '../src/sorted/base/insertion/insertionSort';
+import { selectionSort } from '../src/sorted/base/selection';
+import { mergeSort } from '../src/sorted/base/merge';
+import { quickSort } from '../src/sorted/base/quick/quickSort';
+import { heapSort } from '../src/sorted/base/heap/heapSort';
+import { CompareFn } from '../src/types/function-type';
+import * as sortedExports from '../src/sorted';
+import { compareBy } from '../src/utils/compareBy';
+import { defaultCompareFn } from '../src/utils/defaultCompareFn';
+import { selectionSort as selectionNamed } from '../src/base/selection';
+import { bubbleSort as bubbleNamed } from '../src/base/bubble';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
