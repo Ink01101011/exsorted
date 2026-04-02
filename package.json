@@ -10,6 +10,46 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
+    },
+    "./base": {
+      "types": "./dist/base/index.d.ts",
+      "import": "./dist/base/index.mjs",
+      "require": "./dist/base/index.cjs"
+    },
+    "./base/bubble": {
+      "types": "./dist/base/bubble.d.ts",
+      "import": "./dist/base/bubble.mjs",
+      "require": "./dist/base/bubble.cjs"
+    },
+    "./base/insertion": {
+      "types": "./dist/base/insertion.d.ts",
+      "import": "./dist/base/insertion.mjs",
+      "require": "./dist/base/insertion.cjs"
+    },
+    "./base/selection": {
+      "types": "./dist/base/selection.d.ts",
+      "import": "./dist/base/selection.mjs",
+      "require": "./dist/base/selection.cjs"
+    },
+    "./base/merge": {
+      "types": "./dist/base/merge.d.ts",
+      "import": "./dist/base/merge.mjs",
+      "require": "./dist/base/merge.cjs"
+    },
+    "./base/quick": {
+      "types": "./dist/base/quick.d.ts",
+      "import": "./dist/base/quick.mjs",
+      "require": "./dist/base/quick.cjs"
+    },
+    "./base/heap": {
+      "types": "./dist/base/heap.d.ts",
+      "import": "./dist/base/heap.mjs",
+      "require": "./dist/base/heap.cjs"
+    },
+    "./meme": {
+      "types": "./dist/meme/index.d.ts",
+      "import": "./dist/meme/index.mjs",
+      "require": "./dist/meme/index.cjs"
     }
   },
   "sideEffects": false,
