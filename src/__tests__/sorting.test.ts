@@ -7,6 +7,7 @@ import { heapSort } from '../sorted/base/heap/heapSort';
 import { CompareFn } from '../types/function-type';
 import * as sortedExports from '../sorted';
 import { compareBy } from '../utils/compareBy';
+import { defaultCompareFn } from '../utils/defaultCompareFn';
 import { selectionSort as selectionNamed } from '../base/selection';
 import { bubbleSort as bubbleNamed } from '../base/bubble';
 
@@ -190,5 +191,37 @@ describe('subpath entrypoints', () => {
   it('supports named imports for bubble', () => {
     expect(bubbleNamed).toBe(bubbleSort);
     expect(bubbleNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+});
+
+describe('defaultCompareFn graph handling (TDD for path-stack + WeakMap)', () => {
+  it('treats shared references as non-cyclic structural data', () => {
+    const shared = { value: 1 };
+
+    const withSharedRefs = {
+      a: shared,
+      b: shared,
+    };
+
+    const withDuplicatedStructure = {
+      a: { value: 1 },
+      b: { value: 1 },
+    };
+
+    // Shared references should not be classified as circular.
+    // After path-stack + WeakMap implementation, these should compare equal.
+    expect(defaultCompareFn(withSharedRefs, withDuplicatedStructure)).toBe(0);
+    expect(defaultCompareFn(withDuplicatedStructure, withSharedRefs)).toBe(0);
+  });
+
+  it('still handles genuine cycles deterministically', () => {
+    const left: { id: number; self?: unknown } = { id: 1 };
+    left.self = left;
+
+    const right: { id: number; self?: unknown } = { id: 1 };
+    right.self = right;
+
+    expect(() => defaultCompareFn(left, right)).not.toThrow();
+    expect(defaultCompareFn(left, right)).toBe(0);
   });
 });
