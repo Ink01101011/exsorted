@@ -7,8 +7,8 @@ import { heapSort } from '../sorted/base/heap/heapSort';
 import { CompareFn } from '../types/function-type';
 import * as sortedExports from '../sorted';
 import { compareBy } from '../utils/compareBy';
-import selectionDefault, { selectionSort as selectionNamed } from '../base/selection';
-import bubbleDefault, { bubbleSort as bubbleNamed } from '../base/bubble';
+import { selectionSort as selectionNamed } from '../base/selection';
+import { bubbleSort as bubbleNamed } from '../base/bubble';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
@@ -182,15 +182,13 @@ describe('compareBy helper', () => {
 });
 
 describe('subpath entrypoints', () => {
-  it('supports named and default imports for selection', () => {
-    expect(selectionDefault).toBe(selectionSort);
+  it('supports named imports for selection', () => {
     expect(selectionNamed).toBe(selectionSort);
-    expect(selectionDefault([3, 2, 1])).toEqual([1, 2, 3]);
+    expect(selectionNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 
-  it('supports named and default imports for bubble', () => {
-    expect(bubbleDefault).toBe(bubbleSort);
+  it('supports named imports for bubble', () => {
     expect(bubbleNamed).toBe(bubbleSort);
-    expect(bubbleDefault([3, 2, 1])).toEqual([1, 2, 3]);
+    expect(bubbleNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });
