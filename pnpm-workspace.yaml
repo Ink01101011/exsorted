@@ -1,0 +1,2 @@
+# pnpm workspace configuration intentionally left empty.
+# Previously ignoredBuiltDependencies: [esbuild], which could break esbuild/tsup builds.

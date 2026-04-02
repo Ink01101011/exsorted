@@ -1,0 +1,114 @@
+{
+  "name": "exsorted",
+  "version": "1.0.0",
+  "description": "A TypeScript sorting algorithms library",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./base": {
+      "types": "./dist/base/index.d.ts",
+      "import": "./dist/base/index.mjs",
+      "require": "./dist/base/index.cjs"
+    },
+    "./bubble": {
+      "types": "./dist/base/bubble.d.ts",
+      "import": "./dist/base/bubble.mjs",
+      "require": "./dist/base/bubble.cjs"
+    },
+    "./insertion": {
+      "types": "./dist/base/insertion.d.ts",
+      "import": "./dist/base/insertion.mjs",
+      "require": "./dist/base/insertion.cjs"
+    },
+    "./selection": {
+      "types": "./dist/base/selection.d.ts",
+      "import": "./dist/base/selection.mjs",
+      "require": "./dist/base/selection.cjs"
+    },
+    "./merge": {
+      "types": "./dist/base/merge.d.ts",
+      "import": "./dist/base/merge.mjs",
+      "require": "./dist/base/merge.cjs"
+    },
+    "./quick": {
+      "types": "./dist/base/quick.d.ts",
+      "import": "./dist/base/quick.mjs",
+      "require": "./dist/base/quick.cjs"
+    },
+    "./heap": {
+      "types": "./dist/base/heap.d.ts",
+      "import": "./dist/base/heap.mjs",
+      "require": "./dist/base/heap.cjs"
+    },
+    "./meme": {
+      "types": "./dist/meme/index.d.ts",
+      "import": "./dist/meme/index.mjs",
+      "require": "./dist/meme/index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "minify": "tsup --config tsup.config.ts --minify",
+    "test": "jest",
+    "lint": "oxlint . --deny-warnings",
+    "lint:fix": "oxlint . --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "prepare": "husky",
+    "prepublishOnly": "pnpm run minify"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx,js,mjs,cjs}": [
+      "oxlint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ink01101011/exsorted.git"
+  },
+  "keywords": [
+    "sort",
+    "sorting",
+    "algorithms",
+    "typescript",
+    "bubble-sort",
+    "merge-sort",
+    "quick-sort",
+    "heap-sort",
+    "insertion-sort",
+    "selection-sort"
+  ],
+  "author": "Ink01101011",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ink01101011/exsorted/issues"
+  },
+  "homepage": "https://github.com/Ink01101011/exsorted#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^25.5.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^16.4.0",
+    "oxlint": "^1.58.0",
+    "prettier": "^3.8.1",
+    "ts-jest": "^29.4.8",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.2"
+  }
+}
