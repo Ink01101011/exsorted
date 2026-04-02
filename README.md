@@ -60,6 +60,10 @@ quickSort(
   people,
   compareBy((p) => p.age),
 );
+
+// Subpath import (new namespace structure)
+import { selectionSort as baseSelectionSort } from 'exsorted/selection';
+baseSelectionSort([3, 1, 2]); // [1, 2, 3]
 ```
 
 ### API
