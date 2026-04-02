@@ -1,12 +1,12 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/base/*.ts', 'src/meme/*.ts'],
+  entry: ['src/index.ts', 'src/base/*.ts', 'src/meme/*.ts', 'src/types/index.ts', 'src/utils/index.ts'],
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: false,
   clean: true,
-  minify: false,
+  minify: true,
   treeshake: true,
   outDir: 'dist',
   outExtension({ format }) {
