@@ -62,32 +62,46 @@ function normalizeComplexValue(value: unknown): string {
   return stableSerialize(value);
 }
 
-function stableSerialize(value: unknown, seen: WeakSet<object> = new WeakSet()): string {
-  if (value === null || typeof value !== 'object') {
-    return String(value);
+function stableSerialize(value: unknown): string {
+  const activePath = new Set<object>();
+  const objectIds = new WeakMap<object, number>();
+  let nextId = 1;
+
+  function idOf(obj: object): number {
+    const existing = objectIds.get(obj);
+    if (existing !== undefined) return existing;
+    const id = nextId++;
+    objectIds.set(obj, id);
+    return id;
   }
 
-  if (seen.has(value)) {
-    return '[Circular]';
+  function walk(val: unknown): string {
+    if (val === null) return 'null';
+    if (typeof val !== 'object') return String(val);
+
+    const refId = idOf(val);
+
+    if (activePath.has(val)) {
+      return `[Circular#${refId}]`;
+    }
+
+    activePath.add(val);
+
+    let out: string;
+    if (Array.isArray(val)) {
+      out = `[${val.map(walk).join(',')}]`;
+    } else if (val instanceof Date) {
+      out = `Date:${val.toISOString()}`;
+    } else {
+      const entries = Object.entries(val as Record<string, unknown>)
+        .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
+        .map(([k, v]) => `${k}:${walk(v)}`);
+      out = `{${entries.join(',')}}`;
+    }
+
+    activePath.delete(val);
+    return out;
   }
 
-  seen.add(value);
-
-  if (value instanceof Date) {
-    const iso = value.toISOString();
-    seen.delete(value);
-    return `Date:${iso}`;
-  }
-
-  if (Array.isArray(value)) {
-    const serialized = `[${value.map((item) => stableSerialize(item, seen)).join(',')}]`;
-    seen.delete(value);
-    return serialized;
-  }
-
-  const entries = Object.entries(value as Record<string, unknown>)
-    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-    .map(([k, v]) => `${k}:${stableSerialize(v, seen)}`);
-  seen.delete(value);
-  return `{${entries.join(',')}}`;
+  return walk(value);
 }
