@@ -1,12 +1,14 @@
-import { bubbleSort } from '../sorted/bubbleSort';
-import { insertionSort } from '../sorted/insertionSort';
-import { selectionSort } from '../sorted/selectionSort';
-import { mergeSort } from '../sorted/mergeSort';
-import { quickSort } from '../sorted/quickSort';
-import { heapSort } from '../sorted/heapSort';
+import { bubbleSort } from '../sorted/base/bubble/bubbleSort';
+import { insertionSort } from '../sorted/base/insertion/insertionSort';
+import { selectionSort } from '../sorted/base/selection';
+import { mergeSort } from '../sorted/base/merge';
+import { quickSort } from '../sorted/base/quick/quickSort';
+import { heapSort } from '../sorted/base/heap/heapSort';
 import { CompareFn } from '../types/function-type';
 import * as sortedExports from '../sorted';
 import { compareBy } from '../utils/compareBy';
+import selectionDefault, { selectionSort as selectionNamed } from '../base/selection';
+import bubbleDefault, { bubbleSort as bubbleNamed } from '../base/bubble';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 
@@ -176,5 +178,19 @@ describe('compareBy helper', () => {
     );
     const result = heapSort(people, byAgeDesc);
     expect(result.map((p) => p.name)).toEqual(['Charlie', 'Alice', 'Bob']);
+  });
+});
+
+describe('subpath entrypoints', () => {
+  it('supports named and default imports for selection', () => {
+    expect(selectionDefault).toBe(selectionSort);
+    expect(selectionNamed).toBe(selectionSort);
+    expect(selectionDefault([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named and default imports for bubble', () => {
+    expect(bubbleDefault).toBe(bubbleSort);
+    expect(bubbleNamed).toBe(bubbleSort);
+    expect(bubbleDefault([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });

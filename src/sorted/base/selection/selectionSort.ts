@@ -1,5 +1,5 @@
-import { CompareFn, SortedArray } from '../types/function-type';
-import { defaultCompareFn } from '../utils/defaultCompareFn';
+import { CompareFn, SortedArray } from '../../../types/function-type';
+import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Selection Sort
