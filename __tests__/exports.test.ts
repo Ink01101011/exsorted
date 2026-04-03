@@ -6,8 +6,8 @@ import { quickSort } from '../src/sorted/base/quick/quickSort';
 import { heapSort } from '../src/sorted/base/heap/heapSort';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
-import { selectionSort as selectionNamed } from '../src/base/selection';
-import { bubbleSort as bubbleNamed } from '../src/base/bubble';
+import { selectionSort as selectionNamed } from '../src/sorted/base/selection';
+import { bubbleSort as bubbleNamed } from '../src/sorted/base/bubble';
 
 describe('sorted index exports', () => {
   it('re-exports all sorting functions', () => {
