@@ -1,1 +1,1 @@
-export {};
+export const __exsortedMemeEntry = true;
