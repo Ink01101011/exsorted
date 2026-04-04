@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup --config tsup.config.ts",
+    "benchmark": "pnpm run build && node scripts/benchmark.cjs",
     "minify": "tsup --config tsup.config.ts --minify",
     "test": "jest",
     "lint": "oxlint . --deny-warnings",
@@ -82,6 +83,16 @@
       "types": "./dist/sorted/standard/tim/index.d.ts",
       "import": "./dist/sorted/standard/tim/index.mjs",
       "require": "./dist/sorted/standard/tim/index.cjs"
+    },
+    "./gnome": {
+      "types": "./dist/sorted/standard/gnome/index.d.ts",
+      "import": "./dist/sorted/standard/gnome/index.mjs",
+      "require": "./dist/sorted/standard/gnome/index.cjs"
+    },
+    "./shell": {
+      "types": "./dist/sorted/standard/shell/index.d.ts",
+      "import": "./dist/sorted/standard/shell/index.mjs",
+      "require": "./dist/sorted/standard/shell/index.cjs"
     }
   },
   "sideEffects": false,
