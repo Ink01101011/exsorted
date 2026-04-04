@@ -20,6 +20,7 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 | Merge Sort     | O(n log n)   | O(n log n) | O(n)     | ✅     | ❌       |
 | Quick Sort     | O(n log n)   | O(n²)      | O(log n) | ❌     | ✅       |
 | Heap Sort      | O(n log n)   | O(n log n) | O(1)     | ❌     | ✅       |
+| Tim Sort       | O(n log n)   | O(n log n) | O(n)     | ✅     | ✅       |
 
 ## Installation
 
@@ -27,14 +28,15 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 npm install exsorted
 ```
 
-## Usage
+## Quick Start
 
 ```typescript
-import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort, compareBy } from 'exsorted';
+import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort, timSort, compareBy } from 'exsorted';
 
 // Sort numbers ascending (default)
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 mergeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+timSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
 // Sort numbers descending (custom comparator)
 quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
@@ -60,13 +62,32 @@ quickSort(
   people,
   compareBy((p) => p.age),
 );
-
-// Subpath import (new namespace structure)
-import { selectionSort as baseSelectionSort } from 'exsorted/selection';
-baseSelectionSort([3, 1, 2]); // [1, 2, 3]
 ```
 
-### API
+## Import Paths
+
+The package supports both root import and grouped subpath imports.
+
+```typescript
+// Root import (recommended for most users)
+import { quickSort, timSort, compareBy } from 'exsorted';
+
+// Grouped subpath imports
+import { bubbleSort, mergeSort } from 'exsorted/base';
+import { timSort as timSortStandard } from 'exsorted/standard';
+import { compareBy, defaultCompareFn } from 'exsorted/helper';
+import type { CompareFn, SortedArray } from 'exsorted/types';
+```
+
+Available subpaths:
+
+- `exsorted/base` -> bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
+- `exsorted/standard` -> timSort
+- `exsorted/helper` -> compareBy, defaultCompareFn
+- `exsorted/types` -> CompareFn, SortedArray, SelectorFn
+- `exsorted/meme` -> meme namespace exports
+
+## API Reference
 
 Every function shares the same signature:
 
@@ -74,17 +95,45 @@ Every function shares the same signature:
 function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 ```
 
-- **`arr`** — the array to sort.  
-  _Most algorithms sort in-place (mutate `arr`). `mergeSort` is the exception — it returns a new array and leaves the original untouched._
-- **`compareFn`** _(optional)_ — behaves like the native `Array.prototype.sort` comparator:
+- `arr` — the array to sort.
+- `compareFn` (optional) — comparator with the same contract as `Array.prototype.sort`:
   - return **negative** if `a` should come before `b`
   - return **positive** if `a` should come after `b`
-  - return **0** if order does not matter  
-    Defaults to a dynamic deterministic comparator:
-    supports `number`, `string`, `bigint`, `boolean`, `Date`, arrays, and objects.
-    For domain-specific object ordering, passing an explicit `compareFn` is still recommended.
+  - return **0** if order does not matter
 
-  `compareBy(selector, compareFn?)` helper is exported to build typed object comparators.
+### Mutation Behavior
+
+- In-place (returns same array reference): bubbleSort, insertionSort, selectionSort, quickSort, heapSort, timSort
+- Non-mutating (returns new array): mergeSort
+
+### Exported Algorithms
+
+```typescript
+bubbleSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+insertionSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+selectionSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+mergeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+quickSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+heapSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+```
+
+### Helper APIs
+
+- `compareBy(selector, compareFn?)` builds a typed comparator for object sorting.
+- `defaultCompareFn(a, b)` is the built-in fallback comparator.
+
+### Consumer Notes
+
+- For objects, passing an explicit comparator is recommended for domain-specific ordering.
+- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort).
+- If you must preserve the original array, use mergeSort or sort a copied array (`algorithm([...arr])`).
+
+## Compatibility
+
+- Runtime: Node.js versions supported by this package (see Node badge above)
+- Language: TypeScript and JavaScript
+- Module formats: ESM and CommonJS (via package exports)
 
 ## License
 

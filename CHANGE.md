@@ -1,8 +1,35 @@
 # CHANGE
 
-Changed date: 2026-04-01
+Changed date: 2026-04-04
 
 This file summarizes all diffs currently introduced in this working tree.
+
+## Latest Updates (2026-04-04)
+
+## Updated Files
+
+- README.md
+  - Kept all existing badges unchanged.
+  - Added Tim Sort to the algorithm matrix.
+  - Expanded consumer documentation with:
+    - Quick Start including `timSort`
+    - Subpath import guide
+    - Full API reference and mutation behavior
+    - Helper API usage and practical consumer notes
+  - Updated examples to match current grouped subpath exports.
+- package.json
+  - Simplified package exports to grouped consumer paths only:
+    - `exsorted`
+    - `exsorted/base`
+    - `exsorted/meme`
+    - `exsorted/types`
+    - `exsorted/helper`
+    - `exsorted/standard`
+  - Removed algorithm-per-subpath exports from the public API.
+
+## Notes
+
+- Build output paths were revalidated against `tsup` output to ensure every export target resolves correctly.
 
 ## Added Files
 
