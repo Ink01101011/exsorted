@@ -4,6 +4,8 @@ import { selectionSort } from '../src/sorted/base/selection';
 import { mergeSort } from '../src/sorted/base/merge';
 import { quickSort } from '../src/sorted/base/quick/quickSort';
 import { heapSort } from '../src/sorted/base/heap/heapSort';
+import { gnomeSort } from '../src/sorted/standard/gnome';
+import { shellSort } from '../src/sorted/standard/shell';
 import { CompareFn } from '../src/types/function-type';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
@@ -20,6 +22,8 @@ const ALGORITHMS: Array<[string, SortFn<unknown>]> = [
   ['mergeSort', mergeSort as SortFn<unknown>],
   ['quickSort', quickSort as SortFn<unknown>],
   ['heapSort', heapSort as SortFn<unknown>],
+  ['gnomeSort', gnomeSort as SortFn<unknown>],
+  ['shellSort', shellSort as SortFn<unknown>],
 ];
 
 describe.each(ALGORITHMS)('%s', (name, sortFn) => {
@@ -120,6 +124,8 @@ describe.each([
   ['selectionSort', selectionSort],
   ['quickSort', quickSort],
   ['heapSort', heapSort],
+  ['gnomeSort', gnomeSort],
+  ['shellSort', shellSort],
 ] as Array<[string, SortFn<number>]>)('%s mutates the original array', (_, sortFn) => {
   it('returns the same array reference', () => {
     const arr = [3, 1, 2];
@@ -147,6 +153,8 @@ describe('sorted index exports', () => {
     expect(sortedExports.mergeSort).toBe(mergeSort);
     expect(sortedExports.quickSort).toBe(quickSort);
     expect(sortedExports.heapSort).toBe(heapSort);
+    expect(sortedExports.gnomeSort).toBe(gnomeSort);
+    expect(sortedExports.shellSort).toBe(shellSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });

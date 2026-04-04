@@ -1,31 +1,40 @@
 # CHANGE
 
-Changed date: 2026-04-04
+Changed date: 2026-04-05
 
 This file summarizes all diffs currently introduced in this working tree.
 
-## Latest Updates (2026-04-04)
+## Latest Updates (2026-04-05)
 
 ## Updated Files
 
 - README.md
   - Kept all existing badges unchanged.
   - Added Tim Sort to the algorithm matrix.
+  - Added Gnome Sort and Shell Sort to the algorithm matrix.
   - Expanded consumer documentation with:
-    - Quick Start including `timSort`
+    - Quick Start including `timSort`, `gnomeSort`, and `shellSort`
     - Subpath import guide
     - Full API reference and mutation behavior
     - Helper API usage and practical consumer notes
-  - Updated examples to match current grouped subpath exports.
+  - Updated examples to match grouped and per-algorithm subpath exports.
+- **tests**/algorithms.test.ts, **tests**/sorting.test.ts, **tests**/mutation.test.ts, **tests**/exports.test.ts
+  - Added `gnomeSort` and `shellSort` into shared matrix coverage where applicable.
+  - Added export assertions for `gnomeSort` and `shellSort` from sorted index and subpaths.
+- src/sorted/standard/gnome/gnomeSort.ts
+  - Fixed single-element array edge case (`[42]`) by preventing invalid comparison with `arr[-1]`/`undefined` path on index reset.
 - package.json
-  - Simplified package exports to grouped consumer paths only:
+  - Supports grouped consumer paths:
     - `exsorted`
     - `exsorted/base`
     - `exsorted/meme`
     - `exsorted/types`
     - `exsorted/helper`
     - `exsorted/standard`
-  - Removed algorithm-per-subpath exports from the public API.
+  - Also supports per-algorithm subpaths:
+    - `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`
+    - `exsorted/merge`, `exsorted/quick`, `exsorted/heap`
+    - `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`
 
 ## Notes
 
