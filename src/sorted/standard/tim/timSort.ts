@@ -33,8 +33,10 @@ export function timSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn)
 function calculateMinRun(n: number): number {
   let r = 0;
   while (n >= 64) {
-    r |= n & 1;
-    n >>= 1;
+    if (n % 2 !== 0) {
+      r = 1;
+    }
+    n = Math.floor(n / 2);
   }
   return n + r;
 }
