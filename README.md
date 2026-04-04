@@ -152,6 +152,10 @@ shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 - For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort).
 - If you must preserve the original array, use mergeSort or sort a copied array (`algorithm([...arr])`).
 
+### Shell Sort Stability
+
+`shellSort` is not stable by design. Equal elements may change relative order after sorting.
+
 \* Shell Sort average complexity depends on the chosen gap sequence.
 
 ## Compatibility

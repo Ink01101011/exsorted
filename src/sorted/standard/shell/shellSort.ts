@@ -10,11 +10,8 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  *
  * @template T - The type of elements in the array
  * @param arr - The array to be sorted
- * @param compareFn - The comparison function to determine the order of elements.
- *                    Returns a negative number if first argument should come before second,
- *                    positive number if first should come after second, or 0 if equal.
- *                    Defaults to the default comparison function.
- * @returns The sorted array (sorts in-place and returns the same array reference)
+ * @param compareFn - The comparison function to determine sort order
+ * @returns The sorted array
  *
  * @complexity
  * - Time: O(n log² n) average case, O(n²) worst case for the halving gap sequence used here
