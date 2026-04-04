@@ -82,6 +82,11 @@
       "types": "./dist/sorted/standard/tim/index.d.ts",
       "import": "./dist/sorted/standard/tim/index.mjs",
       "require": "./dist/sorted/standard/tim/index.cjs"
+    },
+    "./gnome": {
+      "types": "./dist/sorted/standard/gnome/index.d.ts",
+      "import": "./dist/sorted/standard/gnome/index.mjs",
+      "require": "./dist/sorted/standard/gnome/index.cjs"
     }
   },
   "sideEffects": false,
