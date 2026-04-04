@@ -27,6 +27,7 @@ export function gnomeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
   while (index < n) {
     if (index === 0) {
       index++;
+      continue;
     }
 
     if (compareFn(arr[index], arr[index - 1]) >= 0) {
