@@ -87,38 +87,6 @@ Available subpaths:
 - `exsorted/types` -> CompareFn, SortedArray, SelectorFn
 - `exsorted/meme` -> meme namespace exports
 
-## Migration Guide
-
-If you are upgrading from per-algorithm subpaths, update imports to grouped subpaths.
-
-### Path Mapping
-
-- `exsorted/bubble` -> `exsorted/base`
-- `exsorted/insertion` -> `exsorted/base`
-- `exsorted/selection` -> `exsorted/base`
-- `exsorted/merge` -> `exsorted/base`
-- `exsorted/quick` -> `exsorted/base`
-- `exsorted/heap` -> `exsorted/base`
-- `exsorted/tim` -> `exsorted/standard`
-- `exsorted/utils` -> `exsorted/helper`
-
-### Before / After
-
-```typescript
-// Before
-import { selectionSort } from 'exsorted/selection';
-import { quickSort } from 'exsorted/quick';
-import { timSort } from 'exsorted/tim';
-import { compareBy } from 'exsorted/utils';
-
-// After
-import { selectionSort, quickSort } from 'exsorted/base';
-import { timSort } from 'exsorted/standard';
-import { compareBy } from 'exsorted/helper';
-```
-
-For most consumers, importing from `exsorted` remains the simplest option.
-
 ## API Reference
 
 Every function shares the same signature:
