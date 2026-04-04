@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup --config tsup.config.ts",
+    "benchmark": "pnpm run build && node scripts/benchmark.cjs",
     "minify": "tsup --config tsup.config.ts --minify",
     "test": "jest",
     "lint": "oxlint . --deny-warnings",
