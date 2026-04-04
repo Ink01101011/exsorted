@@ -47,6 +47,41 @@
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.mjs",
       "require": "./dist/utils/index.cjs"
+    },
+    "./bubble": {
+      "types": "./dist/sorted/base/bubble/index.d.ts",
+      "import": "./dist/sorted/base/bubble/index.mjs",
+      "require": "./dist/sorted/base/bubble/index.cjs"
+    },
+    "./insertion": {
+      "types": "./dist/sorted/base/insertion/index.d.ts",
+      "import": "./dist/sorted/base/insertion/index.mjs",
+      "require": "./dist/sorted/base/insertion/index.cjs"
+    },
+    "./selection": {
+      "types": "./dist/sorted/base/selection/index.d.ts",
+      "import": "./dist/sorted/base/selection/index.mjs",
+      "require": "./dist/sorted/base/selection/index.cjs"
+    },
+    "./merge": {
+      "types": "./dist/sorted/base/merge/index.d.ts",
+      "import": "./dist/sorted/base/merge/index.mjs",
+      "require": "./dist/sorted/base/merge/index.cjs"
+    },
+    "./quick": {
+      "types": "./dist/sorted/base/quick/index.d.ts",
+      "import": "./dist/sorted/base/quick/index.mjs",
+      "require": "./dist/sorted/base/quick/index.cjs"
+    },
+    "./heap": {
+      "types": "./dist/sorted/base/heap/index.d.ts",
+      "import": "./dist/sorted/base/heap/index.mjs",
+      "require": "./dist/sorted/base/heap/index.cjs"
+    },
+    "./tim": {
+      "types": "./dist/sorted/standard/tim/index.d.ts",
+      "import": "./dist/sorted/standard/tim/index.mjs",
+      "require": "./dist/sorted/standard/tim/index.cjs"
     }
   },
   "sideEffects": false,
