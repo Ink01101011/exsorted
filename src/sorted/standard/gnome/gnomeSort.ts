@@ -1,5 +1,6 @@
-import { CompareFn, SortedArray } from '../../../types';
-import { defaultCompareFn } from '../../../utils';
+import { SortedArray } from '../../../types';
+import { CompareFn } from '../../../types/function-type';
+import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Performs a gnome sort on an array.
