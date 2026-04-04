@@ -1,6 +1,22 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
+/**
+ * Sorts an array using the TimSort algorithm.
+ *
+ * Mutates the original array and also returns it.
+ *
+ * Time complexity:
+ * - Best case: O(n)
+ * - Average case: O(n log n)
+ * - Worst case: O(n log n)
+ *
+ * Space complexity: O(n)
+ *
+ * @param arr - The array to sort.
+ * @param compareFn - Optional comparison function used to determine the order of elements.
+ * @returns The sorted array.
+ */
 export function timSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
   const n = arr.length;
   if (n < 2) return arr;
