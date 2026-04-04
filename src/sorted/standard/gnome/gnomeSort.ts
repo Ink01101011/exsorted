@@ -29,7 +29,7 @@ export function gnomeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
       index++;
     }
 
-    if (compareFn(arr[index], arr[index - 1])) {
+    if (compareFn(arr[index], arr[index - 1]) >= 0) {
       index++;
     } else {
       [arr[index], arr[index - 1]] = [arr[index - 1], arr[index]];
