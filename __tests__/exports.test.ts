@@ -5,11 +5,13 @@ import { mergeSort } from '../src/sorted/base/merge';
 import { quickSort } from '../src/sorted/base/quick/quickSort';
 import { heapSort } from '../src/sorted/base/heap/heapSort';
 import { timSort } from '../src/sorted/standard/tim';
+import { shellSort } from '../src/sorted/standard/shell';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
 import { selectionSort as selectionNamed } from '../src/sorted/base/selection';
 import { bubbleSort as bubbleNamed } from '../src/sorted/base/bubble';
 import { timSort as timNamed } from '../src/sorted/standard/tim';
+import { shellSort as shellNamed } from '../src/sorted/standard/shell';
 
 describe('sorted index exports', () => {
   it('re-exports all sorting functions', () => {
@@ -20,6 +22,7 @@ describe('sorted index exports', () => {
     expect(sortedExports.quickSort).toBe(quickSort);
     expect(sortedExports.heapSort).toBe(heapSort);
     expect(sortedExports.timSort).toBe(timSort);
+    expect(sortedExports.shellSort).toBe(shellSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });
@@ -38,5 +41,10 @@ describe('subpath entrypoints', () => {
   it('supports named imports for tim', () => {
     expect(timNamed).toBe(timSort);
     expect(timNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for shell', () => {
+    expect(shellNamed).toBe(shellSort);
+    expect(shellNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });
