@@ -17,7 +17,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The sorted array (sorts in-place and returns the same array reference)
  *
  * @complexity
- * - Time: O(n log n) average case, O(n²) worst case (depends on gap sequence)
+ * - Time: O(n log² n) average case, O(n²) worst case for the halving gap sequence used here
  * - Space: O(1) auxiliary space
  *
  * @example
