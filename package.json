@@ -87,6 +87,11 @@
       "types": "./dist/sorted/standard/gnome/index.d.ts",
       "import": "./dist/sorted/standard/gnome/index.mjs",
       "require": "./dist/sorted/standard/gnome/index.cjs"
+    },
+    "./shell": {
+      "types": "./dist/sorted/standard/shell/index.d.ts",
+      "import": "./dist/sorted/standard/shell/index.mjs",
+      "require": "./dist/sorted/standard/shell/index.cjs"
     }
   },
   "sideEffects": false,
