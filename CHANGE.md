@@ -18,7 +18,7 @@ This file summarizes all diffs currently introduced in this working tree.
     - Full API reference and mutation behavior
     - Helper API usage and practical consumer notes
   - Updated examples to match grouped and per-algorithm subpath exports.
-- **tests**/algorithms.test.ts, **tests**/sorting.test.ts, **tests**/mutation.test.ts, **tests**/exports.test.ts
+- **__tests__**/algorithms.test.ts, **__tests__**/sorting.test.ts, **__tests__**/mutation.test.ts, **__tests__**/exports.test.ts
   - Added `gnomeSort` and `shellSort` into shared matrix coverage where applicable.
   - Added export assertions for `gnomeSort` and `shellSort` from sorted index and subpaths.
 - src/sorted/standard/gnome/gnomeSort.ts
