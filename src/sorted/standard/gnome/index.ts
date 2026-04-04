@@ -1,0 +1,1 @@
+export { gnomeSort } from './gnomeSort';
