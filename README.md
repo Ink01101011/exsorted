@@ -12,15 +12,17 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 
 ## Algorithms
 
-| Algorithm      | Average Time | Worst Time | Space    | Stable | In-place |
-| -------------- | ------------ | ---------- | -------- | ------ | -------- |
-| Bubble Sort    | O(n²)        | O(n²)      | O(1)     | ✅     | ✅       |
-| Insertion Sort | O(n²)        | O(n²)      | O(1)     | ✅     | ✅       |
-| Selection Sort | O(n²)        | O(n²)      | O(1)     | ❌     | ✅       |
-| Merge Sort     | O(n log n)   | O(n log n) | O(n)     | ✅     | ❌       |
-| Quick Sort     | O(n log n)   | O(n²)      | O(log n) | ❌     | ✅       |
-| Heap Sort      | O(n log n)   | O(n log n) | O(1)     | ❌     | ✅       |
-| Tim Sort       | O(n log n)   | O(n log n) | O(n)     | ✅     | ✅       |
+| Algorithm      | Average Time  | Worst Time | Space    | Stable | In-place |
+| -------------- | ------------- | ---------- | -------- | ------ | -------- |
+| Bubble Sort    | O(n²)         | O(n²)      | O(1)     | ✅     | ✅       |
+| Insertion Sort | O(n²)         | O(n²)      | O(1)     | ✅     | ✅       |
+| Selection Sort | O(n²)         | O(n²)      | O(1)     | ❌     | ✅       |
+| Merge Sort     | O(n log n)    | O(n log n) | O(n)     | ✅     | ❌       |
+| Quick Sort     | O(n log n)    | O(n²)      | O(log n) | ❌     | ✅       |
+| Heap Sort      | O(n log n)    | O(n log n) | O(1)     | ❌     | ✅       |
+| Tim Sort       | O(n log n)    | O(n log n) | O(n)     | ✅     | ✅       |
+| Gnome Sort     | O(n²)         | O(n²)      | O(1)     | ✅     | ✅       |
+| Shell Sort     | O(n log² n)\* | O(n²)      | O(1)     | ❌     | ✅       |
 
 ## Installation
 
@@ -31,12 +33,25 @@ npm install exsorted
 ## Quick Start
 
 ```typescript
-import { bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort, timSort, compareBy } from 'exsorted';
+import {
+  bubbleSort,
+  insertionSort,
+  selectionSort,
+  mergeSort,
+  quickSort,
+  heapSort,
+  timSort,
+  gnomeSort,
+  shellSort,
+  compareBy,
+} from 'exsorted';
 
 // Sort numbers ascending (default)
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 mergeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 timSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+gnomeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+shellSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
 // Sort numbers descending (custom comparator)
 quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
@@ -74,18 +89,24 @@ import { quickSort, timSort, compareBy } from 'exsorted';
 
 // Grouped subpath imports
 import { bubbleSort, mergeSort } from 'exsorted/base';
-import { timSort as timSortStandard } from 'exsorted/standard';
+import { timSort as timSortStandard, gnomeSort, shellSort } from 'exsorted/standard';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
+
+// Per-algorithm subpath imports (also supported)
+import { bubbleSort as bubbleSortOnly } from 'exsorted/bubble';
+import { gnomeSort as gnomeSortOnly } from 'exsorted/gnome';
+import { shellSort as shellSortOnly } from 'exsorted/shell';
 ```
 
 Available subpaths:
 
 - `exsorted/base` -> bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
-- `exsorted/standard` -> timSort
+- `exsorted/standard` -> timSort, gnomeSort, shellSort
 - `exsorted/helper` -> compareBy, defaultCompareFn
 - `exsorted/types` -> CompareFn, SortedArray, SelectorFn
 - `exsorted/meme` -> meme namespace exports
+- Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`
 
 ## API Reference
 
@@ -103,7 +124,7 @@ function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 
 ### Mutation Behavior
 
-- In-place (returns same array reference): bubbleSort, insertionSort, selectionSort, quickSort, heapSort, timSort
+- In-place (returns same array reference): bubbleSort, insertionSort, selectionSort, quickSort, heapSort, timSort, gnomeSort, shellSort
 - Non-mutating (returns new array): mergeSort
 
 ### Exported Algorithms
@@ -116,6 +137,8 @@ mergeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 quickSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 heapSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 
 ### Helper APIs
@@ -126,8 +149,10 @@ timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ### Consumer Notes
 
 - For objects, passing an explicit comparator is recommended for domain-specific ordering.
-- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort).
+- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort).
 - If you must preserve the original array, use mergeSort or sort a copied array (`algorithm([...arr])`).
+
+\* Shell Sort average complexity depends on the chosen gap sequence.
 
 ## Compatibility
 
