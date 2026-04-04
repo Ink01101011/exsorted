@@ -4,10 +4,12 @@ import { selectionSort } from '../src/sorted/base/selection';
 import { mergeSort } from '../src/sorted/base/merge';
 import { quickSort } from '../src/sorted/base/quick/quickSort';
 import { heapSort } from '../src/sorted/base/heap/heapSort';
+import { timSort } from '../src/sorted/standard/tim';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
-import { selectionSort as selectionNamed } from '../src/base/selection';
-import { bubbleSort as bubbleNamed } from '../src/base/bubble';
+import { selectionSort as selectionNamed } from '../src/sorted/base/selection';
+import { bubbleSort as bubbleNamed } from '../src/sorted/base/bubble';
+import { timSort as timNamed } from '../src/sorted/standard/tim';
 
 describe('sorted index exports', () => {
   it('re-exports all sorting functions', () => {
@@ -17,6 +19,7 @@ describe('sorted index exports', () => {
     expect(sortedExports.mergeSort).toBe(mergeSort);
     expect(sortedExports.quickSort).toBe(quickSort);
     expect(sortedExports.heapSort).toBe(heapSort);
+    expect(sortedExports.timSort).toBe(timSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });
@@ -30,5 +33,10 @@ describe('subpath entrypoints', () => {
   it('supports named imports for bubble', () => {
     expect(bubbleNamed).toBe(bubbleSort);
     expect(bubbleNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for tim', () => {
+    expect(timNamed).toBe(timSort);
+    expect(timNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });

@@ -8,8 +8,8 @@ import { CompareFn } from '../src/types/function-type';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
 import { defaultCompareFn } from '../src/utils/defaultCompareFn';
-import { selectionSort as selectionNamed } from '../src/base/selection';
-import { bubbleSort as bubbleNamed } from '../src/base/bubble';
+import { selectionSort as selectionNamed } from '../src/sorted/base/selection';
+import { bubbleSort as bubbleNamed } from '../src/sorted/base/bubble';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
 

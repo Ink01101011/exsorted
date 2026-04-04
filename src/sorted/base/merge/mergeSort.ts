@@ -17,28 +17,34 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
   if (arr.length <= 1) return arr.slice();
 
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid), compareFn);
-  const right = mergeSort(arr.slice(mid), compareFn);
+  const middleIndex = Math.floor(arr.length / 2);
+  const leftHalf = mergeSort(arr.slice(0, middleIndex), compareFn);
+  const rightHalf = mergeSort(arr.slice(middleIndex), compareFn);
 
-  return merge(left, right, compareFn);
+  return merge(leftHalf, rightHalf, compareFn);
 }
 
 function merge<T>(left: T[], right: T[], compareFn: CompareFn<T>): T[] {
-  const result: T[] = [];
-  let i = 0;
-  let j = 0;
+  const merged: T[] = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
 
-  while (i < left.length && j < right.length) {
-    if (compareFn(left[i], right[j]) <= 0) {
-      result.push(left[i++]);
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (compareFn(left[leftIndex], right[rightIndex]) <= 0) {
+      merged.push(left[leftIndex++]);
     } else {
-      result.push(right[j++]);
+      merged.push(right[rightIndex++]);
     }
   }
 
-  while (i < left.length) result.push(left[i++]);
-  while (j < right.length) result.push(right[j++]);
+  appendRemainingItems(merged, left, leftIndex);
+  appendRemainingItems(merged, right, rightIndex);
 
-  return result;
+  return merged;
+}
+
+function appendRemainingItems<T>(target: T[], source: T[], startIndex: number): void {
+  for (let index = startIndex; index < source.length; index += 1) {
+    target.push(source[index]);
+  }
 }
