@@ -93,6 +93,11 @@
       "types": "./dist/sorted/standard/shell/index.d.ts",
       "import": "./dist/sorted/standard/shell/index.mjs",
       "require": "./dist/sorted/standard/shell/index.cjs"
+    },
+    "./intro": {
+      "types": "./dist/sorted/standard/intro/index.d.ts",
+      "import": "./dist/sorted/standard/intro/index.mjs",
+      "require": "./dist/sorted/standard/intro/index.cjs"
     }
   },
   "sideEffects": false,
