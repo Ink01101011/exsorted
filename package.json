@@ -98,6 +98,11 @@
       "types": "./dist/sorted/standard/intro/index.d.ts",
       "import": "./dist/sorted/standard/intro/index.mjs",
       "require": "./dist/sorted/standard/intro/index.cjs"
+    },
+    "./block": {
+      "types": "./dist/sorted/standard/block/index.d.ts",
+      "import": "./dist/sorted/standard/block/index.mjs",
+      "require": "./dist/sorted/standard/block/index.cjs"
     }
   },
   "sideEffects": false,
