@@ -10,9 +10,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * 3) locally sorts each block,
  * 4) merges blocks iteratively with block moves and buffered merge.
  *
- * Practical complexity: typically O(n log n) for mixed input distributions;
- * this simplified implementation can perform more data movement in fallback
- * block rotations when internal scratch space is insufficient for a move.
+ * Practical complexity: typically O(n log n) for mixed input distributions.
  *
  * Space complexity: O(n) worst case due to merge buffering.
  *
@@ -106,32 +104,16 @@ function blockMovePhase<T>(
 function rotateRightByBlock<T>(arr: T[], leftStart: number, mid: number, rightEnd: number, internalBuffer: T[]): void {
   const rightLength = rightEnd - mid;
 
-  if (rightLength > 0 && internalBuffer.length >= rightLength) {
-    for (let i = 0; i < rightLength; i += 1) {
-      internalBuffer[i] = arr[mid + i];
-    }
-
-    for (let i = mid - 1; i >= leftStart; i -= 1) {
-      arr[i + rightLength] = arr[i];
-    }
-
-    for (let i = 0; i < rightLength; i += 1) {
-      arr[leftStart + i] = internalBuffer[i];
-    }
-    return;
+  for (let i = 0; i < rightLength; i += 1) {
+    internalBuffer[i] = arr[mid + i];
   }
 
-  // Fallback when available internal buffer is too small.
-  reverseRange(arr, leftStart, mid - 1);
-  reverseRange(arr, mid, rightEnd - 1);
-  reverseRange(arr, leftStart, rightEnd - 1);
-}
+  for (let i = mid - 1; i >= leftStart; i -= 1) {
+    arr[i + rightLength] = arr[i];
+  }
 
-function reverseRange<T>(arr: T[], left: number, right: number): void {
-  while (left < right) {
-    [arr[left], arr[right]] = [arr[right], arr[left]];
-    left += 1;
-    right -= 1;
+  for (let i = 0; i < rightLength; i += 1) {
+    arr[leftStart + i] = internalBuffer[i];
   }
 }
 

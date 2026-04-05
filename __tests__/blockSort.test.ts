@@ -65,7 +65,7 @@ describe('blockSort', () => {
     }
   });
 
-  it('remains stable on large low-cardinality input (small internal buffer scenario)', () => {
+  it('remains stable on large low-cardinality input', () => {
     const size = 400;
     const items = Array.from({ length: size }, (_, index) => ({
       key: index % 2,
