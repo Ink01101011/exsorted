@@ -6,13 +6,13 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  *
  * Block-oriented hybrid sort that:
  * 1) partitions data into fixed-size blocks,
- * 2) selects unique values as an internal buffer,
+ * 2) allocates fixed-size internal scratch space,
  * 3) locally sorts each block,
  * 4) merges blocks iteratively with block moves and buffered merge.
  *
  * Practical complexity: typically O(n log n) for mixed input distributions;
  * this simplified implementation can perform more data movement in fallback
- * block rotations when the internal unique buffer is small.
+ * block rotations when internal scratch space is insufficient for a move.
  *
  * Space complexity: O(n) worst case due to merge buffering.
  *
@@ -27,7 +27,7 @@ export function blockSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
   if (n < 2) return arr;
 
   const blockSize = Math.max(16, Math.floor(Math.sqrt(n)));
-  const buffer = selectUniqueBuffer(arr, blockSize, compareFn);
+  const buffer = new Array<T>(blockSize);
 
   // Local sort inside each block.
   for (let start = 0; start < n; start += blockSize) {
@@ -48,28 +48,6 @@ export function blockSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
   }
 
   return arr;
-}
-
-function selectUniqueBuffer<T>(arr: T[], targetSize: number, compareFn: CompareFn<T>): T[] {
-  const buffer: T[] = [];
-
-  for (let i = 0; i < arr.length && buffer.length < targetSize; i += 1) {
-    const value = arr[i];
-    let isUnique = true;
-
-    for (let j = 0; j < buffer.length; j += 1) {
-      if (compareFn(value, buffer[j]) === 0) {
-        isUnique = false;
-        break;
-      }
-    }
-
-    if (isUnique) {
-      buffer.push(value);
-    }
-  }
-
-  return buffer;
 }
 
 function insertionSortRange<T>(arr: T[], start: number, endExclusive: number, compareFn: CompareFn<T>): void {
@@ -100,7 +78,9 @@ function blockMovePhase<T>(
   let split = mid;
 
   while (left < split && right < end) {
-    if (compareFn(arr[left], arr[right]) <= 0) {
+    const leftBlockEnd = Math.min(left + blockSize - 1, split - 1);
+
+    if (compareFn(arr[leftBlockEnd], arr[right]) <= 0) {
       left += Math.min(blockSize, split - left);
       continue;
     }
