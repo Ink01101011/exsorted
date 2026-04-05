@@ -4,14 +4,19 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 /**
  * Block Sort
  *
- * Hybrid stable sorting approach that:
+ * Block-oriented hybrid sort that:
  * 1) partitions data into fixed-size blocks,
  * 2) selects unique values as an internal buffer,
  * 3) locally sorts each block,
  * 4) merges blocks iteratively with block moves and buffered merge.
  *
- * Time complexity:  O(n log n) average and worst case
- * Space complexity: O(n) worst case (buffered merges)
+ * Practical complexity: typically O(n log n) for mixed input distributions;
+ * this simplified implementation can perform more data movement in fallback
+ * block rotations when the internal unique buffer is small.
+ *
+ * Space complexity: O(n) worst case due to merge buffering.
+ *
+ * Stability: designed to keep equal elements in their original relative order.
  *
  * @param arr - The array to sort (mutated in place)
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
@@ -37,8 +42,8 @@ export function blockSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
       const end = Math.min(start + 2 * width, n);
       if (mid >= end) continue;
 
-      const adjustedMid = blockMovePhase(arr, start, mid, end, blockSize, compareFn);
-      mergeWithBuffer(arr, start, adjustedMid, end, compareFn, buffer);
+      const adjustedMid = blockMovePhase(arr, start, mid, end, blockSize, compareFn, buffer);
+      mergeWithBuffer(arr, start, adjustedMid, end, compareFn);
     }
   }
 
@@ -88,6 +93,7 @@ function blockMovePhase<T>(
   end: number,
   blockSize: number,
   compareFn: CompareFn<T>,
+  internalBuffer: T[],
 ): number {
   let left = start;
   let right = mid;
@@ -100,7 +106,15 @@ function blockMovePhase<T>(
     }
 
     const blockLen = Math.min(blockSize, end - right);
-    rotateRightByBlock(arr, left, right, right + blockLen);
+
+    // Preserve stability by rotating only when the entire right block is
+    // strictly smaller than the current left boundary element.
+    if (compareFn(arr[right + blockLen - 1], arr[left]) >= 0) {
+      left += Math.min(blockSize, split - left);
+      continue;
+    }
+
+    rotateRightByBlock(arr, left, right, right + blockLen, internalBuffer);
     left += blockLen;
     split += blockLen;
     right += blockLen;
@@ -109,7 +123,25 @@ function blockMovePhase<T>(
   return split;
 }
 
-function rotateRightByBlock<T>(arr: T[], leftStart: number, mid: number, rightEnd: number): void {
+function rotateRightByBlock<T>(arr: T[], leftStart: number, mid: number, rightEnd: number, internalBuffer: T[]): void {
+  const rightLength = rightEnd - mid;
+
+  if (rightLength > 0 && internalBuffer.length >= rightLength) {
+    for (let i = 0; i < rightLength; i += 1) {
+      internalBuffer[i] = arr[mid + i];
+    }
+
+    for (let i = mid - 1; i >= leftStart; i -= 1) {
+      arr[i + rightLength] = arr[i];
+    }
+
+    for (let i = 0; i < rightLength; i += 1) {
+      arr[leftStart + i] = internalBuffer[i];
+    }
+    return;
+  }
+
+  // Fallback when available internal buffer is too small.
   reverseRange(arr, leftStart, mid - 1);
   reverseRange(arr, mid, rightEnd - 1);
   reverseRange(arr, leftStart, rightEnd - 1);
@@ -123,14 +155,7 @@ function reverseRange<T>(arr: T[], left: number, right: number): void {
   }
 }
 
-function mergeWithBuffer<T>(
-  arr: T[],
-  start: number,
-  mid: number,
-  end: number,
-  compareFn: CompareFn<T>,
-  selectedBuffer: T[],
-): void {
+function mergeWithBuffer<T>(arr: T[], start: number, mid: number, end: number, compareFn: CompareFn<T>): void {
   if (start >= mid || mid >= end) return;
   if (compareFn(arr[mid - 1], arr[mid]) <= 0) return;
 
@@ -140,9 +165,6 @@ function mergeWithBuffer<T>(
   for (let i = 0; i < leftLength; i += 1) {
     left[i] = arr[start + i];
   }
-
-  // Keep this in place so the selected internal buffer is intentionally part of the algorithm flow.
-  void selectedBuffer.length;
 
   let leftIndex = 0;
   let rightIndex = mid;
