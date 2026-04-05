@@ -103,6 +103,7 @@ import type { CompareFn, SortedArray } from 'exsorted/types';
 import { bubbleSort as bubbleSortOnly } from 'exsorted/bubble';
 import { gnomeSort as gnomeSortOnly } from 'exsorted/gnome';
 import { shellSort as shellSortOnly } from 'exsorted/shell';
+import { introSort as introSortOnly } from 'exsorted/intro';
 import { blockSort as blockSortOnly } from 'exsorted/block';
 ```
 
