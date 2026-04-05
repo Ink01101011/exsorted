@@ -7,6 +7,7 @@ import { heapSort } from '../src/sorted/base/heap/heapSort';
 import { gnomeSort } from '../src/sorted/standard/gnome';
 import { shellSort } from '../src/sorted/standard/shell';
 import { introSort } from '../src/sorted/standard/intro';
+import { blockSort } from '../src/sorted/standard/block';
 import { CompareFn } from '../src/types/function-type';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
@@ -26,6 +27,7 @@ const ALGORITHMS: Array<[string, SortFn<unknown>]> = [
   ['gnomeSort', gnomeSort as SortFn<unknown>],
   ['shellSort', shellSort as SortFn<unknown>],
   ['introSort', introSort as SortFn<unknown>],
+  ['blockSort', blockSort as SortFn<unknown>],
 ];
 
 describe.each(ALGORITHMS)('%s', (name, sortFn) => {
@@ -129,6 +131,7 @@ describe.each([
   ['gnomeSort', gnomeSort],
   ['shellSort', shellSort],
   ['introSort', introSort],
+  ['blockSort', blockSort],
 ] as Array<[string, SortFn<number>]>)('%s mutates the original array', (_, sortFn) => {
   it('returns the same array reference', () => {
     const arr = [3, 1, 2];
@@ -159,6 +162,7 @@ describe('sorted index exports', () => {
     expect(sortedExports.gnomeSort).toBe(gnomeSort);
     expect(sortedExports.shellSort).toBe(shellSort);
     expect(sortedExports.introSort).toBe(introSort);
+    expect(sortedExports.blockSort).toBe(blockSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });
