@@ -6,6 +6,8 @@ import { quickSort } from '../src/sorted/base/quick/quickSort';
 import { heapSort } from '../src/sorted/base/heap/heapSort';
 import { gnomeSort } from '../src/sorted/standard/gnome';
 import { shellSort } from '../src/sorted/standard/shell';
+import { introSort } from '../src/sorted/standard/intro';
+import { blockSort } from '../src/sorted/standard/block';
 import { CompareFn } from '../src/types/function-type';
 
 type SortFn<T> = (arr: T[], compareFn?: CompareFn<T>) => T[];
@@ -18,6 +20,8 @@ describe.each([
   ['heapSort', heapSort],
   ['gnomeSort', gnomeSort],
   ['shellSort', shellSort],
+  ['introSort', introSort],
+  ['blockSort', blockSort],
 ] as Array<[string, SortFn<number>]>)('%s mutates the original array', (_, sortFn) => {
   it('returns the same array reference', () => {
     const arr = [3, 1, 2];
