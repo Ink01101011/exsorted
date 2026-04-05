@@ -11,7 +11,7 @@ const INSERTION_SORT_THRESHOLD = 16;
  * small partitions.
  *
  * Time complexity:  O(n log n) average and worst case
- * Space complexity: O(log n) average (recursion stack)
+ * Space complexity: O(log n) worst case (recursion stack)
  *
  * @param arr - The array to sort (mutated in place)
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
