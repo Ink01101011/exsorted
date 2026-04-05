@@ -6,13 +6,14 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  *
  * Block-oriented hybrid sort that:
  * 1) partitions data into fixed-size blocks,
- * 2) allocates fixed-size internal scratch space,
+ * 2) allocates a fixed-size internal buffer for block moves,
  * 3) locally sorts each block,
- * 4) merges blocks iteratively with block moves and buffered merge.
+ * 4) merges blocks iteratively using block moves plus merge-time buffering.
  *
  * Practical complexity: typically O(n log n) for mixed input distributions.
  *
- * Space complexity: O(n) worst case due to merge buffering.
+ * Space complexity: O(n) worst case overall due to merge buffering; the
+ * block-move scratch buffer itself is fixed-size relative to the chosen block size.
  *
  * Stability: designed to keep equal elements in their original relative order.
  *
