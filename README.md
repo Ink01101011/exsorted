@@ -153,6 +153,7 @@ blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 
 - `threshold` must be an integer `>= 2`.
+- `threshold` is evaluated as partition length (number of elements).
 - Recommended range: `8` to `32` (default is `16`).
 - Lower values favor quick/heap partitioning longer; higher values switch to insertion sort earlier.
 

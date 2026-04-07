@@ -15,7 +15,7 @@ const INSERTION_SORT_THRESHOLD = 16;
  *
  * @param arr - The array to sort (mutated in place)
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
- * @param threshold - Partition size cutoff for switching to insertion sort (default: 16)
+ * @param threshold - Partition length cutoff (element count) for switching to insertion sort (default: 16)
  * @returns The sorted array
  */
 export function introSort<T>(
@@ -51,7 +51,7 @@ function introSortRecursive<T>(
   compareFn: CompareFn<T>,
   threshold: number,
 ): void {
-  while (high - low > threshold) {
+  while (high - low + 1 > threshold) {
     if (depthLimit === 0) {
       heapSortRange(arr, low, high, compareFn);
       return;
