@@ -149,8 +149,15 @@ timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 introSort<T>(arr: T[], threshold?: number): T[]
-introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold?: number): T[]
 blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+
+// avoid implying introSort(arr, undefined) is a supported/typed call
+
+introSort<T>(arr: T[]): T[]
+introSort<T>(arr: T[], threshold: number): T[]
+introSort<T>(arr: T[], compareFn: CompareFn<T>): T[]
+introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold: number): T[]
+
 ```
 
 - `threshold` must be an integer `>= 2`.
