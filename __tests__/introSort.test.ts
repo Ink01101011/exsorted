@@ -15,6 +15,20 @@ describe('introSort', () => {
     expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
+  it('interprets threshold as partition length cutoff (no off-by-one)', () => {
+    let compareCount = 0;
+    const compare = (a: number, b: number) => {
+      compareCount += 1;
+      return a - b;
+    };
+
+    introSort([3, 2, 1], compare, 2);
+
+    // If threshold=2 is treated as length cutoff, a length-3 partition
+    // still goes through partitioning before the final insertion pass.
+    expect(compareCount).toBeGreaterThan(2);
+  });
+
   it('returns the same array reference (in-place)', () => {
     const arr = [3, 1, 2];
     const result = introSort(arr);

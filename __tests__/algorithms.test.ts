@@ -26,6 +26,14 @@ const ALGORITHMS: Array<[string, SortFn<unknown>]> = [
 ];
 
 describe.each(ALGORITHMS)('%s', (name, sortFn) => {
+  describe('input validation', () => {
+    it('throws TypeError when arr is not an array', () => {
+      expect(() => (sortFn as unknown as (arr: unknown) => unknown)(null)).toThrow(TypeError);
+      expect(() => (sortFn as unknown as (arr: unknown) => unknown)({})).toThrow(TypeError);
+      expect(() => (sortFn as unknown as (arr: unknown) => unknown)('not-an-array')).toThrow(TypeError);
+    });
+  });
+
   describe('numbers (ascending, default)', () => {
     it('sorts an unsorted array', () => {
       expect(sortFn([5, 3, 8, 1, 2])).toEqual([1, 2, 3, 5, 8]);
