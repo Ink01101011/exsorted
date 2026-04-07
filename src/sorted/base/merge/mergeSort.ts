@@ -15,6 +15,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns A new sorted array
  */
 export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   if (arr.length <= 1) return arr.slice();
 
   const middleIndex = Math.floor(arr.length / 2);
