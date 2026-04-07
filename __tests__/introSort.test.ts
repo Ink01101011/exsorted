@@ -10,6 +10,11 @@ describe('introSort', () => {
     expect(result).toEqual([8, 5, 3, 2, 1]);
   });
 
+  it('accepts a custom threshold', () => {
+    const result = introSort([9, 1, 7, 3, 5, 2, 8, 6, 4], undefined, 8);
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+
   it('returns the same array reference (in-place)', () => {
     const arr = [3, 1, 2];
     const result = introSort(arr);
@@ -31,5 +36,11 @@ describe('introSort', () => {
 
     const result = introSort(people, (a, b) => a.age - b.age);
     expect(result.map((p) => p.name)).toEqual(['Bob', 'Alice', 'Charlie']);
+  });
+
+  it('throws for invalid thresholds', () => {
+    expect(() => introSort([3, 2, 1], undefined, 1)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], undefined, 2.5)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], undefined, Number.NaN)).toThrow(TypeError);
   });
 });
