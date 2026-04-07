@@ -1,6 +1,6 @@
 {
   "name": "exsorted",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A TypeScript sorting algorithms library",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
