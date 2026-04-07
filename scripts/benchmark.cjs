@@ -104,29 +104,54 @@ function formatMarkdownSummary(rows) {
   const grouped = new Map();
 
   for (const row of rows) {
-    if (row.status !== 'ok') {
-      continue;
+    const current = grouped.get(row.algorithm) || {
+      totalMs: 0,
+      passed: 0,
+      total: 0,
+    };
+
+    current.total += 1;
+
+    if (row.status === 'ok') {
+      current.totalMs += row.avgMs;
+      current.passed += 1;
     }
 
-    const current = grouped.get(row.algorithm) || { total: 0, count: 0 };
-    current.total += row.avgMs;
-    current.count += 1;
     grouped.set(row.algorithm, current);
   }
 
   const summary = Array.from(grouped.entries())
     .map(([algorithm, stats]) => ({
       algorithm,
-      avgMs: Number((stats.total / stats.count).toFixed(3)),
+      passed: stats.passed,
+      total: stats.total,
+      avgMs: stats.passed > 0
+        ? Number((stats.totalMs / stats.passed).toFixed(3))
+        : null,
     }))
-    .sort((a, b) => a.avgMs - b.avgMs);
+    .sort((a, b) => {
+      if (a.avgMs === null && b.avgMs === null) {
+        return a.algorithm.localeCompare(b.algorithm);
+      }
+      if (a.avgMs === null) {
+        return 1;
+      }
+      if (b.avgMs === null) {
+        return -1;
+      }
+      return a.avgMs - b.avgMs;
+    });
 
-  const fastest = summary[0]?.avgMs || 1;
-  const lines = ['| Algorithm | Avg ms (all cases) | Relative |', '| --- | ---: | ---: |'];
+  const fastest = summary.find((item) => item.avgMs !== null)?.avgMs || 1;
+  const lines = [
+    '| Algorithm | Passed | Avg ms (passed cases) | Relative |',
+    '| --- | ---: | ---: | ---: |',
+  ];
 
   for (const item of summary) {
-    const relative = `${(item.avgMs / fastest).toFixed(2)}x`;
-    lines.push(`| ${item.algorithm} | ${item.avgMs.toFixed(3)} | ${relative} |`);
+    const avgMs = item.avgMs === null ? '—' : item.avgMs.toFixed(3);
+    const relative = item.avgMs === null ? '—' : `${(item.avgMs / fastest).toFixed(2)}x`;
+    lines.push(`| ${item.algorithm} | ${item.passed}/${item.total} | ${avgMs} | ${relative} |`);
   }
 
   return lines.join('\n');
