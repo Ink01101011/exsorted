@@ -21,6 +21,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * ```
  */
 export function gnomeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   let index = 0;
   const n = arr.length;
 

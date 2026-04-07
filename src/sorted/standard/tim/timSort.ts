@@ -25,6 +25,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The same input array reference, now sorted.
  */
 export function timSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   const n = arr.length;
   if (n < 2) return arr;
 

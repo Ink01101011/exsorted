@@ -30,6 +30,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * ```
  */
 export function shellSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   const n = arr.length;
   if (n < 2) return arr;
 

@@ -15,6 +15,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The sorted array
  */
 export function heapSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   const n = arr.length;
 
   // Build max-heap

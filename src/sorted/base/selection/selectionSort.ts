@@ -16,6 +16,10 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The sorted array
  */
 export function selectionSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
+
   const n = arr.length;
   for (let i = 0; i < n - 1; i++) {
     let minIdx = i;

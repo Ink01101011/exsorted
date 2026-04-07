@@ -16,6 +16,9 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The sorted array
  */
 export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Input must be an array');
+  }
   _quickSort(arr, 0, arr.length - 1, compareFn);
   return arr;
 }
