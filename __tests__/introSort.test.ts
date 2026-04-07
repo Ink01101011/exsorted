@@ -11,7 +11,17 @@ describe('introSort', () => {
   });
 
   it('accepts a custom threshold', () => {
-    const result = introSort([9, 1, 7, 3, 5, 2, 8, 6, 4], undefined, 8);
+    const result = introSort([9, 1, 7, 3, 5, 2, 8, 6, 4], 8);
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+
+  it('still accepts threshold as third argument for backward compatibility', () => {
+    const introSortAny = introSort as unknown as (
+      arr: number[],
+      compareFn?: ((a: number, b: number) => number) | undefined,
+      threshold?: number,
+    ) => number[];
+    const result = introSortAny([9, 1, 7, 3, 5, 2, 8, 6, 4], undefined, 8);
     expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
 
@@ -53,8 +63,8 @@ describe('introSort', () => {
   });
 
   it('throws for invalid thresholds', () => {
-    expect(() => introSort([3, 2, 1], undefined, 1)).toThrow(TypeError);
-    expect(() => introSort([3, 2, 1], undefined, 2.5)).toThrow(TypeError);
-    expect(() => introSort([3, 2, 1], undefined, Number.NaN)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], 1)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], 2.5)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], Number.NaN)).toThrow(TypeError);
   });
 });

@@ -57,7 +57,7 @@ timSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 gnomeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 shellSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 introSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
-introSort([5, 3, 8, 1, 2], undefined, 24); // custom threshold
+introSort([5, 3, 8, 1, 2], 24); // custom threshold
 blockSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
 // Sort numbers descending (custom comparator)
@@ -148,7 +148,8 @@ heapSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
-introSort<T>(arr: T[], compareFn?: CompareFn<T>, threshold?: number): T[]
+introSort<T>(arr: T[], threshold?: number): T[]
+introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold?: number): T[]
 blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 

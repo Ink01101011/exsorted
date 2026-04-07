@@ -14,20 +14,23 @@ const INSERTION_SORT_THRESHOLD = 16;
  * Space complexity: O(log n) worst case (recursion stack)
  *
  * @param arr - The array to sort (mutated in place)
- * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
+ * @param compareOrThreshold - Comparator function or threshold value
  * @param threshold - Partition length cutoff (element count) for switching to insertion sort (default: 16)
  * @returns The sorted array
  */
-export function introSort<T>(
-  arr: T[],
-  compareFn: CompareFn<T> = defaultCompareFn,
-  threshold: number = INSERTION_SORT_THRESHOLD,
-): SortedArray<T> {
+export function introSort<T>(arr: T[]): SortedArray<T>;
+export function introSort<T>(arr: T[], threshold: number): SortedArray<T>;
+export function introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold?: number): SortedArray<T>;
+export function introSort<T>(arr: T[], compareOrThreshold?: CompareFn<T> | number, threshold?: number): SortedArray<T> {
   if (!Array.isArray(arr)) {
     throw new TypeError('Input must be an array');
   }
 
-  if (!Number.isInteger(threshold) || threshold < 2) {
+  const compareFn = typeof compareOrThreshold === 'function' ? compareOrThreshold : defaultCompareFn;
+  const resolvedThreshold =
+    typeof compareOrThreshold === 'number' ? compareOrThreshold : (threshold ?? INSERTION_SORT_THRESHOLD);
+
+  if (!Number.isInteger(resolvedThreshold) || resolvedThreshold < 2) {
     throw new TypeError('Threshold must be an integer greater than or equal to 2 (recommended range: 8 to 32)');
   }
 
@@ -36,7 +39,7 @@ export function introSort<T>(
 
   const maxDepth = Math.floor(Math.log2(n)) * 2;
 
-  introSortRecursive(arr, 0, n - 1, maxDepth, compareFn, threshold);
+  introSortRecursive(arr, 0, n - 1, maxDepth, compareFn, resolvedThreshold);
 
   insertionSortRange(arr, 0, n - 1, compareFn);
 
