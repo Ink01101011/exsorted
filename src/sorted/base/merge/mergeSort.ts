@@ -19,11 +19,15 @@ export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
     throw new TypeError('Input must be an array');
   }
 
+  return _mergeSort(arr, compareFn);
+}
+
+function _mergeSort<T>(arr: T[], compareFn: CompareFn<T>): T[] {
   if (arr.length <= 1) return arr.slice();
 
   const middleIndex = Math.floor(arr.length / 2);
-  const leftHalf = mergeSort(arr.slice(0, middleIndex), compareFn);
-  const rightHalf = mergeSort(arr.slice(middleIndex), compareFn);
+  const leftHalf = _mergeSort(arr.slice(0, middleIndex), compareFn);
+  const rightHalf = _mergeSort(arr.slice(middleIndex), compareFn);
 
   return merge(leftHalf, rightHalf, compareFn);
 }
