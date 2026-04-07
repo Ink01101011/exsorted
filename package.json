@@ -131,7 +131,13 @@
     "quick-sort",
     "heap-sort",
     "insertion-sort",
-    "selection-sort"
+    "selection-sort",
+    "tim-sort",
+    "gnome-sort",
+    "shell-sort",
+    "intro-sort",
+    "block-sort",
+    "exsorted"
   ],
   "author": "Ink01101011",
   "license": "MIT",
