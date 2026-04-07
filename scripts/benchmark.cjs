@@ -125,9 +125,7 @@ function formatMarkdownSummary(rows) {
       algorithm,
       passed: stats.passed,
       total: stats.total,
-      avgMs: stats.passed > 0
-        ? Number((stats.totalMs / stats.passed).toFixed(3))
-        : null,
+      avgMs: stats.passed > 0 ? Number((stats.totalMs / stats.passed).toFixed(3)) : null,
     }))
     .sort((a, b) => {
       if (a.avgMs === null && b.avgMs === null) {
@@ -143,10 +141,7 @@ function formatMarkdownSummary(rows) {
     });
 
   const fastest = summary.find((item) => item.avgMs !== null)?.avgMs || 1;
-  const lines = [
-    '| Algorithm | Passed | Avg ms (passed cases) | Relative |',
-    '| --- | ---: | ---: | ---: |',
-  ];
+  const lines = ['| Algorithm | Passed | Avg ms (passed cases) | Relative |', '| --- | ---: | ---: | ---: |'];
 
   for (const item of summary) {
     const avgMs = item.avgMs === null ? '—' : item.avgMs.toFixed(3);
