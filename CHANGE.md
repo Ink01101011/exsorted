@@ -1,88 +1,108 @@
 # CHANGE
 
-Changed date: 2026-04-05
+Versioned release notes.
 
-This file summarizes all diffs currently introduced in this working tree.
+## 1.0.3 - 2026-04-08
 
-## Latest Updates (2026-04-05)
+### Added
 
-## Updated Files
+- `src/utils/assertArrayInput.ts`
+  - Added reusable `assertArrayInput` helper for array input validation.
+- `scripts/benchmark.cjs`
+  - Added Markdown summary table output (average ms and relative speed).
+  - Added verification table for failed sorting cases.
+- `__tests__/introSort.test.ts`
+  - Added coverage for threshold-as-second-argument API.
+  - Added coverage for legacy third-argument threshold compatibility.
+  - Added threshold semantics test to prevent off-by-one regression.
+  - Added invalid-threshold validation coverage.
+- `__tests__/algorithms.test.ts`, `__tests__/timSort.test.ts`
+  - Added explicit non-array input validation coverage.
 
-- README.md
-  - Kept all existing badges unchanged.
-  - Added Tim Sort to the algorithm matrix.
-  - Added Gnome Sort and Shell Sort to the algorithm matrix.
-  - Expanded consumer documentation with:
-    - Quick Start including `timSort`, `gnomeSort`, and `shellSort`
-    - Subpath import guide
-    - Full API reference and mutation behavior
-    - Helper API usage and practical consumer notes
-  - Updated examples to match grouped and per-algorithm subpath exports.
-- \***\*tests\*\***/algorithms.test.ts, \***\*tests\*\***/sorting.test.ts, \***\*tests\*\***/mutation.test.ts, \***\*tests\*\***/exports.test.ts
-  - Added `gnomeSort` and `shellSort` into shared matrix coverage where applicable.
-  - Added export assertions for `gnomeSort` and `shellSort` from sorted index and subpaths.
-- src/sorted/standard/gnome/gnomeSort.ts
-  - Fixed single-element array edge case (`[42]`) by preventing invalid comparison with `arr[-1]`/`undefined` path on index reset.
-- package.json
-  - Supports grouped consumer paths:
-    - `exsorted`
-    - `exsorted/base`
-    - `exsorted/meme`
-    - `exsorted/types`
-    - `exsorted/helper`
-    - `exsorted/standard`
-  - Also supports per-algorithm subpaths:
-    - `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`
-    - `exsorted/merge`, `exsorted/quick`, `exsorted/heap`
-    - `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`
+### Changed
 
-## Notes
+- `src/sorted/standard/intro/introSort.ts`
+  - Added overload-style API:
+    - `introSort(arr, threshold)`
+    - `introSort(arr, compareFn, threshold?)`
+  - Kept backward compatibility for legacy call pattern.
+  - Updated threshold cutoff logic to partition length (`high - low + 1`).
+  - Clarified threshold docs and validation behavior.
+- `src/sorted/base/merge/mergeSort.ts`
+  - Kept public validation at entry point and used internal recursive helper `_mergeSort`.
+- `src/sorted/base/bubble/bubbleSort.ts`
+- `src/sorted/base/insertion/insertionSort.ts`
+- `src/sorted/base/selection/selectionSort.ts`
+- `src/sorted/base/quick/quickSort.ts`
+- `src/sorted/base/heap/heapSort.ts`
+- `src/sorted/standard/tim/timSort.ts`
+- `src/sorted/standard/gnome/gnomeSort.ts`
+- `src/sorted/standard/shell/shellSort.ts`
+- `src/sorted/standard/block/blockSort.ts`
+- `src/sorted/standard/intro/introSort.ts`
+  - Replaced duplicated inline `Array.isArray` guard with shared `assertArrayInput` helper.
+- `src/utils/index.ts`
+  - Exported `assertArrayInput`.
+- `README.md`
+  - Updated introSort usage/signatures for threshold-as-second-argument support.
+  - Clarified threshold semantics as partition length and recommended range.
+  - Added benchmark usage and environment variable options (`BENCH_SIZES`, `BENCH_REPEATS`, `BENCH_WARMUP`).
+- `scripts/benchmark.cjs`
+  - Expanded benchmark execution to all sorting algorithms.
+  - Kept detailed per-case `console.table` output.
 
-- Build output paths were revalidated against `tsup` output to ensure every export target resolves correctly.
+### Fixed
 
-## Added Files
+- Prevented introSort threshold off-by-one API surprise.
+- Reduced repeated input-guard logic across algorithms to keep validation behavior consistent.
 
-- .github/workflows/ci.yml
-  - Added CI workflow to run format check, lint, typecheck, tests, and build on push/PR.
-- .github/workflows/cve.yml
-  - Added security workflow with scheduled weekly pnpm audit.
-- .husky/pre-commit
-  - Added pre-commit hook to run lint-staged.
-- .oxlintrc.json
-  - Added OXC linter configuration for TypeScript with strict correctness/suspicious categories.
-- .prettierignore
-  - Added ignore rules for node_modules, dist, coverage, and lockfiles.
-- tsup.config.ts
-  - Added bundling config for ESM+CJS output, declaration generation, minify, and treeshake.
-- DEVELOP.md
-  - Added standalone development command guide moved from README.
+### Notes
 
-## Updated Files
+- Benchmark now reports failed verification cases without aborting the full run.
 
-- package.json
-  - Changed package outputs to dual module targets:
-    - main: dist/index.cjs
-    - module: dist/index.mjs
-    - exports map for import/require/types
-  - Added sideEffects: false for tree-shaking.
-  - Switched build script from tsc to tsup.
-  - Added scripts: minify, lint, lint:fix, typecheck, format, format:check, prepare.
-  - Added lint-staged config.
-  - Added devDependencies: husky, lint-staged, oxlint, prettier, tsup.
-- pnpm-lock.yaml
-  - Updated lockfile for newly added tooling dependencies.
-- tsconfig.json
-  - Added ignoreDeprecations: "6.0" to avoid TypeScript deprecation build failure.
-- README.md
-  - Applied formatting normalization.
-  - Kept project docs and quality gates.
-  - Removed in-file DEVELOP section; its content was moved into DEVELOP.md.
+## 1.0.2 - 2026-04-05
 
-## Removed Files
+### Added
 
-- CHANGE
-  - Replaced by CHANGE.md.
+- `.github/workflows/ci.yml`
+  - CI workflow for format check, lint, typecheck, tests, and build.
+- `.github/workflows/cve.yml`
+  - Weekly security audit workflow.
+- `.husky/pre-commit`
+  - Pre-commit hook running lint-staged.
+- `.oxlintrc.json`
+  - OXC linter configuration.
+- `.prettierignore`
+  - Ignore rules for generated and dependency files.
+- `tsup.config.ts`
+  - Build config for ESM/CJS + declaration output.
+- `DEVELOP.md`
+  - Developer workflow/command guide.
 
-## Notes
+### Changed
 
-- Tooling now supports: Husky + lint-staged, OXC linting, Prettier formatting, minified/tree-shake-friendly builds, CI checks, and pnpm-based CVE security audit checks.
+- `README.md`
+  - Added Tim Sort, Gnome Sort, and Shell Sort in algorithm matrix and examples.
+  - Expanded docs with subpath imports, API reference, mutation behavior, and helper usage.
+- `__tests__/algorithms.test.ts`, `__tests__/sorting.test.ts`, `__tests__/mutation.test.ts`, `__tests__/exports.test.ts`
+  - Added/expanded matrix coverage and export assertions for gnomeSort/shellSort.
+- `src/sorted/standard/gnome/gnomeSort.ts`
+  - Fixed single-element edge case behavior.
+- `package.json`
+  - Added grouped/per-algorithm exports and dual module targets.
+  - Added tooling scripts (lint, format, typecheck, minify, prepare).
+  - Added tree-shaking metadata and lint-staged config.
+- `pnpm-lock.yaml`
+  - Updated for tooling dependencies.
+- `tsconfig.json`
+  - Added `ignoreDeprecations: "6.0"`.
+
+### Removed
+
+- `CHANGE`
+  - Replaced by `CHANGE.md`.
+
+### Notes
+
+- Build outputs were validated against tsup targets.
+- Toolchain now includes Husky, lint-staged, OXC, Prettier, CI, and CVE audit workflow.
