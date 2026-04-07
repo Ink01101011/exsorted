@@ -1,4 +1,5 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
+import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
@@ -15,9 +16,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns A new sorted array
  */
 export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
-  if (!Array.isArray(arr)) {
-    throw new TypeError('Input must be an array');
-  }
+  assertArrayInput(arr);
 
   return _mergeSort(arr, compareFn);
 }
