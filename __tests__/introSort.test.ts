@@ -10,6 +10,35 @@ describe('introSort', () => {
     expect(result).toEqual([8, 5, 3, 2, 1]);
   });
 
+  it('accepts a custom threshold', () => {
+    const result = introSort([9, 1, 7, 3, 5, 2, 8, 6, 4], 8);
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+
+  it('still accepts threshold as third argument for backward compatibility', () => {
+    const introSortAny = introSort as unknown as (
+      arr: number[],
+      compareFn?: ((a: number, b: number) => number) | undefined,
+      threshold?: number,
+    ) => number[];
+    const result = introSortAny([9, 1, 7, 3, 5, 2, 8, 6, 4], undefined, 8);
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  });
+
+  it('interprets threshold as partition length cutoff (no off-by-one)', () => {
+    let compareCount = 0;
+    const compare = (a: number, b: number) => {
+      compareCount += 1;
+      return a - b;
+    };
+
+    introSort([3, 2, 1], compare, 2);
+
+    // If threshold=2 is treated as length cutoff, a length-3 partition
+    // still goes through partitioning before the final insertion pass.
+    expect(compareCount).toBeGreaterThan(2);
+  });
+
   it('returns the same array reference (in-place)', () => {
     const arr = [3, 1, 2];
     const result = introSort(arr);
@@ -31,5 +60,11 @@ describe('introSort', () => {
 
     const result = introSort(people, (a, b) => a.age - b.age);
     expect(result.map((p) => p.name)).toEqual(['Bob', 'Alice', 'Charlie']);
+  });
+
+  it('throws for invalid thresholds', () => {
+    expect(() => introSort([3, 2, 1], 1)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], 2.5)).toThrow(TypeError);
+    expect(() => introSort([3, 2, 1], Number.NaN)).toThrow(TypeError);
   });
 });

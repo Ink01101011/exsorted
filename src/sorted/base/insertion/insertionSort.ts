@@ -1,4 +1,5 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
+import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
@@ -15,6 +16,8 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The sorted array
  */
 export function insertionSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  assertArrayInput(arr);
+
   for (let i = 1; i < arr.length; i++) {
     const key = arr[i];
     let j = i - 1;

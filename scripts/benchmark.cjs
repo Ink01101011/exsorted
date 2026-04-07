@@ -1,14 +1,34 @@
 const { performance } = require('node:perf_hooks');
-const { gnomeSort, shellSort, timSort } = require('../dist/index.cjs');
+const {
+  bubbleSort,
+  insertionSort,
+  selectionSort,
+  mergeSort,
+  quickSort,
+  heapSort,
+  timSort,
+  gnomeSort,
+  shellSort,
+  introSort,
+  blockSort,
+} = require('../dist/index.cjs');
 
 const ALGORITHMS = [
+  ['bubbleSort', bubbleSort],
+  ['insertionSort', insertionSort],
+  ['selectionSort', selectionSort],
+  ['mergeSort', mergeSort],
+  ['quickSort', quickSort],
+  ['heapSort', heapSort],
   ['gnomeSort', gnomeSort],
   ['shellSort', shellSort],
   ['timSort', timSort],
+  ['introSort', introSort],
+  ['blockSort', blockSort],
 ];
 
-const DEFAULT_SIZES = [1000, 3000, 7000];
-const DEFAULT_REPEATS = 5;
+const DEFAULT_SIZES = [200, 500, 1000];
+const DEFAULT_REPEATS = 3;
 const DEFAULT_WARMUP = 1;
 
 function parseSizes(value) {
@@ -80,6 +100,73 @@ function measureMs(fn, input, repeats, warmup) {
   return (end - start) / repeats;
 }
 
+function formatMarkdownSummary(rows) {
+  const grouped = new Map();
+
+  for (const row of rows) {
+    const current = grouped.get(row.algorithm) || {
+      totalMs: 0,
+      passed: 0,
+      total: 0,
+    };
+
+    current.total += 1;
+
+    if (row.status === 'ok') {
+      current.totalMs += row.avgMs;
+      current.passed += 1;
+    }
+
+    grouped.set(row.algorithm, current);
+  }
+
+  const summary = Array.from(grouped.entries())
+    .map(([algorithm, stats]) => ({
+      algorithm,
+      passed: stats.passed,
+      total: stats.total,
+      avgMs: stats.passed > 0 ? Number((stats.totalMs / stats.passed).toFixed(3)) : null,
+    }))
+    .sort((a, b) => {
+      if (a.avgMs === null && b.avgMs === null) {
+        return a.algorithm.localeCompare(b.algorithm);
+      }
+      if (a.avgMs === null) {
+        return 1;
+      }
+      if (b.avgMs === null) {
+        return -1;
+      }
+      return a.avgMs - b.avgMs;
+    });
+
+  const fastest = summary.find((item) => item.avgMs !== null)?.avgMs || 1;
+  const lines = ['| Algorithm | Passed | Avg ms (passed cases) | Relative |', '| --- | ---: | ---: | ---: |'];
+
+  for (const item of summary) {
+    const avgMs = item.avgMs === null ? '—' : item.avgMs.toFixed(3);
+    const relative = item.avgMs === null ? '—' : `${(item.avgMs / fastest).toFixed(2)}x`;
+    lines.push(`| ${item.algorithm} | ${item.passed}/${item.total} | ${avgMs} | ${relative} |`);
+  }
+
+  return lines.join('\n');
+}
+
+function formatMarkdownFailures(rows) {
+  const failedRows = rows.filter((row) => row.status !== 'ok');
+  if (failedRows.length === 0) {
+    return 'All algorithms passed verification in all cases.';
+  }
+
+  const lines = ['| Algorithm | Dataset | Size | Status |', '| --- | --- | ---: | --- |'];
+
+  for (const row of failedRows) {
+    lines.push(`| ${row.algorithm} | ${row.dataset} | ${row.size} | ${row.status} |`);
+  }
+
+  return lines.join('\n');
+}
+
 function runBenchmarks() {
   const sizes = parseSizes(process.env.BENCH_SIZES);
   const repeats = Number(process.env.BENCH_REPEATS || DEFAULT_REPEATS);
@@ -94,7 +181,14 @@ function runBenchmarks() {
       for (const [name, sortFn] of ALGORITHMS) {
         const output = sortFn(input.slice());
         if (!isSortedAscending(output)) {
-          throw new Error(`${name} failed sort verification for ${datasetName} size=${size}`);
+          rows.push({
+            algorithm: name,
+            dataset: datasetName,
+            size,
+            avgMs: Number.NaN,
+            status: 'failed-verification',
+          });
+          continue;
         }
 
         const avgMs = measureMs(sortFn, input, repeats, warmup);
@@ -103,6 +197,7 @@ function runBenchmarks() {
           dataset: datasetName,
           size,
           avgMs: Number(avgMs.toFixed(3)),
+          status: 'ok',
         });
       }
     }
@@ -112,6 +207,13 @@ function runBenchmarks() {
   console.log(`  sizes=${sizes.join(', ')}`);
   console.log(`  repeats=${repeats}, warmup=${warmup}`);
   console.log('');
+  console.log('Summary (average across all datasets and sizes):');
+  console.log(formatMarkdownSummary(rows));
+  console.log('');
+  console.log('Verification:');
+  console.log(formatMarkdownFailures(rows));
+  console.log('');
+  console.log('Detailed results:');
   console.table(rows);
 }
 

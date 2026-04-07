@@ -1,6 +1,12 @@
 import { timSort } from '../src/sorted/standard/tim';
 
 describe('timSort', () => {
+  it('throws TypeError when arr is not an array', () => {
+    expect(() => (timSort as unknown as (arr: unknown) => unknown)(null)).toThrow(TypeError);
+    expect(() => (timSort as unknown as (arr: unknown) => unknown)({})).toThrow(TypeError);
+    expect(() => (timSort as unknown as (arr: unknown) => unknown)('not-an-array')).toThrow(TypeError);
+  });
+
   it('sorts numbers in ascending order', () => {
     expect(timSort([5, 3, 8, 1, 2])).toEqual([1, 2, 3, 5, 8]);
   });

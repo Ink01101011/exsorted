@@ -1,4 +1,5 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
+import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
@@ -25,6 +26,8 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @returns The same input array reference, now sorted.
  */
 export function timSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+  assertArrayInput(arr);
+
   const n = arr.length;
   if (n < 2) return arr;
 

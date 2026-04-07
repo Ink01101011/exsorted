@@ -1,4 +1,5 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
+import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 const INSERTION_SORT_THRESHOLD = 16;
@@ -14,24 +15,45 @@ const INSERTION_SORT_THRESHOLD = 16;
  * Space complexity: O(log n) worst case (recursion stack)
  *
  * @param arr - The array to sort (mutated in place)
- * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
+ * @param compareOrThreshold - Comparator function or threshold value
+ * @param threshold - Partition length cutoff (element count) for switching to insertion sort (default: 16)
  * @returns The sorted array
  */
-export function introSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function introSort<T>(arr: T[]): SortedArray<T>;
+export function introSort<T>(arr: T[], threshold: number): SortedArray<T>;
+export function introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold?: number): SortedArray<T>;
+export function introSort<T>(arr: T[], compareOrThreshold?: CompareFn<T> | number, threshold?: number): SortedArray<T> {
+  assertArrayInput(arr);
+
+  const compareFn = typeof compareOrThreshold === 'function' ? compareOrThreshold : defaultCompareFn;
+  const resolvedThreshold =
+    typeof compareOrThreshold === 'number' ? compareOrThreshold : (threshold ?? INSERTION_SORT_THRESHOLD);
+
+  if (!Number.isInteger(resolvedThreshold) || resolvedThreshold < 2) {
+    throw new TypeError('Threshold must be an integer greater than or equal to 2 (recommended range: 8 to 32)');
+  }
+
   const n = arr.length;
   if (n < 2) return arr;
 
   const maxDepth = Math.floor(Math.log2(n)) * 2;
 
-  introSortRecursive(arr, 0, n - 1, maxDepth, compareFn);
+  introSortRecursive(arr, 0, n - 1, maxDepth, compareFn, resolvedThreshold);
 
   insertionSortRange(arr, 0, n - 1, compareFn);
 
   return arr;
 }
 
-function introSortRecursive<T>(arr: T[], low: number, high: number, depthLimit: number, compareFn: CompareFn<T>): void {
-  while (high - low > INSERTION_SORT_THRESHOLD) {
+function introSortRecursive<T>(
+  arr: T[],
+  low: number,
+  high: number,
+  depthLimit: number,
+  compareFn: CompareFn<T>,
+  threshold: number,
+): void {
+  while (high - low + 1 > threshold) {
     if (depthLimit === 0) {
       heapSortRange(arr, low, high, compareFn);
       return;
@@ -42,10 +64,10 @@ function introSortRecursive<T>(arr: T[], low: number, high: number, depthLimit: 
 
     // Recurse on the smaller side first to keep stack depth bounded.
     if (pivotIndex - low < high - pivotIndex) {
-      introSortRecursive(arr, low, pivotIndex - 1, depthLimit, compareFn);
+      introSortRecursive(arr, low, pivotIndex - 1, depthLimit, compareFn, threshold);
       low = pivotIndex + 1;
     } else {
-      introSortRecursive(arr, pivotIndex + 1, high, depthLimit, compareFn);
+      introSortRecursive(arr, pivotIndex + 1, high, depthLimit, compareFn, threshold);
       high = pivotIndex - 1;
     }
   }
