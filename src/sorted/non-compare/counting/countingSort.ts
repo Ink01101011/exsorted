@@ -1,5 +1,5 @@
-import { SortedArray, KeySelector } from '../../../types';
-import { assertArrayInput } from '../../../utils';
+import { SortedArray, KeySelector } from '../../../types/function-type';
+import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
 
 /**
@@ -15,7 +15,7 @@ import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
  * where n is the number of items and k is the key range (max - min + 1).
  *
  * @param arr - The array to sort (a new sorted array is returned)
- * @param keySelector - Optional key selector for non-number items; key must be a finite integer
+ * @param keySelector - Required for non-number items; optional when sorting numbers. The selected key must be a finite integer.
  * @returns A new sorted array
  */
 export function countingSort<T extends number>(arr: T[]): SortedArray<T>;
@@ -23,12 +23,7 @@ export function countingSort<T>(arr: T[], keySelector: KeySelector<T>): SortedAr
 export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
   assertArrayInput(arr);
 
-  if (arr.length < 2) return arr;
-
-  const firstItem = arr[0];
-  if (!keySelector && typeof firstItem === 'object' && firstItem !== null) {
-    throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
-  }
+  if (arr.length < 2) return arr.slice(); // Return a shallow copy for consistency
 
   const [max, min, cachedKeys] = getMaxMinCacheKeys(arr, keyGetter(keySelector));
   const range = max - min + 1;
@@ -78,17 +73,17 @@ function getMaxMinCacheKeys<T>(arr: T[], getKey: (item: T) => number): [number, 
 }
 
 function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T> {
-  return (item: T) => convertor(item, keySelector);
+  return (item: T) => converter(item, keySelector);
 }
 
-function convertor<T>(item: T, keySelector?: KeySelector<T>): number {
+function converter<T>(item: T, keySelector?: KeySelector<T>): number {
   if (typeof item === 'number') {
     keyValidator(item);
     return item;
   }
 
   if (!keySelector) {
-    throw new TypeError(ERROR_MESSAGES.CONVERTER_KEY_SELECTOR_REQUIRED);
+    throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
   }
 
   const key = keySelector(item);

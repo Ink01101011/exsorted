@@ -1,5 +1,5 @@
 function main() {
-  // For testing purposes, you can run this file with ts-node or compile it to JavaScript and run with Node.js
+  // For testing purposes, run this file via the `run:example` script (using `tsx`)
 }
 
 main();

@@ -1,1 +1,1 @@
-export { countingSort } from './counting';
+export * from './counting';
