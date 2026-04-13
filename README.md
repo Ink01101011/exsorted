@@ -34,6 +34,8 @@ npm install exsorted
 
 ## Quick Start
 
+#### 1) Import from the root package
+
 ```typescript
 import {
   bubbleSort,
@@ -49,64 +51,96 @@ import {
   blockSort,
   compareBy,
 } from 'exsorted';
+```
 
-// Sort numbers ascending (default)
+#### 2) Sort numbers (default ascending)
+
+```typescript
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 mergeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 timSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 gnomeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 shellSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 introSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
-introSort([5, 3, 8, 1, 2], 24); // custom threshold
 blockSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+```
 
-// Sort numbers descending (custom comparator)
+Special case: `mergeSort` returns a new array (non-mutating), while most other algorithms sort in place.
+
+#### 3) Sort with a custom comparator
+
+```typescript
 quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
-
-// Sort strings
 insertionSort(['banana', 'apple', 'cherry']); // ['apple', 'banana', 'cherry']
+```
 
-// Sort objects
+#### 4) introSort threshold (special case)
+
+```typescript
+introSort([5, 3, 8, 1, 2], 24); // custom threshold without placeholder arguments
+introSort([5, 3, 8, 1, 2], (a, b) => a - b, 24); // comparator + threshold
+```
+
+`threshold` must be an integer >= 2. Recommended range: 8 to 32 (default: 16).
+
+#### 5) Sort objects
+
+```typescript
 interface Person {
   name: string;
   age: number;
 }
+
 const people: Person[] = [
   { name: 'Alice', age: 30 },
   { name: 'Bob', age: 25 },
   { name: 'Charlie', age: 35 },
 ];
+
 heapSort(people, (a, b) => a.age - b.age);
 // [{ name: 'Bob', age: 25 }, { name: 'Alice', age: 30 }, { name: 'Charlie', age: 35 }]
-
-// Or use compareBy helper for cleaner typed comparators
 quickSort(
   people,
   compareBy((p) => p.age),
 );
 ```
 
+Special case: `compareBy` helps build typed object comparators with less boilerplate.
+
 ## Import Paths
 
-The package supports both root import and grouped subpath imports.
+The package supports root imports, grouped subpath imports, and per-algorithm imports.
+
+#### 1) Root import (recommended)
 
 ```typescript
-// Root import (recommended for most users)
 import { quickSort, timSort, compareBy } from 'exsorted';
+```
 
-// Grouped subpath imports
+Use this when you want simple, central imports.
+
+#### 2) Grouped subpath imports
+
+```typescript
 import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort as timSortStandard, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
+```
 
-// Per-algorithm subpath imports (also supported)
+Use grouped imports when you want clearer boundaries by algorithm family.
+
+#### 3) Per-algorithm subpath imports
+
+```typescript
 import { bubbleSort as bubbleSortOnly } from 'exsorted/bubble';
 import { gnomeSort as gnomeSortOnly } from 'exsorted/gnome';
 import { shellSort as shellSortOnly } from 'exsorted/shell';
 import { introSort as introSortOnly } from 'exsorted/intro';
 import { blockSort as blockSortOnly } from 'exsorted/block';
 ```
+
+Special case: per-algorithm paths are useful for targeted imports in small bundles.
 
 Available subpaths:
 
@@ -138,6 +172,8 @@ function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 
 ### Exported Algorithms
 
+#### Base algorithms
+
 ```typescript
 bubbleSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 insertionSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
@@ -145,20 +181,27 @@ selectionSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 mergeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 quickSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 heapSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+```
+
+#### Standard algorithms
+
+```typescript
 timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
-introSort<T>(arr: T[], threshold?: number): T[]
 blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+```
 
-// avoid implying introSort(arr, undefined) is a supported/typed call
+#### introSort overloads (special case)
 
+```typescript
 introSort<T>(arr: T[]): T[]
 introSort<T>(arr: T[], threshold: number): T[]
 introSort<T>(arr: T[], compareFn: CompareFn<T>): T[]
 introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold: number): T[]
-
 ```
+
+Special case: no placeholder call is needed. Prefer `introSort(arr, threshold)` when you only want to set threshold.
 
 - `threshold` must be an integer `>= 2`.
 - `threshold` is evaluated as partition length (number of elements).

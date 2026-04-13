@@ -1,6 +1,6 @@
 {
   "name": "exsorted",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A TypeScript sorting algorithms library",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -148,7 +148,8 @@
     "shell-sort",
     "intro-sort",
     "block-sort",
-    "counting-sort"
+    "counting-sort",
+    "exsorted"
   ],
   "author": "Ink01101011",
   "license": "MIT",
