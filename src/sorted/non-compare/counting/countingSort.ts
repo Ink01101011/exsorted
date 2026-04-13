@@ -77,19 +77,21 @@ function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T> {
 }
 
 function converter<T>(item: T, keySelector?: KeySelector<T>): number {
+  // Apply keySelector if provided, regardless of item type
+  if (keySelector) {
+    const key = keySelector(item);
+    keyValidator(key);
+    return key;
+  }
+
+  // Fallback: if item is number and no selector, use item as key
   if (typeof item === 'number') {
     keyValidator(item);
     return item;
   }
 
-  if (!keySelector) {
-    throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
-  }
-
-  const key = keySelector(item);
-  keyValidator(key);
-
-  return key;
+  // Error: non-number item without selector
+  throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
 }
 
 function guardRange(size: number): void {
@@ -99,7 +101,7 @@ function guardRange(size: number): void {
 }
 
 function keyValidator<T extends number>(key: T): void {
-  if (!Number.isInteger(key)) {
+  if (!Number.isSafeInteger(key)) {
     throw new TypeError(ERROR_MESSAGES.KEY_NOT_INTEGER);
   }
 }

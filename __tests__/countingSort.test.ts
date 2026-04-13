@@ -67,4 +67,21 @@ describe('countingSort', () => {
   it('throws when key range is too large', () => {
     expect(() => countingSort([0, 1_000_001])).toThrow(ERROR_MESSAGES.RANGE_TOO_LARGE);
   });
+
+  it('applies keySelector to numeric arrays when provided', () => {
+    const input = [1, -2, 3, -1];
+    const result = countingSort(input, (x) => Math.abs(x));
+
+    // Stable sort: elements with same key (abs) maintain original order
+    // keys: [1, 2, 3, 1] → sorted by key: 1, 1, 2, 3 → [1, -1, -2, 3]
+    expect(result).toEqual([1, -1, -2, 3]);
+  });
+
+  it('rejects non-integer values like Infinity', () => {
+    expect(() => countingSort([1, Infinity])).toThrow(ERROR_MESSAGES.KEY_NOT_INTEGER);
+  });
+
+  it('rejects non-integer values like NaN', () => {
+    expect(() => countingSort([1, NaN])).toThrow(ERROR_MESSAGES.KEY_NOT_INTEGER);
+  });
 });
