@@ -1,6 +1,7 @@
-import { SortedArray, KeySelector } from '../../../types/function-type';
-import { assertArrayInput } from '../../../utils/assertion/assertArrayInput';
-import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
+import { THRESHOLD_RANGE } from '../../../constants/counting';
+import { KeySelector, SortedArray } from '../../../types/function-type';
+import { assertArrayInput, guardRange } from '../../../utils/assertion';
+import { keyGetter } from '../../../utils/keySelector';
 
 /**
  * Counting Sort
@@ -27,7 +28,7 @@ export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedA
 
   const [max, min, cachedKeys] = getMaxMinCacheKeys(arr, keyGetter(keySelector));
   const range = max - min + 1;
-  guardRange(range);
+  guardRange(range, THRESHOLD_RANGE);
 
   const count = new Array<number>(range).fill(0);
   const output = new Array<T>(arr.length);
@@ -70,38 +71,4 @@ function getMaxMinCacheKeys<T>(arr: T[], getKey: (item: T) => number): [number, 
   }
 
   return [max, min, cachedKeys];
-}
-
-function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T> {
-  return (item: T) => converter(item, keySelector);
-}
-
-function converter<T>(item: T, keySelector?: KeySelector<T>): number {
-  // Apply keySelector if provided, regardless of item type
-  if (keySelector) {
-    const key = keySelector(item);
-    keyValidator(key);
-    return key;
-  }
-
-  // Fallback: if item is number and no selector, use item as key
-  if (typeof item === 'number') {
-    keyValidator(item);
-    return item;
-  }
-
-  // Error: non-number item without selector
-  throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
-}
-
-function guardRange(size: number): void {
-  if (size > THRESHOLD_RANGE) {
-    throw new RangeError(ERROR_MESSAGES.RANGE_TOO_LARGE);
-  }
-}
-
-function keyValidator<T extends number>(key: T): void {
-  if (!Number.isSafeInteger(key)) {
-    throw new TypeError(ERROR_MESSAGES.KEY_NOT_INTEGER);
-  }
 }
