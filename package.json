@@ -16,7 +16,8 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky",
-    "prepublishOnly": "pnpm run minify"
+    "prepublishOnly": "pnpm run minify",
+    "run:example": "tsx src/playground/index.ts"
   },
   "exports": {
     ".": {
@@ -103,6 +104,16 @@
       "types": "./dist/sorted/standard/block/index.d.ts",
       "import": "./dist/sorted/standard/block/index.mjs",
       "require": "./dist/sorted/standard/block/index.cjs"
+    },
+    "./non-compare": {
+      "types": "./dist/sorted/non-compare/index.d.ts",
+      "import": "./dist/sorted/non-compare/index.mjs",
+      "require": "./dist/sorted/non-compare/index.cjs"
+    },
+    "./counting": {
+      "types": "./dist/sorted/non-compare/counting/index.d.ts",
+      "import": "./dist/sorted/non-compare/counting/index.mjs",
+      "require": "./dist/sorted/non-compare/counting/index.cjs"
     }
   },
   "sideEffects": false,
@@ -131,7 +142,13 @@
     "quick-sort",
     "heap-sort",
     "insertion-sort",
-    "selection-sort"
+    "selection-sort",
+    "tim-sort",
+    "gnome-sort",
+    "shell-sort",
+    "intro-sort",
+    "block-sort",
+    "counting-sort"
   ],
   "author": "Ink01101011",
   "license": "MIT",
@@ -150,6 +167,7 @@
     "prettier": "^3.8.1",
     "ts-jest": "^29.4.8",
     "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }
