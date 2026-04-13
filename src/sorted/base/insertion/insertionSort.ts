@@ -1,5 +1,5 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
-import { assertArrayInput } from '../../../utils/assertion/assertArrayInput';
+import { assertArrayInput } from '../../../utils/assertion';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
 
 /**

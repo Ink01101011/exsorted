@@ -9,6 +9,8 @@ import { gnomeSort } from '../src/sorted/standard/gnome';
 import { shellSort } from '../src/sorted/standard/shell';
 import { introSort } from '../src/sorted/standard/intro';
 import { blockSort } from '../src/sorted/standard/block';
+import { countingSort } from '../src/sorted/non-compare/counting';
+import { radixSort } from '../src/sorted/non-compare/radix';
 import * as sortedExports from '../src/sorted';
 import { compareBy } from '../src/utils/compareBy';
 import { selectionSort as selectionNamed } from '../src/sorted/base/selection';
@@ -18,6 +20,8 @@ import { gnomeSort as gnomeNamed } from '../src/sorted/standard/gnome';
 import { shellSort as shellNamed } from '../src/sorted/standard/shell';
 import { introSort as introNamed } from '../src/sorted/standard/intro';
 import { blockSort as blockNamed } from '../src/sorted/standard/block';
+import { countingSort as countingNamed } from '../src/sorted/non-compare/counting';
+import { radixSort as radixNamed } from '../src/sorted/non-compare/radix';
 
 describe('sorted index exports', () => {
   it('re-exports all sorting functions', () => {
@@ -32,6 +36,8 @@ describe('sorted index exports', () => {
     expect(sortedExports.shellSort).toBe(shellSort);
     expect(sortedExports.introSort).toBe(introSort);
     expect(sortedExports.blockSort).toBe(blockSort);
+    expect(sortedExports.countingSort).toBe(countingSort);
+    expect(sortedExports.radixSort).toBe(radixSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });
@@ -70,5 +76,15 @@ describe('subpath entrypoints', () => {
   it('supports named imports for block', () => {
     expect(blockNamed).toBe(blockSort);
     expect(blockNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for counting', () => {
+    expect(countingNamed).toBe(countingSort);
+    expect(countingNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for radix', () => {
+    expect(radixNamed).toBe(radixSort);
+    expect(radixNamed([3, 2, 1])).toEqual([3, 2, 1]);
   });
 });
