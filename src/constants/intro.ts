@@ -1,0 +1,1 @@
+export const INSERTION_SORT_THRESHOLD = 16;

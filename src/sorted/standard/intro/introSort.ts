@@ -1,8 +1,7 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertArrayInput';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
-
-const INSERTION_SORT_THRESHOLD = 16;
+import { INSERTION_SORT_THRESHOLD } from '../../../constants/intro';
 
 /**
  * Intro Sort
