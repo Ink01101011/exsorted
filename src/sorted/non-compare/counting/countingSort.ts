@@ -1,5 +1,5 @@
 import { SortedArray, KeySelector } from '../../../types/function-type';
-import { assertArrayInput } from '../../../utils/assertArrayInput';
+import { assertArrayInput } from '../../../utils/assertion/assertArrayInput';
 import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
 
 /**
