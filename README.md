@@ -25,6 +25,9 @@ A lightweight, fully-typed TypeScript library of sorting algorithms — ready to
 | Shell Sort     | O(n log² n)\* | O(n²)      | O(1)     | ❌     | ✅       |
 | Intro Sort     | O(n log n)    | O(n log n) | O(log n) | ❌     | ✅       |
 | Block Sort     | O(n log n)    | O(n log n) | O(n)     | ✅     | ✅       |
+| Counting Sort  | O(n + k)      | O(n + k)   | O(n + k) | ✅     | ❌       |
+
+**Note:** Counting Sort uses integer keys. k represents the key range.
 
 ## Installation
 
@@ -49,6 +52,7 @@ import {
   shellSort,
   introSort,
   blockSort,
+  countingSort,
   compareBy,
 } from 'exsorted';
 ```
@@ -63,9 +67,10 @@ gnomeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 shellSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 introSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 blockSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+countingSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 ```
 
-Special case: `mergeSort` returns a new array (non-mutating), while most other algorithms sort in place.
+Special case: `mergeSort` and `countingSort` return a new array (non-mutating), while most other algorithms sort in place.
 
 #### 3) Sort with a custom comparator
 
@@ -83,7 +88,24 @@ introSort([5, 3, 8, 1, 2], (a, b) => a - b, 24); // comparator + threshold
 
 `threshold` must be an integer >= 2. Recommended range: 8 to 32 (default: 16).
 
-#### 5) Sort objects
+#### 5) Counting Sort with key selector (non-comparison sort)
+
+```typescript
+// Sort integers directly
+countingSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+
+// Sort objects using a key selector (key must be an integer)
+const users = [
+  { name: 'Alice', score: 23 },
+  { name: 'Bob', score: 18 },
+  { name: 'Charlie', score: 45 },
+];
+
+countingSort(users, (user) => user.score);
+// [{ name: 'Bob', score: 18 }, { name: 'Alice', score: 23 }, { name: 'Charlie', score: 45 }]
+```
+
+#### 6) Sort objects
 
 ```typescript
 interface Person {
@@ -123,7 +145,8 @@ Use this when you want simple, central imports.
 
 ```typescript
 import { bubbleSort, mergeSort } from 'exsorted/base';
-import { timSort as timSortStandard, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
+import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
+import { countingSort } from 'exsorted/non-compare';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
@@ -138,6 +161,7 @@ import { gnomeSort as gnomeSortOnly } from 'exsorted/gnome';
 import { shellSort as shellSortOnly } from 'exsorted/shell';
 import { introSort as introSortOnly } from 'exsorted/intro';
 import { blockSort as blockSortOnly } from 'exsorted/block';
+import { countingSort as countingSortOnly } from 'exsorted/counting';
 ```
 
 Special case: per-algorithm paths are useful for targeted imports in small bundles.
@@ -146,10 +170,11 @@ Available subpaths:
 
 - `exsorted/base` -> bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
 - `exsorted/standard` -> timSort, gnomeSort, shellSort, introSort, blockSort
+- `exsorted/non-compare` -> countingSort
 - `exsorted/helper` -> compareBy, defaultCompareFn
 - `exsorted/types` -> CompareFn, SortedArray, SelectorFn
 - `exsorted/meme` -> meme namespace exports
-- Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`, `exsorted/intro`, `exsorted/block`
+- Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`, `exsorted/intro`, `exsorted/block`, `exsorted/counting`
 
 ## API Reference
 
@@ -168,7 +193,7 @@ function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 ### Mutation Behavior
 
 - In-place (returns same array reference): bubbleSort, insertionSort, selectionSort, quickSort, heapSort, timSort, gnomeSort, shellSort, introSort, blockSort
-- Non-mutating (returns new array): mergeSort
+- Non-mutating (returns new array): mergeSort, countingSort
 
 ### Exported Algorithms
 
@@ -191,6 +216,15 @@ gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
+
+#### Non-comparison algorithms
+
+```typescript
+countingSort<T extends number>(arr: T[]): T[]
+countingSort<T>(arr: T[], keySelector: (item: T) => number): T[]
+```
+
+Special case: `countingSort` accepts an optional key selector for non-numeric items. The selected key must be a safe integer. Non-integer keys will throw a `TypeError`.
 
 #### introSort overloads (special case)
 
@@ -216,12 +250,13 @@ Special case: no placeholder call is needed. Prefer `introSort(arr, threshold)` 
 ### Consumer Notes
 
 - For objects, passing an explicit comparator is recommended for domain-specific ordering.
-- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort, blockSort).
-- If you must preserve the original array, use mergeSort or sort a copied array (`algorithm([...arr])`).
+- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort, blockSort, countingSort).
+- If you must preserve the original array, use mergeSort, countingSort, or sort a copied array (`algorithm([...arr])`).
 
-### Shell Sort Stability
+### Algorithm-Specific Notes
 
-`shellSort` is not stable by design. Equal elements may change relative order after sorting.
+- **Shell Sort Stability**: `shellSort` is not stable by design. Equal elements may change relative order after sorting.
+- **Counting Sort**: Optimal for small, dense integer key ranges. Performance degrades for sparse ranges. Maximum recommended key range: 1,000,000.
 
 \* Shell Sort average complexity depends on the chosen gap sequence.
 
