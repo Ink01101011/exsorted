@@ -126,6 +126,11 @@
       "types": "./dist/sorted/non-compare/bucket/index.d.ts",
       "import": "./dist/sorted/non-compare/bucket/index.mjs",
       "require": "./dist/sorted/non-compare/bucket/index.cjs"
+    },
+    "./pigeonhole": {
+      "types": "./dist/sorted/non-compare/pigeonhole/index.d.ts",
+      "import": "./dist/sorted/non-compare/pigeonhole/index.mjs",
+      "require": "./dist/sorted/non-compare/pigeonhole/index.cjs"
     }
   },
   "sideEffects": false,
@@ -163,6 +168,7 @@
     "counting-sort",
     "radix-sort",
     "bucket-sort",
+    "pigeonhole-sort",
     "exsorted"
   ],
   "author": "Ink01101011",

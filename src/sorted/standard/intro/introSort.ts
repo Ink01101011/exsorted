@@ -1,7 +1,7 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
 import { defaultCompareFn } from '../../../utils/defaultCompareFn';
-import { INSERTION_SORT_THRESHOLD } from '../../../constants/intro';
+import { INTRO_INSERTION_SORT_THRESHOLD } from '../../../constants';
 
 /**
  * Intro Sort
@@ -26,7 +26,7 @@ export function introSort<T>(arr: T[], compareOrThreshold?: CompareFn<T> | numbe
 
   const compareFn = typeof compareOrThreshold === 'function' ? compareOrThreshold : defaultCompareFn;
   const resolvedThreshold =
-    typeof compareOrThreshold === 'number' ? compareOrThreshold : (threshold ?? INSERTION_SORT_THRESHOLD);
+    typeof compareOrThreshold === 'number' ? compareOrThreshold : (threshold ?? INTRO_INSERTION_SORT_THRESHOLD);
 
   if (!Number.isInteger(resolvedThreshold) || resolvedThreshold < 2) {
     throw new TypeError('Threshold must be an integer greater than or equal to 2 (recommended range: 8 to 32)');
