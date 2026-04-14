@@ -1,6 +1,6 @@
 import { countingSort } from '../src/sorted/non-compare/counting';
 import { ERROR_MESSAGES } from '../src/constants';
-import { THRESHOLD_RANGE } from '../src/constants/counting';
+import { COUNTING_SORT_THRESHOLD_RANGE } from '../src/constants';
 
 describe('countingSort', () => {
   it('sorts numbers in ascending order', () => {
@@ -88,7 +88,9 @@ describe('countingSort', () => {
   });
 
   it('throws when key range is too large', () => {
-    expect(() => countingSort([0, 1_000_001])).toThrow(ERROR_MESSAGES.COUNTING_SORT_RANGE_TOO_LARGE(THRESHOLD_RANGE));
+    expect(() => countingSort([0, 1_000_001])).toThrow(
+      ERROR_MESSAGES.COUNTING_SORT_RANGE_TOO_LARGE(COUNTING_SORT_THRESHOLD_RANGE),
+    );
   });
 
   it('applies keySelector to numeric arrays when provided', () => {

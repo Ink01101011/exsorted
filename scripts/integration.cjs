@@ -6,19 +6,23 @@ function run() {
   const counting = require('exsorted/counting');
   const radix = require('exsorted/radix');
   const bucket = require('exsorted/bucket');
+  const pigeonhole = require('exsorted/pigeonhole');
 
   assert.equal(typeof root.quickSort, 'function');
   assert.equal(typeof root.countingSort, 'function');
   assert.equal(typeof root.radixSort, 'function');
   assert.equal(typeof root.bucketSort, 'function');
+  assert.equal(typeof root.pigeonholeSort, 'function');
 
   assert.deepEqual(nonCompare.countingSort([3, 1, 2]), [1, 2, 3]);
   assert.deepEqual(nonCompare.radixSort([3, -1, 2, -1]), [-1, -1, 2, 3]);
   assert.deepEqual(nonCompare.bucketSort([3, -1, 2, -1]), [-1, -1, 2, 3]);
+  assert.deepEqual(nonCompare.pigeonholeSort([3, -1, 2, -1]), [-1, -1, 2, 3]);
 
   assert.deepEqual(counting.countingSort([5, 4, 2]), [2, 4, 5]);
   assert.deepEqual(radix.radixSort([10, -5, 3]), [-5, 3, 10]);
   assert.deepEqual(bucket.bucketSort([4, 1, 3]), [1, 3, 4]);
+  assert.deepEqual(pigeonhole.pigeonholeSort([4, 1, 3]), [1, 3, 4]);
 
   console.log('Integration checks passed');
 }

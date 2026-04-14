@@ -4,6 +4,22 @@ import { assertArrayInput, guardRange } from '../../../utils/assertion';
 import { getMinMaxCachedKeys } from '../../../utils/keyCache';
 import { keyGetter } from '../../../utils/keySelector';
 
+/**
+ * Pigeonhole Sort
+ *
+ * Sorts items by placing each item into a "hole" indexed by its integer key
+ * offset from the minimum key, then concatenating holes in ascending key order.
+ *
+ * This implementation is stable and returns a new sorted array.
+ *
+ * Time complexity:  O(n + k)
+ * Space complexity: O(n + k)
+ * where n is the number of items and k is the key range (max - min + 1).
+ *
+ * @param arr - The array to sort (a new sorted array is returned)
+ * @param keySelector - Required for non-number items; optional when sorting numbers. The selected key must be a safe integer.
+ * @returns A new sorted array
+ */
 export function pigeonholeSort<T extends number>(arr: T[]): SortedArray<T>;
 export function pigeonholeSort<T>(arr: T[], keySelector: KeySelector<T>): SortedArray<T>;
 export function pigeonholeSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
