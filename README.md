@@ -99,7 +99,7 @@ introSort([5, 3, 8, 1, 2], (a, b) => a - b, 24); // comparator + threshold
 // Sort integers directly
 countingSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
-// Sort objects using a key selector (key must be an integer)
+// Sort objects using a key selector (key must be a safe integer)
 const users = [
   { name: 'Alice', score: 23 },
   { name: 'Bob', score: 18 },
