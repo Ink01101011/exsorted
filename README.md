@@ -13,23 +13,23 @@ Public utilities contract: `compareBy`, `defaultCompareFn`.
 
 ## Algorithms
 
-| Algorithm       | Average Time | Worst Time  | Space    | Stable | In-place |
-| --------------- | ------------ | ----------- | -------- | ------ | -------- |
-| Bubble Sort     | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Insertion Sort  | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Selection Sort  | O(n²)        | O(n²)       | O(1)     | ❌     | ✅       |
-| Merge Sort      | O(n log n)   | O(n log n)  | O(n)     | ✅     | ❌       |
-| Quick Sort      | O(n log n)   | O(n²)       | O(log n) | ❌     | ✅       |
-| Heap Sort       | O(n log n)   | O(n log n)  | O(1)     | ❌     | ✅       |
-| Tim Sort        | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
-| Gnome Sort      | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Shell Sort      | O(n log² n)  | O(n²)       | O(1)     | ❌     | ✅       |
-| Intro Sort      | O(n log n)   | O(n log n)  | O(log n) | ❌     | ✅       |
-| Block Sort      | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
-| Counting Sort   | O(n + k)     | O(n + k)    | O(n + k) | ✅     | ❌       |
-| Radix Sort      | O(d(n + b))  | O(d(n + b)) | O(n + b) | ✅     | ❌       |
-| Bucket Sort     | O(n + k)     | O(n²)       | O(n + k) | ✅     | ❌       |
-| Pigeonhole Sort | O(n + k)\*   | O(n + k)    | O(n + k) | ✅     | ❌       |
+| Algorithm       | Average Time  | Worst Time  | Space    | Stable | In-place |
+| --------------- | ------------- | ----------- | -------- | ------ | -------- |
+| Bubble Sort     | O(n²)         | O(n²)       | O(1)     | ✅     | ✅       |
+| Insertion Sort  | O(n²)         | O(n²)       | O(1)     | ✅     | ✅       |
+| Selection Sort  | O(n²)         | O(n²)       | O(1)     | ❌     | ✅       |
+| Merge Sort      | O(n log n)    | O(n log n)  | O(n)     | ✅     | ❌       |
+| Quick Sort      | O(n log n)    | O(n²)       | O(log n) | ❌     | ✅       |
+| Heap Sort       | O(n log n)    | O(n log n)  | O(1)     | ❌     | ✅       |
+| Tim Sort        | O(n log n)    | O(n log n)  | O(n)     | ✅     | ✅       |
+| Gnome Sort      | O(n²)         | O(n²)       | O(1)     | ✅     | ✅       |
+| Shell Sort      | O(n log² n)\* | O(n²)       | O(1)     | ❌     | ✅       |
+| Intro Sort      | O(n log n)    | O(n log n)  | O(log n) | ❌     | ✅       |
+| Block Sort      | O(n log n)    | O(n log n)  | O(n)     | ✅     | ✅       |
+| Counting Sort   | O(n + k)      | O(n + k)    | O(n + k) | ✅     | ❌       |
+| Radix Sort      | O(d(n + b))   | O(d(n + b)) | O(n + b) | ✅     | ❌       |
+| Bucket Sort     | O(n + k)      | O(n²)       | O(n + k) | ✅     | ❌       |
+| Pigeonhole Sort | O(n + k)      | O(n + k)    | O(n + k) | ✅     | ❌       |
 
 **Note:** Counting Sort, Radix Sort, Bucket Sort, and Pigeonhole Sort use integer keys. $k$ is the key range, $d$ is the number of digits, and $b$ is the radix base.
 
@@ -41,7 +41,7 @@ npm install exsorted
 
 ## Quick Start
 
-#### 1) Import from the root package
+### 1) Import from the root package
 
 ```typescript
 import {
@@ -64,7 +64,7 @@ import {
 } from 'exsorted';
 ```
 
-#### 2) Sort numbers (default ascending)
+### 2) Sort numbers (default ascending)
 
 ```typescript
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
@@ -82,14 +82,14 @@ pigeonholeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 
 Special case: `mergeSort`, `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` return a new array (non-mutating), while most other algorithms sort in place.
 
-#### 3) Sort with a custom comparator
+### 3) Sort with a custom comparator
 
 ```typescript
 quickSort([5, 3, 8, 1, 2], (a, b) => b - a); // [8, 5, 3, 2, 1]
 insertionSort(['banana', 'apple', 'cherry']); // ['apple', 'banana', 'cherry']
 ```
 
-#### 4) introSort threshold (special case)
+### 4) introSort threshold (special case)
 
 ```typescript
 introSort([5, 3, 8, 1, 2], 24); // custom threshold without placeholder arguments
@@ -98,7 +98,7 @@ introSort([5, 3, 8, 1, 2], (a, b) => a - b, 24); // comparator + threshold
 
 `threshold` must be an integer >= 2. Recommended range: 8 to 32 (default: 16).
 
-#### 5) Counting Sort with key selector (non-comparison sort)
+### 5) Counting Sort with key selector (non-comparison sort)
 
 ```typescript
 // Sort integers directly
@@ -115,7 +115,7 @@ countingSort(users, (user) => user.score);
 // [{ name: 'Bob', score: 18 }, { name: 'Alice', score: 23 }, { name: 'Charlie', score: 45 }]
 ```
 
-#### 6) Sort objects
+### 6) Sort objects
 
 ```typescript
 interface Person {
@@ -139,7 +139,7 @@ quickSort(
 
 Special case: `compareBy` helps build typed object comparators with less boilerplate.
 
-#### 7) Radix Sort with negative and object keys
+### 7) Radix Sort with negative and object keys
 
 ```typescript
 radixSort([3, -1, 3, 0, -1, 2]); // [-1, -1, 0, 2, 3, 3]
@@ -158,7 +158,7 @@ radixSort(items, (item) => item.score);
 
 The package supports root imports, grouped subpath imports, and per-algorithm imports.
 
-#### 1) Root import (recommended)
+### 1) Root import (recommended)
 
 ```typescript
 import { quickSort, timSort, compareBy } from 'exsorted';
@@ -166,7 +166,7 @@ import { quickSort, timSort, compareBy } from 'exsorted';
 
 Use this when you want simple, central imports.
 
-#### 2) Grouped subpath imports
+### 2) Grouped subpath imports
 
 ```typescript
 import { bubbleSort, mergeSort } from 'exsorted/base';
@@ -178,7 +178,7 @@ import type { CompareFn, SortedArray } from 'exsorted/types';
 
 Use grouped imports when you want clearer boundaries by algorithm family.
 
-#### 3) Per-algorithm subpath imports
+### 3) Per-algorithm subpath imports
 
 ```typescript
 import { bubbleSort as bubbleSortOnly } from 'exsorted/bubble';
@@ -242,6 +242,10 @@ heapSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 timSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 gnomeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 shellSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+introSort<T>(arr: T[]): T[]
+introSort<T>(arr: T[], threshold: number): T[]
+introSort<T>(arr: T[], compareFn: CompareFn<T>): T[]
+introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold: number): T[]
 blockSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 
@@ -260,7 +264,7 @@ pigeonholeSort<T>(arr: T[], keySelector: (item: T) => number): T[]
 
 Special case: `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` accept an optional key selector for non-numeric items. The selected key must be a safe integer. Non-integer keys will throw a `TypeError`.
 
-#### introSort overloads (special case)
+#### introSort usage notes (special case)
 
 ```typescript
 introSort<T>(arr: T[]): T[]

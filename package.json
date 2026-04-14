@@ -1,6 +1,6 @@
 {
   "name": "exsorted",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A TypeScript sorting algorithms library",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -15,10 +15,11 @@
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
     "typecheck": "tsc --noEmit",
+    "release:check": "pnpm run lint && pnpm run typecheck && pnpm exec jest --ci && pnpm run test:integration",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky",
-    "prepublishOnly": "pnpm run minify",
+    "prepublishOnly": "pnpm run release:check && pnpm run minify",
     "run:example": "tsx src/playground/index.ts"
   },
   "exports": {

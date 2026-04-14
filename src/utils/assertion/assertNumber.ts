@@ -1,8 +1,12 @@
 import { ERROR_MESSAGES } from '../../constants';
 
-export function guardRange(size: number, threshold: number): void {
+export function guardRange(
+  size: number,
+  threshold: number,
+  getMessage: (threshold: number) => string = ERROR_MESSAGES.COUNTING_SORT_RANGE_TOO_LARGE,
+): void {
   if (size > threshold) {
-    throw new RangeError(ERROR_MESSAGES.COUNTING_SORT_RANGE_TOO_LARGE(threshold));
+    throw new RangeError(getMessage(threshold));
   }
 }
 

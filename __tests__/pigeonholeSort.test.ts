@@ -63,4 +63,8 @@ describe('pigeonholeSort', () => {
       ERROR_MESSAGES.KEY_NOT_INTEGER,
     );
   });
+
+  it('throws a pigeonhole-specific range error when the key range is too large', () => {
+    expect(() => pigeonholeSort([0, 1_000_000])).toThrow(ERROR_MESSAGES.PIGEONHOLE_SORT_RANGE_TOO_LARGE(1_000_000));
+  });
 });

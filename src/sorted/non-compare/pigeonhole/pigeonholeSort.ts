@@ -1,4 +1,4 @@
-import { PIGEONHOLE_SORT_THRESHOLD_RANGE } from '../../../constants';
+import { ERROR_MESSAGES, PIGEONHOLE_SORT_THRESHOLD_RANGE } from '../../../constants';
 import { KeySelector, SortedArray } from '../../../types/function-type';
 import { assertArrayInput, guardRange } from '../../../utils/assertion';
 import { getMinMaxCachedKeys } from '../../../utils/keyCache';
@@ -31,7 +31,7 @@ export function pigeonholeSort<T>(arr: T[], keySelector?: KeySelector<T>): Sorte
   const getKey = keyGetter(keySelector);
   const [min, max, cachedKeys] = getMinMaxCachedKeys(input, getKey);
   const range = max - min + 1;
-  guardRange(range, PIGEONHOLE_SORT_THRESHOLD_RANGE); // Ensure the range is not too large to handle
+  guardRange(range, PIGEONHOLE_SORT_THRESHOLD_RANGE, ERROR_MESSAGES.PIGEONHOLE_SORT_RANGE_TOO_LARGE);
 
   const holes: T[][] = Array.from({ length: range }, () => [] as T[]);
 
