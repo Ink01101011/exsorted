@@ -12,8 +12,8 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  *
  * Practical complexity: typically O(n log n) for mixed input distributions.
  *
- * Space complexity: O(n) worst case overall due to merge buffering; the
- * block-move scratch buffer itself is fixed-size relative to the chosen block size.
+ * Space complexity: O(n) worst case overall due to merge buffering during
+ * iterative merge passes.
  *
  * Stability: designed to keep equal elements in their original relative order.
  *

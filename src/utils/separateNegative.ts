@@ -1,18 +1,3 @@
-export function separateNegative<T>(arr: T[], keys: number[]): [T[], T[]] {
-  const negatives: T[] = [];
-  const nonNegatives: T[] = [];
-
-  for (let i = 0; i < arr.length; i++) {
-    if (keys[i] < 0) {
-      negatives.push(arr[i]);
-    } else {
-      nonNegatives.push(arr[i]);
-    }
-  }
-
-  return [negatives, nonNegatives];
-}
-
 export function absValues(arr: number[]): number[] {
   return arr.map(Math.abs);
 }

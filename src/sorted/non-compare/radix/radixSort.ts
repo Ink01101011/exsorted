@@ -7,7 +7,7 @@ import { absValues, buildStableNegativePrefix, separateBySignWithKeys } from '..
 export function radixSort<T extends number>(arr: T[]): SortedArray<T>;
 export function radixSort<T>(arr: T[], keySelector: KeySelector<T>): SortedArray<T>;
 export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T>;
-export function radixSort<T extends number>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
+export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
   assertArrayInput(arr);
 
   const input = arr.slice(); // Create a copy to avoid mutating the original array

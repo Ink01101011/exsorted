@@ -11,7 +11,7 @@ export function getCachedKeys<T>(arr: T[], getKey: KeySelector<T>): number[] {
 }
 
 export function getMax(arr: number[]): number {
-  let max = 0;
+  let max = -Infinity;
 
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] > max) max = arr[i];
