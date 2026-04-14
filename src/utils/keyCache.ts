@@ -33,5 +33,5 @@ export function getMinMaxCachedKeys<T>(arr: T[], getKey: KeySelector<T>): [numbe
     if (key < min) min = key;
   }
 
-  return [max, min, cachedKeys];
+  return [min, max, cachedKeys];
 }

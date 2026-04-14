@@ -27,7 +27,7 @@ export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedA
 
   if (arr.length < 2) return arr.slice(); // Return a shallow copy for consistency
 
-  const [max, min, cachedKeys] = getMinMaxCachedKeys(arr, keyGetter(keySelector));
+  const [min, max, cachedKeys] = getMinMaxCachedKeys(arr, keyGetter(keySelector));
   const range = max - min + 1;
   guardRange(range, THRESHOLD_RANGE);
 
