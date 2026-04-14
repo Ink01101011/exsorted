@@ -11,6 +11,8 @@ const {
   shellSort,
   introSort,
   blockSort,
+  countingSort,
+  radixSort,
 } = require('../dist/index.cjs');
 
 const ALGORITHMS = [
@@ -25,6 +27,8 @@ const ALGORITHMS = [
   ['timSort', timSort],
   ['introSort', introSort],
   ['blockSort', blockSort],
+  ['countingSort', countingSort],
+  ['radixSort', radixSort],
 ];
 
 const DEFAULT_SIZES = [200, 500, 1000];
