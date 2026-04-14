@@ -1,6 +1,8 @@
-import { SortedArray, KeySelector } from '../../../types/function-type';
-import { assertArrayInput } from '../../../utils/assertArrayInput';
-import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
+import { THRESHOLD_RANGE } from '../../../constants/counting';
+import { KeySelector, SortedArray } from '../../../types/function-type';
+import { assertArrayInput, guardRange } from '../../../utils/assertion';
+import { getMinMaxCachedKeys } from '../../../utils/keyCache';
+import { keyGetter } from '../../../utils/keySelector';
 
 /**
  * Counting Sort
@@ -15,7 +17,7 @@ import { THRESHOLD_RANGE, ERROR_MESSAGES } from '../../../constants/counting';
  * where n is the number of items and k is the key range (max - min + 1).
  *
  * @param arr - The array to sort (a new sorted array is returned)
- * @param keySelector - Required for non-number items; optional when sorting numbers. The selected key must be a finite integer.
+ * @param keySelector - Required for non-number items; optional when sorting numbers. The selected key must be a safe integer.
  * @returns A new sorted array
  */
 export function countingSort<T extends number>(arr: T[]): SortedArray<T>;
@@ -25,9 +27,9 @@ export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedA
 
   if (arr.length < 2) return arr.slice(); // Return a shallow copy for consistency
 
-  const [max, min, cachedKeys] = getMaxMinCacheKeys(arr, keyGetter(keySelector));
+  const [min, max, cachedKeys] = getMinMaxCachedKeys(arr, keyGetter(keySelector));
   const range = max - min + 1;
-  guardRange(range);
+  guardRange(range, THRESHOLD_RANGE);
 
   const count = new Array<number>(range).fill(0);
   const output = new Array<T>(arr.length);
@@ -46,60 +48,4 @@ export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedA
   }
 
   return output;
-}
-
-function getMaxMinCacheKeys<T>(arr: T[], getKey: (item: T) => number): [number, number, Array<number>] {
-  const cachedKeys = new Array<number>(arr.length);
-  let max = -Infinity;
-  let min = Infinity;
-
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i];
-    const key = getKey(item);
-
-    // Cache the key for later use in counting sort
-    cachedKeys[i] = key;
-
-    // Update max and min
-    if (key > max) {
-      max = key;
-    }
-    if (key < min) {
-      min = key;
-    }
-  }
-
-  return [max, min, cachedKeys];
-}
-
-function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T> {
-  return (item: T) => converter(item, keySelector);
-}
-
-function converter<T>(item: T, keySelector?: KeySelector<T>): number {
-  if (typeof item === 'number') {
-    keyValidator(item);
-    return item;
-  }
-
-  if (!keySelector) {
-    throw new TypeError(ERROR_MESSAGES.KEY_SELECTOR_REQUIRED);
-  }
-
-  const key = keySelector(item);
-  keyValidator(key);
-
-  return key;
-}
-
-function guardRange(size: number): void {
-  if (size > THRESHOLD_RANGE) {
-    throw new RangeError(ERROR_MESSAGES.RANGE_TOO_LARGE);
-  }
-}
-
-function keyValidator<T extends number>(key: T): void {
-  if (!Number.isInteger(key)) {
-    throw new TypeError(ERROR_MESSAGES.KEY_NOT_INTEGER);
-  }
 }

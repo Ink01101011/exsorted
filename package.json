@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsup --config tsup.config.ts",
     "benchmark": "pnpm run build && node scripts/benchmark.cjs",
+    "benchmark:block": "pnpm run build && node scripts/benchmark-block.cjs",
+    "test:integration": "pnpm run build && node scripts/integration.cjs",
     "minify": "tsup --config tsup.config.ts --minify",
     "test": "jest",
     "lint": "oxlint . --deny-warnings",
@@ -114,6 +116,11 @@
       "types": "./dist/sorted/non-compare/counting/index.d.ts",
       "import": "./dist/sorted/non-compare/counting/index.mjs",
       "require": "./dist/sorted/non-compare/counting/index.cjs"
+    },
+    "./radix": {
+      "types": "./dist/sorted/non-compare/radix/index.d.ts",
+      "import": "./dist/sorted/non-compare/radix/index.mjs",
+      "require": "./dist/sorted/non-compare/radix/index.cjs"
     }
   },
   "sideEffects": false,
@@ -149,6 +156,7 @@
     "intro-sort",
     "block-sort",
     "counting-sort",
+    "radix-sort",
     "exsorted"
   ],
   "author": "Ink01101011",
