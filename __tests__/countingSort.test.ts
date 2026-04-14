@@ -11,6 +11,15 @@ describe('countingSort', () => {
     expect(countingSort([3, -1, 3, 0, -1, 2])).toEqual([-1, -1, 0, 2, 3, 3]);
   });
 
+  it('sorts numeric arrays that are all negative', () => {
+    expect(countingSort([-9, -1, -4, -4, -7, -2])).toEqual([-9, -7, -4, -4, -2, -1]);
+  });
+
+  it('sorts a wide numeric range including negatives within threshold', () => {
+    const input = [499_999, -500_000, 120_000, -1, 0, -250_000, 250_000, -499_999];
+    expect(countingSort(input)).toEqual([-500_000, -499_999, -250_000, -1, 0, 120_000, 250_000, 499_999]);
+  });
+
   it('returns a new array for length >= 2', () => {
     const input = [3, 1, 2];
     const result = countingSort(input);
@@ -41,6 +50,19 @@ describe('countingSort', () => {
 
     const result = countingSort(input, (item) => item.score);
     expect(result.map((item) => item.id)).toEqual(['second', 'fourth', 'first', 'third']);
+  });
+
+  it('is stable for duplicated negative keys', () => {
+    const input = [
+      { id: 'a', score: -2 },
+      { id: 'b', score: -1 },
+      { id: 'c', score: -2 },
+      { id: 'd', score: 0 },
+      { id: 'e', score: -1 },
+    ];
+
+    const result = countingSort(input, (item) => item.score);
+    expect(result.map((item) => item.id)).toEqual(['a', 'c', 'b', 'e', 'd']);
   });
 
   it('calls keySelector exactly once per element', () => {
