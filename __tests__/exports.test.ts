@@ -30,6 +30,7 @@ import { pigeonholeSort as pigeonholeNamed } from '../src/sorted/non-compare/pig
 import { compareBy as compareByFromUtils, defaultCompareFn as defaultCompareFnFromUtils } from '../src/utils';
 import { compareBy as compareByDirect } from '../src/utils/compareBy';
 import { defaultCompareFn as defaultCompareFnDirect } from '../src/utils/defaultCompareFn';
+import { assertArrayInput as assertArrayInputDirect } from '../src/utils/assertion';
 
 describe('sorted index exports', () => {
   it('re-exports all sorting functions', () => {
@@ -113,9 +114,10 @@ describe('utils barrel exports', () => {
   it('re-exports compare helpers', () => {
     expect(compareByFromUtils).toBe(compareByDirect);
     expect(defaultCompareFnFromUtils).toBe(defaultCompareFnDirect);
+    expect(utilsExports.assertArrayInput).toBe(assertArrayInputDirect);
   });
 
-  it('exposes only the public compare contract', () => {
-    expect(Object.keys(utilsExports).sort()).toEqual(['compareBy', 'defaultCompareFn']);
+  it('keeps compatibility export contract for helper barrel', () => {
+    expect(Object.keys(utilsExports).sort()).toEqual(['assertArrayInput', 'compareBy', 'defaultCompareFn']);
   });
 });

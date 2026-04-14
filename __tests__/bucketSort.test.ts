@@ -63,4 +63,14 @@ describe('bucketSort', () => {
       ERROR_MESSAGES.KEY_NOT_INTEGER,
     );
   });
+
+  it('throws when the key range exceeds the supported threshold', () => {
+    expect(() => bucketSort([0, 1_000_000])).toThrow(ERROR_MESSAGES.BUCKET_SORT_RANGE_TOO_LARGE(1_000_000));
+  });
+
+  it('throws when key range arithmetic is not a safe integer', () => {
+    expect(() => bucketSort([Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER])).toThrow(
+      ERROR_MESSAGES.BUCKET_SORT_RANGE_UNSAFE_INTEGER,
+    );
+  });
 });

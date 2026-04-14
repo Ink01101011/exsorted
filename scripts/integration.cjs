@@ -23,7 +23,7 @@ const ROOT_EXPORTS = [
 const BASE_EXPORTS = ['bubbleSort', 'insertionSort', 'selectionSort', 'mergeSort', 'quickSort', 'heapSort'];
 const STANDARD_EXPORTS = ['timSort', 'gnomeSort', 'shellSort', 'introSort', 'blockSort'];
 const NON_COMPARE_EXPORTS = ['countingSort', 'radixSort', 'bucketSort', 'pigeonholeSort'];
-const HELPER_EXPORTS = ['compareBy', 'defaultCompareFn'];
+const HELPER_EXPORTS = ['assertArrayInput', 'compareBy', 'defaultCompareFn'];
 
 const SUBPATH_CASES = [
   ['exsorted/bubble', 'bubbleSort', [3, 2, 1], [1, 2, 3]],

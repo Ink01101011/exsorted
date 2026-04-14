@@ -7,7 +7,6 @@ import { absValues, buildStableNegativePrefix, separateBySignWithKeys } from '..
 
 export function radixSort<T extends number>(arr: T[]): SortedArray<T>;
 export function radixSort<T>(arr: T[], keySelector: KeySelector<T>): SortedArray<T>;
-export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T>;
 export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
   assertArrayInput(arr);
 

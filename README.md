@@ -10,6 +10,7 @@
 A lightweight, fully-typed TypeScript library of sorting algorithms — ready to use in any TypeScript or JavaScript project.
 
 Public utilities contract: `compareBy`, `defaultCompareFn`.
+Compatibility note: `assertArrayInput` remains exported from `exsorted/helper` as deprecated.
 
 ## Algorithms
 

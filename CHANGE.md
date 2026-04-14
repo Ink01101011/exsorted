@@ -19,6 +19,8 @@ Versioned release notes.
 
 - `src/sorted/non-compare/counting/countingSort.ts`, `src/sorted/non-compare/radix/radixSort.ts`
   - Hardened integer-key sorting behavior, stability, and negative-key support.
+- `src/sorted/non-compare/bucket/bucketSort.ts`
+  - Added safe-integer/range guards to prevent precision-loss bucket assignment on extreme key ranges.
 - `src/sorted/standard/block/blockSort.ts`
   - Simplified the implementation to stable buffered merges after block-local sorting for predictable correctness.
 - `README.md`
@@ -31,6 +33,7 @@ Versioned release notes.
 - Restored benchmark verification correctness for `blockSort` across the benchmark datasets used by the project.
 - Corrected public export coverage for non-comparison subpaths and package entrypoints.
 - Corrected pigeonhole range errors to report pigeonhole-specific messaging instead of counting-sort wording.
+- Restored `assertArrayInput` as a compatibility export from the helper barrel (deprecated).
 
 ### Notes for 1.1.0
 
