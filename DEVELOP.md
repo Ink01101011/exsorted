@@ -37,3 +37,5 @@ pnpm run format:check
 - `pnpm test` runs unit tests.
 - `pnpm run test:integration` runs package-level subpath integration checks.
 - `pnpm run benchmark` runs algorithm benchmarks.
+- `pnpm run benchmark:block` runs a deterministic blockSort benchmark profile (fixed seed).
+- Optional env vars for `benchmark:block`: `BENCH_SEED`, `BENCH_SIZES`, `BENCH_REPEATS`, `BENCH_WARMUP`.

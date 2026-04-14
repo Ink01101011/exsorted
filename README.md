@@ -279,6 +279,7 @@ Special case: no placeholder call is needed. Prefer `introSort(arr, threshold)` 
 
 ### Algorithm-Specific Notes
 
+- **Block Sort**: Implemented as block-chunked insertion sorting followed by stable buffered merges for predictable correctness.
 - **Shell Sort Stability**: `shellSort` is not stable by design. Equal elements may change relative order after sorting.
 - **Counting Sort**: Optimal for small, dense integer key ranges. Performance degrades for sparse ranges. Maximum recommended key range: 1,000,000.
 - **Radix Sort**: Works with safe integer keys and is typically efficient for integer data with bounded digit length.
