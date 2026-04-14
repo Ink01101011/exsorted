@@ -10,7 +10,7 @@ export function guardRange(
   }
 }
 
-export function keyValidator<T extends number>(key: T): void {
+export function keyValidator(key: number): void {
   if (!Number.isSafeInteger(key)) {
     throw new TypeError(ERROR_MESSAGES.KEY_NOT_INTEGER);
   }

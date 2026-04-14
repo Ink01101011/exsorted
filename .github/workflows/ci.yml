@@ -44,4 +44,4 @@ jobs:
         run: pnpm run build
 
       - name: Integration
-        run: pnpm run test:integration
+        run: node scripts/integration.cjs
