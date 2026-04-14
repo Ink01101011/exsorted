@@ -1,3 +1,4 @@
+import { RADIX_SORT_THRESHOLD_DIGITS } from '../../../constants';
 import { KeySelector, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
 import { getCachedKeys, getMax } from '../../../utils/keyCache';
@@ -40,7 +41,7 @@ function radixSortBase<T>(arr: T[], cachedKeys: number[]): void {
 }
 
 function countingSortByDigit<T>(arr: T[], cachedKeys: number[], exponent: number): void {
-  const count = new Array<number>(10).fill(0);
+  const count = new Array<number>(RADIX_SORT_THRESHOLD_DIGITS).fill(0);
   const output = new Array<T>(arr.length);
   const outputKeys = new Array<number>(arr.length);
 

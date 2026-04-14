@@ -13,24 +13,25 @@ Public utilities contract: `compareBy`, `defaultCompareFn`.
 
 ## Algorithms
 
-| Algorithm      | Average Time | Worst Time  | Space    | Stable | In-place |
-| -------------- | ------------ | ----------- | -------- | ------ | -------- |
-| Bubble Sort    | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Insertion Sort | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Selection Sort | O(n²)        | O(n²)       | O(1)     | ❌     | ✅       |
-| Merge Sort     | O(n log n)   | O(n log n)  | O(n)     | ✅     | ❌       |
-| Quick Sort     | O(n log n)   | O(n²)       | O(log n) | ❌     | ✅       |
-| Heap Sort      | O(n log n)   | O(n log n)  | O(1)     | ❌     | ✅       |
-| Tim Sort       | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
-| Gnome Sort     | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
-| Shell Sort     | O(n log² n)  | O(n²)       | O(1)     | ❌     | ✅       |
-| Intro Sort     | O(n log n)   | O(n log n)  | O(log n) | ❌     | ✅       |
-| Block Sort     | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
-| Counting Sort  | O(n + k)     | O(n + k)    | O(n + k) | ✅     | ❌       |
-| Radix Sort     | O(d(n + b))  | O(d(n + b)) | O(n + b) | ✅     | ❌       |
-| Bucket Sort    | O(n + k)\*   | O(n²)       | O(n + k) | ✅     | ❌       |
+| Algorithm       | Average Time | Worst Time  | Space    | Stable | In-place |
+| --------------- | ------------ | ----------- | -------- | ------ | -------- |
+| Bubble Sort     | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
+| Insertion Sort  | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
+| Selection Sort  | O(n²)        | O(n²)       | O(1)     | ❌     | ✅       |
+| Merge Sort      | O(n log n)   | O(n log n)  | O(n)     | ✅     | ❌       |
+| Quick Sort      | O(n log n)   | O(n²)       | O(log n) | ❌     | ✅       |
+| Heap Sort       | O(n log n)   | O(n log n)  | O(1)     | ❌     | ✅       |
+| Tim Sort        | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
+| Gnome Sort      | O(n²)        | O(n²)       | O(1)     | ✅     | ✅       |
+| Shell Sort      | O(n log² n)  | O(n²)       | O(1)     | ❌     | ✅       |
+| Intro Sort      | O(n log n)   | O(n log n)  | O(log n) | ❌     | ✅       |
+| Block Sort      | O(n log n)   | O(n log n)  | O(n)     | ✅     | ✅       |
+| Counting Sort   | O(n + k)     | O(n + k)    | O(n + k) | ✅     | ❌       |
+| Radix Sort      | O(d(n + b))  | O(d(n + b)) | O(n + b) | ✅     | ❌       |
+| Bucket Sort     | O(n + k)     | O(n²)       | O(n + k) | ✅     | ❌       |
+| Pigeonhole Sort | O(n + k)\*   | O(n + k)    | O(n + k) | ✅     | ❌       |
 
-**Note:** Counting Sort, Radix Sort, and Bucket Sort use integer keys. $k$ is the key range, $d$ is the number of digits, and $b$ is the radix base.
+**Note:** Counting Sort, Radix Sort, Bucket Sort, and Pigeonhole Sort use integer keys. $k$ is the key range, $d$ is the number of digits, and $b$ is the radix base.
 
 ## Installation
 
@@ -58,6 +59,7 @@ import {
   countingSort,
   radixSort,
   bucketSort,
+  pigeonholeSort,
   compareBy,
 } from 'exsorted';
 ```
@@ -75,9 +77,10 @@ blockSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 countingSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 radixSort([170, 45, 75, 90, 802, 24, 2, 66]); // [2, 24, 45, 66, 75, 90, 170, 802]
 bucketSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+pigeonholeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 ```
 
-Special case: `mergeSort`, `countingSort`, `radixSort`, and `bucketSort` return a new array (non-mutating), while most other algorithms sort in place.
+Special case: `mergeSort`, `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` return a new array (non-mutating), while most other algorithms sort in place.
 
 #### 3) Sort with a custom comparator
 
@@ -168,7 +171,7 @@ Use this when you want simple, central imports.
 ```typescript
 import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
-import { countingSort, radixSort, bucketSort } from 'exsorted/non-compare';
+import { countingSort, radixSort, bucketSort, pigeonholeSort } from 'exsorted/non-compare';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
@@ -186,6 +189,7 @@ import { blockSort as blockSortOnly } from 'exsorted/block';
 import { countingSort as countingSortOnly } from 'exsorted/counting';
 import { radixSort as radixSortOnly } from 'exsorted/radix';
 import { bucketSort as bucketSortOnly } from 'exsorted/bucket';
+import { pigeonholeSort as pigeonholeSortOnly } from 'exsorted/pigeonhole';
 ```
 
 Special case: per-algorithm paths are useful for targeted imports in small bundles.
@@ -194,11 +198,11 @@ Available subpaths:
 
 - `exsorted/base` -> bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
 - `exsorted/standard` -> timSort, gnomeSort, shellSort, introSort, blockSort
-- `exsorted/non-compare` -> countingSort, radixSort, bucketSort
+- `exsorted/non-compare` -> countingSort, radixSort, bucketSort, pigeonholeSort
 - `exsorted/helper` -> compareBy, defaultCompareFn
 - `exsorted/types` -> CompareFn, SortedArray, SelectorFn
 - `exsorted/meme` -> meme namespace exports
-- Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`, `exsorted/intro`, `exsorted/block`, `exsorted/counting`, `exsorted/radix`, `exsorted/bucket`
+- Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`, `exsorted/intro`, `exsorted/block`, `exsorted/counting`, `exsorted/radix`, `exsorted/bucket`, `exsorted/pigeonhole`
 
 ## API Reference
 
@@ -217,7 +221,7 @@ function algorithmName<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[];
 ### Mutation Behavior
 
 - In-place (returns same array reference): bubbleSort, insertionSort, selectionSort, quickSort, heapSort, timSort, gnomeSort, shellSort, introSort, blockSort
-- Non-mutating (returns new array): mergeSort, countingSort, radixSort, bucketSort
+- Non-mutating (returns new array): mergeSort, countingSort, radixSort, bucketSort, pigeonholeSort
 
 ### Exported Algorithms
 
@@ -250,9 +254,11 @@ radixSort<T extends number>(arr: T[]): T[]
 radixSort<T>(arr: T[], keySelector: (item: T) => number): T[]
 bucketSort<T extends number>(arr: T[]): T[]
 bucketSort<T>(arr: T[], keySelector: (item: T) => number): T[]
+pigeonholeSort<T extends number>(arr: T[]): T[]
+pigeonholeSort<T>(arr: T[], keySelector: (item: T) => number): T[]
 ```
 
-Special case: `countingSort`, `radixSort`, and `bucketSort` accept an optional key selector for non-numeric items. The selected key must be a safe integer. Non-integer keys will throw a `TypeError`.
+Special case: `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` accept an optional key selector for non-numeric items. The selected key must be a safe integer. Non-integer keys will throw a `TypeError`.
 
 #### introSort overloads (special case)
 
@@ -278,8 +284,8 @@ Special case: no placeholder call is needed. Prefer `introSort(arr, threshold)` 
 ### Consumer Notes
 
 - For objects, passing an explicit comparator is recommended for domain-specific ordering.
-- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort, blockSort, countingSort, radixSort, bucketSort).
-- If you must preserve the original array, use mergeSort, countingSort, radixSort, bucketSort, or sort a copied array (`algorithm([...arr])`).
+- For stable ordering of equal keys, use a stable algorithm (bubbleSort, insertionSort, mergeSort, timSort, gnomeSort, blockSort, countingSort, radixSort, bucketSort, pigeonholeSort).
+- If you must preserve the original array, use mergeSort, countingSort, radixSort, bucketSort, pigeonholeSort, or sort a copied array (`algorithm([...arr])`).
 
 ### Algorithm-Specific Notes
 
@@ -288,6 +294,7 @@ Special case: no placeholder call is needed. Prefer `introSort(arr, threshold)` 
 - **Counting Sort**: Optimal for small, dense integer key ranges. Performance degrades for sparse ranges. Maximum recommended key range: 1,000,000.
 - **Radix Sort**: Works with safe integer keys and is typically efficient for integer data with bounded digit length.
 - **Bucket Sort**: Uses range-based integer buckets and insertion sort per bucket. Typically efficient when values are reasonably well-distributed.
+- **Pigeonhole Sort**: Best for dense integer key ranges. Memory usage scales with key range size.
 
 \* Shell Sort average complexity depends on the chosen gap sequence.
 

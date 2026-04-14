@@ -1,4 +1,4 @@
-import { THRESHOLD_RANGE } from '../../../constants/counting';
+import { COUNTING_SORT_THRESHOLD_RANGE } from '../../../constants';
 import { KeySelector, SortedArray } from '../../../types/function-type';
 import { assertArrayInput, guardRange } from '../../../utils/assertion';
 import { getMinMaxCachedKeys } from '../../../utils/keyCache';
@@ -29,7 +29,7 @@ export function countingSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedA
 
   const [min, max, cachedKeys] = getMinMaxCachedKeys(arr, keyGetter(keySelector));
   const range = max - min + 1;
-  guardRange(range, THRESHOLD_RANGE);
+  guardRange(range, COUNTING_SORT_THRESHOLD_RANGE);
 
   const count = new Array<number>(range).fill(0);
   const output = new Array<T>(arr.length);
