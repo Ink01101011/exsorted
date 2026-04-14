@@ -7,9 +7,8 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  *
  * Block-oriented hybrid sort that:
  * 1) partitions data into fixed-size blocks,
- * 2) allocates a fixed-size internal buffer for block moves,
- * 3) locally sorts each block,
- * 4) merges blocks iteratively using block moves plus merge-time buffering.
+ * 2) locally sorts each block,
+ * 3) merges blocks iteratively with a stable buffered merge.
  *
  * Practical complexity: typically O(n log n) for mixed input distributions.
  *
@@ -29,7 +28,6 @@ export function blockSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
   if (n < 2) return arr;
 
   const blockSize = Math.max(16, Math.floor(Math.sqrt(n)));
-  const buffer = new Array<T>(blockSize);
 
   // Local sort inside each block.
   for (let start = 0; start < n; start += blockSize) {
@@ -37,15 +35,14 @@ export function blockSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareF
     insertionSortRange(arr, start, end, compareFn);
   }
 
-  // Iteratively merge sorted runs with block-aware pre-pass.
+  // Iteratively merge sorted runs.
   for (let width = blockSize; width < n; width *= 2) {
     for (let start = 0; start < n; start += 2 * width) {
       const mid = Math.min(start + width, n);
       const end = Math.min(start + 2 * width, n);
       if (mid >= end) continue;
 
-      const adjustedMid = blockMovePhase(arr, start, mid, end, blockSize, compareFn, buffer);
-      mergeWithBuffer(arr, start, adjustedMid, end, compareFn);
+      mergeWithBuffer(arr, start, mid, end, compareFn);
     }
   }
 
@@ -63,61 +60,6 @@ function insertionSortRange<T>(arr: T[], start: number, endExclusive: number, co
     }
 
     arr[j + 1] = value;
-  }
-}
-
-function blockMovePhase<T>(
-  arr: T[],
-  start: number,
-  mid: number,
-  end: number,
-  blockSize: number,
-  compareFn: CompareFn<T>,
-  internalBuffer: T[],
-): number {
-  let left = start;
-  let right = mid;
-  let split = mid;
-
-  while (left < split && right < end) {
-    const leftBlockEnd = Math.min(left + blockSize - 1, split - 1);
-
-    if (compareFn(arr[leftBlockEnd], arr[right]) <= 0) {
-      left += Math.min(blockSize, split - left);
-      continue;
-    }
-
-    const blockLen = Math.min(blockSize, end - right);
-
-    // Preserve stability by rotating only when the entire right block is
-    // strictly smaller than the current left boundary element.
-    if (compareFn(arr[right + blockLen - 1], arr[left]) >= 0) {
-      left += Math.min(blockSize, split - left);
-      continue;
-    }
-
-    rotateRightByBlock(arr, left, right, right + blockLen, internalBuffer);
-    left += blockLen;
-    split += blockLen;
-    right += blockLen;
-  }
-
-  return split;
-}
-
-function rotateRightByBlock<T>(arr: T[], leftStart: number, mid: number, rightEnd: number, internalBuffer: T[]): void {
-  const rightLength = rightEnd - mid;
-
-  for (let i = 0; i < rightLength; i += 1) {
-    internalBuffer[i] = arr[mid + i];
-  }
-
-  for (let i = mid - 1; i >= leftStart; i -= 1) {
-    arr[i + rightLength] = arr[i];
-  }
-
-  for (let i = 0; i < rightLength; i += 1) {
-    arr[leftStart + i] = internalBuffer[i];
   }
 }
 
