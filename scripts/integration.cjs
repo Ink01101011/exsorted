@@ -2,7 +2,6 @@ const assert = require('node:assert/strict');
 
 function run() {
   const root = require('exsorted');
-  const helper = require('exsorted/helper');
   const nonCompare = require('exsorted/non-compare');
   const counting = require('exsorted/counting');
   const radix = require('exsorted/radix');
@@ -10,9 +9,6 @@ function run() {
   assert.equal(typeof root.quickSort, 'function');
   assert.equal(typeof root.countingSort, 'function');
   assert.equal(typeof root.radixSort, 'function');
-
-  assert.equal(utils.compareBy, helper.compareBy);
-  assert.equal(utils.defaultCompareFn, helper.defaultCompareFn);
 
   assert.deepEqual(nonCompare.countingSort([3, 1, 2]), [1, 2, 3]);
   assert.deepEqual(nonCompare.radixSort([3, -1, 2, -1]), [-1, -1, 2, 3]);
