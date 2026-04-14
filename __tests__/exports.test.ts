@@ -11,6 +11,7 @@ import { introSort } from '../src/sorted/standard/intro';
 import { blockSort } from '../src/sorted/standard/block';
 import { countingSort } from '../src/sorted/non-compare/counting';
 import { radixSort } from '../src/sorted/non-compare/radix';
+import { bucketSort } from '../src/sorted/non-compare/bucket';
 import * as sortedExports from '../src/sorted';
 import * as utilsExports from '../src/utils';
 import { compareBy } from '../src/utils/compareBy';
@@ -23,6 +24,7 @@ import { introSort as introNamed } from '../src/sorted/standard/intro';
 import { blockSort as blockNamed } from '../src/sorted/standard/block';
 import { countingSort as countingNamed } from '../src/sorted/non-compare/counting';
 import { radixSort as radixNamed } from '../src/sorted/non-compare/radix';
+import { bucketSort as bucketNamed } from '../src/sorted/non-compare/bucket';
 import { compareBy as compareByFromUtils, defaultCompareFn as defaultCompareFnFromUtils } from '../src/utils';
 import { compareBy as compareByDirect } from '../src/utils/compareBy';
 import { defaultCompareFn as defaultCompareFnDirect } from '../src/utils/defaultCompareFn';
@@ -42,6 +44,7 @@ describe('sorted index exports', () => {
     expect(sortedExports.blockSort).toBe(blockSort);
     expect(sortedExports.countingSort).toBe(countingSort);
     expect(sortedExports.radixSort).toBe(radixSort);
+    expect(sortedExports.bucketSort).toBe(bucketSort);
     expect(sortedExports.compareBy).toBe(compareBy);
   });
 });
@@ -90,6 +93,11 @@ describe('subpath entrypoints', () => {
   it('supports named imports for radix', () => {
     expect(radixNamed).toBe(radixSort);
     expect(radixNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for bucket', () => {
+    expect(bucketNamed).toBe(bucketSort);
+    expect(bucketNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });
 
