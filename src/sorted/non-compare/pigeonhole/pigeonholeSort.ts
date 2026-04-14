@@ -28,7 +28,7 @@ export function pigeonholeSort<T>(arr: T[], keySelector?: KeySelector<T>): Sorte
   const input = arr.slice();
   if (input.length < 2) return input;
 
-  const getKey = keyGetter(keySelector);
+  const getKey = keySelector ? keyGetter(keySelector) : (keyGetter() as KeySelector<T>);
   const [min, max, cachedKeys] = getMinMaxCachedKeys(input, getKey);
   const range = max - min + 1;
   guardRange(range, PIGEONHOLE_SORT_THRESHOLD_RANGE, ERROR_MESSAGES.PIGEONHOLE_SORT_RANGE_TOO_LARGE);

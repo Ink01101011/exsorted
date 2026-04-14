@@ -2,14 +2,16 @@ import { ERROR_MESSAGES } from '../constants';
 import { KeySelector } from '../types/function-type';
 import { keyValidator } from './assertion';
 
-export function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T> {
-  return (item: T) => converter(item, keySelector);
+export function keyGetter(): KeySelector<number>;
+export function keyGetter<T>(keySelector: KeySelector<T>): KeySelector<T>;
+export function keyGetter<T>(keySelector?: KeySelector<T>): KeySelector<T | number> {
+  return (item: T | number) => converter(item, keySelector);
 }
 
-export function converter<T>(item: T, keySelector?: KeySelector<T>): number {
+function converter<T>(item: T | number, keySelector?: KeySelector<T>): number {
   // Apply keySelector if provided, regardless of item type
   if (keySelector) {
-    const key = keySelector(item);
+    const key = keySelector(item as T);
     keyValidator(key);
     return key;
   }

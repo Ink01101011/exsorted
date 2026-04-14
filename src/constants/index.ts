@@ -1,5 +1,6 @@
 export const ERROR_MESSAGES = {
   KEY_SELECTOR_REQUIRED: 'Key selector is required for non-numeric items.',
+  KEY_CACHE_LENGTH_MISMATCH: 'Array length and cached key length must match.',
   COUNTING_SORT_RANGE_TOO_LARGE: (threshold: number) =>
     `The range of keys is too large to be efficient (recommended max range: ${threshold})`,
   PIGEONHOLE_SORT_RANGE_TOO_LARGE: (threshold: number) =>

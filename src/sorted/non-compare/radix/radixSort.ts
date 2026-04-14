@@ -14,7 +14,7 @@ export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArra
   const input = arr.slice();
   if (arr.length < 2) return input;
 
-  const getKey = keyGetter(keySelector);
+  const getKey = keySelector ? keyGetter(keySelector) : (keyGetter() as KeySelector<T>);
   const cachedKeys = getCachedKeys(input, getKey);
   const [negatives, negativeKeys, nonNegatives, nonNegativeKeys] = separateBySignWithKeys(input, cachedKeys);
 

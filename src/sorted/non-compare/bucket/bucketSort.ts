@@ -12,7 +12,7 @@ export function bucketSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArr
   const input = arr.slice();
   if (input.length < 2) return input;
 
-  const getKey = keyGetter(keySelector);
+  const getKey = keySelector ? keyGetter(keySelector) : (keyGetter() as KeySelector<T>);
   const [min, max, cachedKeys] = getMinMaxCachedKeys(input, getKey);
   const len = input.length;
   const bucketCount = Math.max(1, Math.floor(Math.sqrt(len)));

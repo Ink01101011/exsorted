@@ -1,8 +1,14 @@
+import { ERROR_MESSAGES } from '../constants';
+
 export function absValues(arr: number[]): number[] {
   return arr.map(Math.abs);
 }
 
 export function separateBySignWithKeys<T>(arr: T[], keys: number[]): [T[], number[], T[], number[]] {
+  if (arr.length !== keys.length) {
+    throw new RangeError(ERROR_MESSAGES.KEY_CACHE_LENGTH_MISMATCH);
+  }
+
   const negatives: T[] = [];
   const negativeKeys: number[] = [];
   const nonNegatives: T[] = [];
