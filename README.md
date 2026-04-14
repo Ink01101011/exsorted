@@ -192,8 +192,7 @@ Available subpaths:
 - `exsorted/base` -> bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
 - `exsorted/standard` -> timSort, gnomeSort, shellSort, introSort, blockSort
 - `exsorted/non-compare` -> countingSort, radixSort
-- `exsorted/utils` -> compareBy, defaultCompareFn
-- `exsorted/helper` -> compareBy, defaultCompareFn (legacy alias of `exsorted/utils`)
+- `exsorted/helper` -> compareBy, defaultCompareFn
 - `exsorted/types` -> CompareFn, SortedArray, SelectorFn
 - `exsorted/meme` -> meme namespace exports
 - Per-algorithm paths are also available: `exsorted/bubble`, `exsorted/insertion`, `exsorted/selection`, `exsorted/merge`, `exsorted/quick`, `exsorted/heap`, `exsorted/tim`, `exsorted/gnome`, `exsorted/shell`, `exsorted/intro`, `exsorted/block`, `exsorted/counting`, `exsorted/radix`
