@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsup --config tsup.config.ts",
     "benchmark": "pnpm run build && node scripts/benchmark.cjs",
+    "benchmark:block": "pnpm run build && node scripts/benchmark-block.cjs",
     "test:integration": "pnpm run build && node scripts/integration.cjs",
     "minify": "tsup --config tsup.config.ts --minify",
     "test": "jest",
