@@ -11,8 +11,8 @@ export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArra
 export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArray<T> {
   assertArrayInput(arr);
 
-  const input = arr.slice(); // Create a copy to avoid mutating the original array
-  if (arr.length < 2) return input; // Return a shallow copy for consistency
+  const input = arr.slice();
+  if (arr.length < 2) return input;
 
   const getKey = keyGetter(keySelector);
   const cachedKeys = getCachedKeys(input, getKey);
@@ -35,7 +35,7 @@ export function radixSort<T>(arr: T[], keySelector?: KeySelector<T>): SortedArra
 function radixSortBase<T>(arr: T[], cachedKeys: number[]): void {
   const max = getMax(cachedKeys);
 
-  for (let exponent = 1; Math.floor(max / exponent) > 0; exponent *= 10) {
+  for (let exponent = 1; Math.floor(max / exponent) > 0; exponent *= RADIX_SORT_THRESHOLD_DIGITS) {
     countingSortByDigit(arr, cachedKeys, exponent);
   }
 }
@@ -45,18 +45,15 @@ function countingSortByDigit<T>(arr: T[], cachedKeys: number[], exponent: number
   const output = new Array<T>(arr.length);
   const outputKeys = new Array<number>(arr.length);
 
-  // Count occurrences of each digit in the specified place value
   for (const key of cachedKeys) {
     const digit = getDigit(key, exponent);
     count[digit]++;
   }
 
-  // Update count[i] to contain the cumulative count of digits up to i
-  for (let i = 1; i < 10; i++) {
+  for (let i = 1; i < count.length; i++) {
     count[i] += count[i - 1];
   }
 
-  // Build the output array by placing elements in the correct position based on the current digit
   for (let i = arr.length - 1; i >= 0; i--) {
     const digit = getDigit(cachedKeys[i], exponent);
     const outIndex = --count[digit];
@@ -64,7 +61,6 @@ function countingSortByDigit<T>(arr: T[], cachedKeys: number[], exponent: number
     outputKeys[outIndex] = cachedKeys[i];
   }
 
-  // Copy the output back to arr and keep keys aligned with elements for the next pass
   for (let i = 0; i < arr.length; i++) {
     arr[i] = output[i];
     cachedKeys[i] = outputKeys[i];
@@ -72,5 +68,5 @@ function countingSortByDigit<T>(arr: T[], cachedKeys: number[], exponent: number
 }
 
 function getDigit(num: number, exponent: number): number {
-  return Math.floor(Math.abs(num) / exponent) % 10;
+  return Math.floor(Math.abs(num) / exponent) % RADIX_SORT_THRESHOLD_DIGITS;
 }
