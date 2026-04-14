@@ -31,3 +31,9 @@ pnpm run format:check
 - `husky` + `lint-staged` run on pre-commit to auto-format and apply OXC fixes to staged files.
 - GitHub Actions `CI` workflow runs format check, lint, typecheck, tests, and build.
 - GitHub Actions `Security` workflow runs scheduled and PR `pnpm audit` checks for CVEs.
+
+### Development Scripts
+
+- `pnpm test` runs unit tests.
+- `pnpm run test:integration` runs package-level subpath integration checks.
+- `pnpm run benchmark` runs algorithm benchmarks.
