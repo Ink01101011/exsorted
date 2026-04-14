@@ -167,7 +167,7 @@ Use this when you want simple, central imports.
 import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
 import { countingSort, radixSort } from 'exsorted/non-compare';
-import { compareBy, defaultCompareFn } from 'exsorted/utils';
+import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
 
