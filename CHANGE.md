@@ -2,6 +2,25 @@
 
 Versioned release notes.
 
+## 1.1.1 - 2026-04-22
+
+### Changed in 1.1.1
+
+- `src/sorted/base/quick/quickSort.ts`
+  - Replaced Lomuto partition with 3-way partition (Dutch National Flag) to handle duplicate-heavy inputs in O(n) instead of O(n²).
+  - Added recursion depth limit (`2 * log2(n)`) with automatic fallback to heap sort, preventing stack overflow on large or adversarial inputs and guaranteeing O(n log n) worst case.
+- `src/utils/defaultCompareFn.ts`
+  - Hoisted `_activePath` (Set) and `_walk` to module level to eliminate per-comparison-call allocations of `Set`, `WeakMap`, and closures.
+  - Replaced ID-based `[Circular#N]` cycle marker with `[Circular]` — removes the need for a `WeakMap` entirely while keeping correct deterministic comparison of cyclic structures.
+
+### Changed in 1.1.1 (non-code)
+
+- `package.json`
+  - Expanded `description` to include algorithm count, module formats, and zero-dependency note for better npm discoverability.
+  - Expanded `keywords` from 20 to 32 entries, adding `javascript`, `sort-algorithm`, `sorting-algorithm`, `timsort`, `introsort`, `tree-shaking`, `tree-shakeable`, `zero-dependency`, `comparator`, `data-structures`, `performance`, `typed`.
+- `README.md`
+  - Added **Features** section listing algorithm count, TypeScript generics, tree-shaking, dual module support, zero dependencies, and flexible API.
+
 ## 1.1.0 - 2026-04-14
 
 ### Added in 1.1.0

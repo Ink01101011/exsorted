@@ -7,7 +7,16 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/exsorted)](https://bundlephobia.com/package/exsorted)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A lightweight, fully-typed TypeScript library of sorting algorithms — ready to use in any TypeScript or JavaScript project.
+A lightweight, fully-typed TypeScript sorting library with **15 algorithms** — ready to use in any TypeScript or JavaScript project.
+
+## Features
+
+- **15 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, and pigeonhole sort
+- **Fully typed** — complete TypeScript generics with `CompareFn`, `KeySelector`, and `SortedArray` types
+- **Tree-shakeable** — import only what you need via per-algorithm subpaths
+- **Dual module support** — ships as both ESM and CommonJS
+- **Zero dependencies** — no runtime dependencies
+- **Flexible API** — custom comparators and key selectors for any data shape
 
 Public utilities contract: `compareBy`, `defaultCompareFn`.
 Compatibility note: `assertArrayInput` remains exported from `exsorted/helper` as deprecated.
