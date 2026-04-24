@@ -132,6 +132,16 @@
       "types": "./dist/sorted/non-compare/pigeonhole/index.d.ts",
       "import": "./dist/sorted/non-compare/pigeonhole/index.mjs",
       "require": "./dist/sorted/non-compare/pigeonhole/index.cjs"
+    },
+    "./parallel": {
+      "types": "./dist/sorted/parallel/index.d.ts",
+      "import": "./dist/sorted/parallel/index.mjs",
+      "require": "./dist/sorted/parallel/index.cjs"
+    },
+    "./cycle": {
+      "types": "./dist/sorted/parallel/cycle/index.d.ts",
+      "import": "./dist/sorted/parallel/cycle/index.mjs",
+      "require": "./dist/sorted/parallel/cycle/index.cjs"
     }
   },
   "sideEffects": false,
