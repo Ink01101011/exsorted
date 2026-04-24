@@ -1,4 +1,4 @@
-# exsorted — TypeScript Sorting Library with 15 Algorithms
+# exsorted — TypeScript Sorting Library with 16 Algorithms
 
 [![npm version](https://img.shields.io/npm/v/exsorted.svg)](https://www.npmjs.com/package/exsorted)
 [![npm downloads](https://img.shields.io/npm/dm/exsorted.svg)](https://www.npmjs.com/package/exsorted)
@@ -7,7 +7,7 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/exsorted)](https://bundlephobia.com/package/exsorted)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A lightweight, fully-typed TypeScript sorting library with **15 algorithms** — ready to drop into any TypeScript or JavaScript project.
+A lightweight, fully-typed TypeScript sorting library with **16 algorithms** — ready to drop into any TypeScript or JavaScript project.
 
 ```bash
 npm install exsorted
@@ -25,7 +25,7 @@ npm install exsorted
 
 ## Features
 
-- **15 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, and pigeonhole sort
+- **16 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, and cycle sort
 - **Fully typed** — complete TypeScript generics with `CompareFn`, `KeySelector`, and `SortedArray` types
 - **Tree-shakeable** — import only what you need via per-algorithm subpaths
 - **Dual module support** — ships as both ESM and CommonJS
@@ -51,6 +51,7 @@ npm install exsorted
 | Radix Sort      | O(d(n + b))   | O(d(n + b)) | O(n + b) | ✅     | ❌       |
 | Bucket Sort     | O(n + k)      | O(n²)       | O(n + k) | ✅     | ❌       |
 | Pigeonhole Sort | O(n + k)      | O(n + k)    | O(n + k) | ✅     | ❌       |
+| Cycle Sort      | O(n²)         | O(n²)       | O(1)     | ❌     | ✅       |
 
 > Counting Sort, Radix Sort, Bucket Sort, and Pigeonhole Sort operate on integer keys. _k_ = key range, _d_ = number of digits, _b_ = radix base.
 
@@ -64,18 +65,20 @@ npm install exsorted
 - **Integer data**: `countingSort`, `radixSort`, `bucketSort`, or `pigeonholeSort` — linear time for bounded integer keys
 - **Nearly sorted data**: `insertionSort` or `timSort` — highly efficient on already-ordered arrays
 - **Learning/comparison**: `bubbleSort`, `insertionSort`, `selectionSort` — simple to trace and understand
+- **Minimum writes**: `cycleSort` — minimises array writes; useful when write cost is expensive
 
 ## Quick Start
 
 ### Sort numbers
 
 ```typescript
-import { bubbleSort, mergeSort, timSort, quickSort } from 'exsorted';
+import { bubbleSort, mergeSort, timSort, quickSort, cycleSort } from 'exsorted';
 
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 mergeSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8] — returns new array
 timSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 quickSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+cycleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 ```
 
 `mergeSort`, `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` return a **new array** (non-mutating). All other algorithms sort **in place**.
@@ -172,6 +175,7 @@ import { quickSort, timSort, compareBy } from 'exsorted';
 import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
 import { countingSort, radixSort, bucketSort, pigeonholeSort } from 'exsorted/non-compare';
+import { cycleSort } from 'exsorted/parallel';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
@@ -183,19 +187,21 @@ import { bubbleSort } from 'exsorted/bubble';
 import { gnomeSort } from 'exsorted/gnome';
 import { countingSort } from 'exsorted/counting';
 import { radixSort } from 'exsorted/radix';
+import { cycleSort } from 'exsorted/cycle';
 // ...and so on for each algorithm
 ```
 
 **Available subpaths:**
 
-| Subpath                | Exports                                                                                                                                  |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `exsorted/base`        | bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort                                                                 |
-| `exsorted/standard`    | timSort, gnomeSort, shellSort, introSort, blockSort                                                                                      |
-| `exsorted/non-compare` | countingSort, radixSort, bucketSort, pigeonholeSort                                                                                      |
-| `exsorted/helper`      | compareBy, defaultCompareFn                                                                                                              |
-| `exsorted/types`       | CompareFn, KeySelector, SortedArray, SelectorFn                                                                                          |
-| `exsorted/<name>`      | Single algorithm: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole |
+| Subpath                | Exports                                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exsorted/base`        | bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort                                                                        |
+| `exsorted/standard`    | timSort, gnomeSort, shellSort, introSort, blockSort                                                                                             |
+| `exsorted/non-compare` | countingSort, radixSort, bucketSort, pigeonholeSort                                                                                             |
+| `exsorted/parallel`    | cycleSort                                                                                                                                       |
+| `exsorted/helper`      | compareBy, defaultCompareFn                                                                                                                     |
+| `exsorted/types`       | CompareFn, KeySelector, SortedArray, SelectorFn                                                                                                 |
+| `exsorted/<name>`      | Single algorithm: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle |
 
 ## API Reference
 
