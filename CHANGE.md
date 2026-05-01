@@ -2,6 +2,31 @@
 
 Versioned release notes.
 
+## Unreleased
+
+### Added
+
+- `src/sorted/parallel/cocktail/cocktailShakerSort.ts`
+  - Added a generic, type-safe in-place Cocktail Shaker Sort implementation with comparator support.
+- `src/sorted/parallel/cocktail/index.ts`
+  - Added barrel export for `cocktailShakerSort`.
+- `__tests__/cocktailShakerSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `cocktailShakerSort`.
+
+### Changed
+
+- `src/sorted/parallel/index.ts`
+  - Added `cocktailShakerSort` re-export from the parallel group barrel.
+- `package.json`
+  - Added `./cocktail` subpath export.
+  - Updated package description/keywords to include cocktail shaker sort and algorithm count.
+- `__tests__/exports.test.ts`
+  - Added named subpath export assertion for `cocktailShakerSort`.
+- `scripts/integration.cjs`
+  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, and cocktail.
+- `README.md`
+  - Updated algorithm count and docs sections (tables, imports, API signatures, mutation behavior, and subpath list) to include cocktail shaker sort.
+
 ## 1.1.1 - 2026-04-22
 
 ### Changed in 1.1.1
