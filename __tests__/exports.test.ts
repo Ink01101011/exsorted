@@ -29,6 +29,7 @@ import { bucketSort as bucketNamed } from '../src/sorted/non-compare/bucket';
 import { pigeonholeSort as pigeonholeNamed } from '../src/sorted/non-compare/pigeonhole';
 import { bitonicSort as bitonicNamed } from '../src/sorted/parallel/bitonic';
 import { cocktailShakerSort as cocktailNamed } from '../src/sorted/parallel/cocktail';
+import { circleSort as circleNamed } from '../src/sorted/parallel/circle';
 import { compareBy as compareByFromUtils, defaultCompareFn as defaultCompareFnFromUtils } from '../src/utils';
 import { compareBy as compareByDirect } from '../src/utils/compareBy';
 import { defaultCompareFn as defaultCompareFnDirect } from '../src/utils/defaultCompareFn';
@@ -119,6 +120,11 @@ describe('subpath entrypoints', () => {
   it('supports named imports for cocktail', () => {
     expect(cocktailNamed).toBe(sortedExports.cocktailShakerSort);
     expect(cocktailNamed([3, 2, 1])).toEqual([1, 2, 3]);
+  });
+
+  it('supports named imports for circle', () => {
+    expect(circleNamed).toBe(sortedExports.circleSort);
+    expect(circleNamed([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });
 
