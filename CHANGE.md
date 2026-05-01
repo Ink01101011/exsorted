@@ -2,6 +2,45 @@
 
 Versioned release notes.
 
+## 1.2.0 - 2026-05-01
+
+### Added
+
+- `src/sorted/parallel/cocktail/cocktailShakerSort.ts`
+  - Added a generic, type-safe in-place Cocktail Shaker Sort implementation with comparator support.
+- `src/sorted/parallel/cocktail/index.ts`
+  - Added barrel export for `cocktailShakerSort`.
+- `__tests__/cocktailShakerSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `cocktailShakerSort`.
+- `src/sorted/parallel/circle/circleSort.ts`
+  - Added a generic, type-safe in-place Circle Sort implementation with comparator support.
+- `src/sorted/parallel/circle/index.ts`
+  - Added barrel export for `circleSort`.
+- `__tests__/circleSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `circleSort`.
+- `src/sorted/parallel/comb/combSort.ts`
+  - Added a generic, type-safe in-place Comb Sort implementation with comparator support.
+- `src/sorted/parallel/comb/index.ts`
+  - Added barrel export for `combSort`.
+- `__tests__/combSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `combSort`.
+
+### Changed
+
+- `src/sorted/parallel/index.ts`
+  - Added `cocktailShakerSort`, `circleSort`, and `combSort` re-exports from the parallel group barrel.
+- `package.json`
+  - Added `./cocktail` subpath export.
+  - Added `./circle` subpath export.
+  - Added `./comb` subpath export.
+  - Updated package description/keywords and version metadata for the 1.2.0 release.
+- `__tests__/exports.test.ts`
+  - Added named subpath export assertions for `cocktailShakerSort`, `circleSort`, and `combSort`.
+- `scripts/integration.cjs`
+  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, circle, and comb.
+- `README.md`
+  - Updated algorithm counts and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include cocktail, circle, and comb sorts.
+
 ## 1.1.1 - 2026-04-22
 
 ### Changed in 1.1.1

@@ -16,6 +16,11 @@ const ROOT_EXPORTS = [
   'radixSort',
   'bucketSort',
   'pigeonholeSort',
+  'cycleSort',
+  'bitonicSort',
+  'cocktailShakerSort',
+  'circleSort',
+  'combSort',
   'compareBy',
   'defaultCompareFn',
 ];
@@ -23,6 +28,7 @@ const ROOT_EXPORTS = [
 const BASE_EXPORTS = ['bubbleSort', 'insertionSort', 'selectionSort', 'mergeSort', 'quickSort', 'heapSort'];
 const STANDARD_EXPORTS = ['timSort', 'gnomeSort', 'shellSort', 'introSort', 'blockSort'];
 const NON_COMPARE_EXPORTS = ['countingSort', 'radixSort', 'bucketSort', 'pigeonholeSort'];
+const PARALLEL_EXPORTS = ['cycleSort', 'bitonicSort', 'cocktailShakerSort', 'circleSort', 'combSort'];
 const HELPER_EXPORTS = ['assertArrayInput', 'compareBy', 'defaultCompareFn'];
 
 const SUBPATH_CASES = [
@@ -41,6 +47,11 @@ const SUBPATH_CASES = [
   ['exsorted/radix', 'radixSort', [3, -1, 2, -1], [-1, -1, 2, 3]],
   ['exsorted/bucket', 'bucketSort', [3, -1, 2, -1], [-1, -1, 2, 3]],
   ['exsorted/pigeonhole', 'pigeonholeSort', [3, -1, 2, -1], [-1, -1, 2, 3]],
+  ['exsorted/cycle', 'cycleSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/bitonic', 'bitonicSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/cocktail', 'cocktailShakerSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/circle', 'circleSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/comb', 'combSort', [3, 2, 1], [1, 2, 3]],
 ];
 
 function assertFunctionExports(mod, exportNames) {
@@ -61,6 +72,7 @@ async function run() {
   const base = require('exsorted/base');
   const standard = require('exsorted/standard');
   const nonCompare = require('exsorted/non-compare');
+  const parallel = require('exsorted/parallel');
   const helper = require('exsorted/helper');
   const types = require('exsorted/types');
   const meme = require('exsorted/meme');
@@ -68,6 +80,11 @@ async function run() {
   const radix = require('exsorted/radix');
   const bucket = require('exsorted/bucket');
   const pigeonhole = require('exsorted/pigeonhole');
+  const cycle = require('exsorted/cycle');
+  const bitonic = require('exsorted/bitonic');
+  const cocktail = require('exsorted/cocktail');
+  const circle = require('exsorted/circle');
+  const comb = require('exsorted/comb');
   const bubble = require('exsorted/bubble');
   const insertion = require('exsorted/insertion');
   const selection = require('exsorted/selection');
@@ -84,6 +101,7 @@ async function run() {
   assertFunctionExports(base, BASE_EXPORTS);
   assertFunctionExports(standard, STANDARD_EXPORTS);
   assertFunctionExports(nonCompare, NON_COMPARE_EXPORTS);
+  assertFunctionExports(parallel, PARALLEL_EXPORTS);
   assert.deepEqual(Object.keys(helper).sort(), HELPER_EXPORTS);
   assert.deepEqual(Object.keys(types), []);
   assert.equal(meme.__exsortedMemeEntry, true);
@@ -114,6 +132,11 @@ async function run() {
     'exsorted/radix': radix,
     'exsorted/bucket': bucket,
     'exsorted/pigeonhole': pigeonhole,
+    'exsorted/cycle': cycle,
+    'exsorted/bitonic': bitonic,
+    'exsorted/cocktail': cocktail,
+    'exsorted/circle': circle,
+    'exsorted/comb': comb,
   });
 
   const [
@@ -121,6 +144,7 @@ async function run() {
     baseEsm,
     standardEsm,
     nonCompareEsm,
+    parallelEsm,
     helperEsm,
     typesEsm,
     memeEsm,
@@ -139,11 +163,17 @@ async function run() {
     radixEsm,
     bucketEsm,
     pigeonholeEsm,
+    cycleEsm,
+    bitonicEsm,
+    cocktailEsm,
+    circleEsm,
+    combEsm,
   ] = await Promise.all([
     import('exsorted'),
     import('exsorted/base'),
     import('exsorted/standard'),
     import('exsorted/non-compare'),
+    import('exsorted/parallel'),
     import('exsorted/helper'),
     import('exsorted/types'),
     import('exsorted/meme'),
@@ -162,12 +192,18 @@ async function run() {
     import('exsorted/radix'),
     import('exsorted/bucket'),
     import('exsorted/pigeonhole'),
+    import('exsorted/cycle'),
+    import('exsorted/bitonic'),
+    import('exsorted/cocktail'),
+    import('exsorted/circle'),
+    import('exsorted/comb'),
   ]);
 
   assertFunctionExports(rootEsm, ROOT_EXPORTS);
   assertFunctionExports(baseEsm, BASE_EXPORTS);
   assertFunctionExports(standardEsm, STANDARD_EXPORTS);
   assertFunctionExports(nonCompareEsm, NON_COMPARE_EXPORTS);
+  assertFunctionExports(parallelEsm, PARALLEL_EXPORTS);
   assert.deepEqual(Object.keys(helperEsm).sort(), HELPER_EXPORTS);
   assert.deepEqual(Object.keys(typesEsm), []);
   assert.equal(memeEsm.__exsortedMemeEntry, true);
@@ -188,6 +224,11 @@ async function run() {
     'exsorted/radix': radixEsm,
     'exsorted/bucket': bucketEsm,
     'exsorted/pigeonhole': pigeonholeEsm,
+    'exsorted/cycle': cycleEsm,
+    'exsorted/bitonic': bitonicEsm,
+    'exsorted/cocktail': cocktailEsm,
+    'exsorted/circle': circleEsm,
+    'exsorted/comb': combEsm,
   });
 
   console.log('Integration checks passed');
