@@ -19,6 +19,7 @@ const ROOT_EXPORTS = [
   'cycleSort',
   'bitonicSort',
   'cocktailShakerSort',
+  'circleSort',
   'combSort',
   'compareBy',
   'defaultCompareFn',
@@ -27,7 +28,7 @@ const ROOT_EXPORTS = [
 const BASE_EXPORTS = ['bubbleSort', 'insertionSort', 'selectionSort', 'mergeSort', 'quickSort', 'heapSort'];
 const STANDARD_EXPORTS = ['timSort', 'gnomeSort', 'shellSort', 'introSort', 'blockSort'];
 const NON_COMPARE_EXPORTS = ['countingSort', 'radixSort', 'bucketSort', 'pigeonholeSort'];
-const PARALLEL_EXPORTS = ['cycleSort', 'bitonicSort', 'cocktailShakerSort', 'combSort'];
+const PARALLEL_EXPORTS = ['cycleSort', 'bitonicSort', 'cocktailShakerSort', 'circleSort', 'combSort'];
 const HELPER_EXPORTS = ['assertArrayInput', 'compareBy', 'defaultCompareFn'];
 
 const SUBPATH_CASES = [
@@ -49,6 +50,7 @@ const SUBPATH_CASES = [
   ['exsorted/cycle', 'cycleSort', [3, 2, 1], [1, 2, 3]],
   ['exsorted/bitonic', 'bitonicSort', [3, 2, 1], [1, 2, 3]],
   ['exsorted/cocktail', 'cocktailShakerSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/circle', 'circleSort', [3, 2, 1], [1, 2, 3]],
   ['exsorted/comb', 'combSort', [3, 2, 1], [1, 2, 3]],
 ];
 
@@ -81,6 +83,7 @@ async function run() {
   const cycle = require('exsorted/cycle');
   const bitonic = require('exsorted/bitonic');
   const cocktail = require('exsorted/cocktail');
+  const circle = require('exsorted/circle');
   const comb = require('exsorted/comb');
   const bubble = require('exsorted/bubble');
   const insertion = require('exsorted/insertion');
@@ -132,6 +135,7 @@ async function run() {
     'exsorted/cycle': cycle,
     'exsorted/bitonic': bitonic,
     'exsorted/cocktail': cocktail,
+    'exsorted/circle': circle,
     'exsorted/comb': comb,
   });
 
@@ -162,6 +166,7 @@ async function run() {
     cycleEsm,
     bitonicEsm,
     cocktailEsm,
+    circleEsm,
     combEsm,
   ] = await Promise.all([
     import('exsorted'),
@@ -190,6 +195,7 @@ async function run() {
     import('exsorted/cycle'),
     import('exsorted/bitonic'),
     import('exsorted/cocktail'),
+    import('exsorted/circle'),
     import('exsorted/comb'),
   ]);
 
@@ -221,6 +227,7 @@ async function run() {
     'exsorted/cycle': cycleEsm,
     'exsorted/bitonic': bitonicEsm,
     'exsorted/cocktail': cocktailEsm,
+    'exsorted/circle': circleEsm,
     'exsorted/comb': combEsm,
   });
 

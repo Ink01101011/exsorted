@@ -12,6 +12,12 @@ Versioned release notes.
   - Added barrel export for `cocktailShakerSort`.
 - `__tests__/cocktailShakerSort.test.ts`
   - Added behavior, comparator, object, mutation, and export coverage for `cocktailShakerSort`.
+- `src/sorted/parallel/circle/circleSort.ts`
+  - Added a generic, type-safe in-place Circle Sort implementation with comparator support.
+- `src/sorted/parallel/circle/index.ts`
+  - Added barrel export for `circleSort`.
+- `__tests__/circleSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `circleSort`.
 - `src/sorted/parallel/comb/combSort.ts`
   - Added a generic, type-safe in-place Comb Sort implementation with comparator support.
 - `src/sorted/parallel/comb/index.ts`
@@ -22,6 +28,17 @@ Versioned release notes.
 ### Changed
 
 - `src/sorted/parallel/index.ts`
+  - Added `cocktailShakerSort` and `circleSort` re-exports from the parallel group barrel.
+- `package.json`
+  - Added `./cocktail` subpath export.
+  - Added `./circle` subpath export.
+  - Updated package description/keywords to include circle sort and algorithm count.
+- `__tests__/exports.test.ts`
+  - Added named subpath export assertions for `cocktailShakerSort` and `circleSort`.
+- `scripts/integration.cjs`
+  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, and circle.
+- `README.md`
+  - Updated algorithm count and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include circle sort.
   - Added `cocktailShakerSort` and `combSort` re-exports from the parallel group barrel.
 - `package.json`
   - Added `./cocktail` subpath export.
