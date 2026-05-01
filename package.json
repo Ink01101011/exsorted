@@ -1,7 +1,7 @@
 {
   "name": "exsorted",
   "version": "1.1.2",
-  "description": "A lightweight, fully-typed TypeScript sorting library with 19 algorithms: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
+  "description": "A lightweight, fully-typed TypeScript sorting library with 20 algorithms: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -157,6 +157,11 @@
       "types": "./dist/sorted/parallel/circle/index.d.ts",
       "import": "./dist/sorted/parallel/circle/index.mjs",
       "require": "./dist/sorted/parallel/circle/index.cjs"
+    },
+    "./comb": {
+      "types": "./dist/sorted/parallel/comb/index.d.ts",
+      "import": "./dist/sorted/parallel/comb/index.mjs",
+      "require": "./dist/sorted/parallel/comb/index.cjs"
     }
   },
   "sideEffects": false,
@@ -212,7 +217,8 @@
     "cycle-sort",
     "bitonic-sort",
     "cocktail-shaker-sort",
-    "circle-sort"
+    "circle-sort",
+    "comb-sort"
   ],
   "author": "Ink01101011",
   "license": "MIT",

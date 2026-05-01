@@ -25,7 +25,7 @@ npm install exsorted
 
 ## Features
 
-- **19 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, and circle sort
+- **20 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort
 - **Fully typed** — complete TypeScript generics with `CompareFn`, `KeySelector`, and `SortedArray` types
 - **Tree-shakeable** — import only what you need via per-algorithm subpaths
 - **Dual module support** — ships as both ESM and CommonJS
@@ -55,6 +55,7 @@ npm install exsorted
 | Bitonic Sort    | O(n log² n)   | O(n log² n) | O(n)     | ❌     | ✅       |
 | Cocktail Sort   | O(n²)         | O(n²)       | O(1)     | ✅     | ✅       |
 | Circle Sort     | O(n²)         | O(n²)       | O(log n) | ❌     | ✅       |
+| Comb Sort       | O(n²)         | O(n²)       | O(1)     | ❌     | ✅       |
 
 > Counting Sort, Radix Sort, Bucket Sort, and Pigeonhole Sort operate on integer keys. _k_ = key range, _d_ = number of digits, _b_ = radix base.
 
@@ -85,6 +86,7 @@ import {
   bitonicSort,
   cocktailShakerSort,
   circleSort,
+  combSort,
 } from 'exsorted';
 
 bubbleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
@@ -95,6 +97,7 @@ cycleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 bitonicSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 cocktailShakerSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 circleSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
+combSort([5, 3, 8, 1, 2]); // [1, 2, 3, 5, 8]
 ```
 
 `mergeSort`, `countingSort`, `radixSort`, `bucketSort`, and `pigeonholeSort` return a **new array** (non-mutating). All other algorithms sort **in place**.
@@ -191,7 +194,7 @@ import { quickSort, timSort, compareBy } from 'exsorted';
 import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
 import { countingSort, radixSort, bucketSort, pigeonholeSort } from 'exsorted/non-compare';
-import { cycleSort, bitonicSort, cocktailShakerSort, circleSort } from 'exsorted/parallel';
+import { cycleSort, bitonicSort, cocktailShakerSort, combSort, circleSort } from 'exsorted/parallel';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
@@ -207,6 +210,7 @@ import { cycleSort } from 'exsorted/cycle';
 import { bitonicSort } from 'exsorted/bitonic';
 import { cocktailShakerSort } from 'exsorted/cocktail';
 import { circleSort } from 'exsorted/circle';
+import { combSort } from 'exsorted/comb';
 // ...and so on for each algorithm
 ```
 
@@ -215,7 +219,7 @@ import { circleSort } from 'exsorted/circle';
 - `exsorted/base`: bubbleSort, insertionSort, selectionSort, mergeSort, quickSort, heapSort
 - `exsorted/standard`: timSort, gnomeSort, shellSort, introSort, blockSort
 - `exsorted/non-compare`: countingSort, radixSort, bucketSort, pigeonholeSort
-- `exsorted/parallel`: cycleSort, bitonicSort, cocktailShakerSort, circleSort
+- `exsorted/parallel`: cycleSort, bitonicSort, cocktailShakerSort, circleSort, combSort
 - `exsorted/helper`: compareBy, defaultCompareFn
 - `exsorted/types`: CompareFn, KeySelector, SortedArray, SelectorFn
 - `exsorted/<name>`: Single algorithm subpaths: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail, circle
@@ -269,6 +273,7 @@ cycleSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 bitonicSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 cocktailShakerSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 circleSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+combSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 
 ### Non-comparison algorithms
@@ -313,6 +318,7 @@ To preserve the original array with an in-place algorithm: `algorithm([...arr])`
 - **Shell Sort** — not stable; equal elements may change relative order.
 - **Bitonic Sort** — pads to the next power of two internally so arbitrary-length arrays still work with the bitonic network.
 - **Circle Sort** — recursively compares mirrored pairs in each segment until a no-swap pass.
+- **Comb Sort** — uses a shrink factor on comparison gap to remove turtles (small values near the end) before the final gap-1 pass.
 - **Counting Sort** — optimal for small, dense integer ranges. Avoid sparse ranges > 1,000,000.
 - **Radix Sort** — efficient for integer data with bounded digit length; supports negative integers.
 - **Bucket Sort** — range-based integer buckets with per-bucket insertion sort; best for well-distributed data.
