@@ -1,6 +1,6 @@
 {
   "name": "exsorted",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A lightweight, fully-typed TypeScript sorting library with 20 algorithms: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",

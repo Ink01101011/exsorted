@@ -1,4 +1,4 @@
-# exsorted — TypeScript Sorting Library with 19 Algorithms
+# exsorted — TypeScript Sorting Library with 20 Algorithms
 
 [![npm version](https://img.shields.io/npm/v/exsorted.svg)](https://www.npmjs.com/package/exsorted)
 [![npm downloads](https://img.shields.io/npm/dm/exsorted.svg)](https://www.npmjs.com/package/exsorted)
@@ -7,7 +7,7 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/exsorted)](https://bundlephobia.com/package/exsorted)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A lightweight, fully-typed TypeScript sorting library with **19 algorithms** — ready to drop into any TypeScript or JavaScript project.
+A lightweight, fully-typed TypeScript sorting library with **20 algorithms** — ready to drop into any TypeScript or JavaScript project.
 
 ```bash
 npm install exsorted

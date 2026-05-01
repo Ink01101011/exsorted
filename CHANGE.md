@@ -2,7 +2,7 @@
 
 Versioned release notes.
 
-## Unreleased
+## 1.2.0 - 2026-05-01
 
 ### Added
 
@@ -28,28 +28,18 @@ Versioned release notes.
 ### Changed
 
 - `src/sorted/parallel/index.ts`
-  - Added `cocktailShakerSort` and `circleSort` re-exports from the parallel group barrel.
+  - Added `cocktailShakerSort`, `circleSort`, and `combSort` re-exports from the parallel group barrel.
 - `package.json`
   - Added `./cocktail` subpath export.
   - Added `./circle` subpath export.
-  - Updated package description/keywords to include circle sort and algorithm count.
-- `__tests__/exports.test.ts`
-  - Added named subpath export assertions for `cocktailShakerSort` and `circleSort`.
-- `scripts/integration.cjs`
-  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, and circle.
-- `README.md`
-  - Updated algorithm count and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include circle sort.
-  - Added `cocktailShakerSort` and `combSort` re-exports from the parallel group barrel.
-- `package.json`
-  - Added `./cocktail` subpath export.
   - Added `./comb` subpath export.
-  - Updated package description/keywords to include comb sort and algorithm count.
+  - Updated package description/keywords and version metadata for the 1.2.0 release.
 - `__tests__/exports.test.ts`
-  - Added named subpath export assertions for `cocktailShakerSort` and `combSort`.
+  - Added named subpath export assertions for `cocktailShakerSort`, `circleSort`, and `combSort`.
 - `scripts/integration.cjs`
-  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, and comb.
+  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, circle, and comb.
 - `README.md`
-  - Updated algorithm count and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include comb sort.
+  - Updated algorithm counts and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include cocktail, circle, and comb sorts.
 
 ## 1.1.1 - 2026-04-22
 
