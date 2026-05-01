@@ -12,20 +12,27 @@ Versioned release notes.
   - Added barrel export for `cocktailShakerSort`.
 - `__tests__/cocktailShakerSort.test.ts`
   - Added behavior, comparator, object, mutation, and export coverage for `cocktailShakerSort`.
+- `src/sorted/parallel/comb/combSort.ts`
+  - Added a generic, type-safe in-place Comb Sort implementation with comparator support.
+- `src/sorted/parallel/comb/index.ts`
+  - Added barrel export for `combSort`.
+- `__tests__/combSort.test.ts`
+  - Added behavior, comparator, object, mutation, and export coverage for `combSort`.
 
 ### Changed
 
 - `src/sorted/parallel/index.ts`
-  - Added `cocktailShakerSort` re-export from the parallel group barrel.
+  - Added `cocktailShakerSort` and `combSort` re-exports from the parallel group barrel.
 - `package.json`
   - Added `./cocktail` subpath export.
-  - Updated package description/keywords to include cocktail shaker sort and algorithm count.
+  - Added `./comb` subpath export.
+  - Updated package description/keywords to include comb sort and algorithm count.
 - `__tests__/exports.test.ts`
-  - Added named subpath export assertion for `cocktailShakerSort`.
+  - Added named subpath export assertions for `cocktailShakerSort` and `combSort`.
 - `scripts/integration.cjs`
-  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, and cocktail.
+  - Extended CJS/ESM smoke checks to validate parallel-group and per-algorithm exports for cycle, bitonic, cocktail, and comb.
 - `README.md`
-  - Updated algorithm count and docs sections (tables, imports, API signatures, mutation behavior, and subpath list) to include cocktail shaker sort.
+  - Updated algorithm count and docs sections (tables, imports, API signatures, algorithm notes, and subpath list) to include comb sort.
 
 ## 1.1.1 - 2026-04-22
 

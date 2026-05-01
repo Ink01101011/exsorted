@@ -19,6 +19,7 @@ const ROOT_EXPORTS = [
   'cycleSort',
   'bitonicSort',
   'cocktailShakerSort',
+  'combSort',
   'compareBy',
   'defaultCompareFn',
 ];
@@ -26,7 +27,7 @@ const ROOT_EXPORTS = [
 const BASE_EXPORTS = ['bubbleSort', 'insertionSort', 'selectionSort', 'mergeSort', 'quickSort', 'heapSort'];
 const STANDARD_EXPORTS = ['timSort', 'gnomeSort', 'shellSort', 'introSort', 'blockSort'];
 const NON_COMPARE_EXPORTS = ['countingSort', 'radixSort', 'bucketSort', 'pigeonholeSort'];
-const PARALLEL_EXPORTS = ['cycleSort', 'bitonicSort', 'cocktailShakerSort'];
+const PARALLEL_EXPORTS = ['cycleSort', 'bitonicSort', 'cocktailShakerSort', 'combSort'];
 const HELPER_EXPORTS = ['assertArrayInput', 'compareBy', 'defaultCompareFn'];
 
 const SUBPATH_CASES = [
@@ -48,6 +49,7 @@ const SUBPATH_CASES = [
   ['exsorted/cycle', 'cycleSort', [3, 2, 1], [1, 2, 3]],
   ['exsorted/bitonic', 'bitonicSort', [3, 2, 1], [1, 2, 3]],
   ['exsorted/cocktail', 'cocktailShakerSort', [3, 2, 1], [1, 2, 3]],
+  ['exsorted/comb', 'combSort', [3, 2, 1], [1, 2, 3]],
 ];
 
 function assertFunctionExports(mod, exportNames) {
@@ -79,6 +81,7 @@ async function run() {
   const cycle = require('exsorted/cycle');
   const bitonic = require('exsorted/bitonic');
   const cocktail = require('exsorted/cocktail');
+  const comb = require('exsorted/comb');
   const bubble = require('exsorted/bubble');
   const insertion = require('exsorted/insertion');
   const selection = require('exsorted/selection');
@@ -129,6 +132,7 @@ async function run() {
     'exsorted/cycle': cycle,
     'exsorted/bitonic': bitonic,
     'exsorted/cocktail': cocktail,
+    'exsorted/comb': comb,
   });
 
   const [
@@ -158,6 +162,7 @@ async function run() {
     cycleEsm,
     bitonicEsm,
     cocktailEsm,
+    combEsm,
   ] = await Promise.all([
     import('exsorted'),
     import('exsorted/base'),
@@ -185,6 +190,7 @@ async function run() {
     import('exsorted/cycle'),
     import('exsorted/bitonic'),
     import('exsorted/cocktail'),
+    import('exsorted/comb'),
   ]);
 
   assertFunctionExports(rootEsm, ROOT_EXPORTS);
@@ -215,6 +221,7 @@ async function run() {
     'exsorted/cycle': cycleEsm,
     'exsorted/bitonic': bitonicEsm,
     'exsorted/cocktail': cocktailEsm,
+    'exsorted/comb': combEsm,
   });
 
   console.log('Integration checks passed');
