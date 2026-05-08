@@ -62,38 +62,32 @@ function normalizeComplexValue(value: unknown): string {
   return stableSerialize(value);
 }
 
-const _activePath = new Set<object>();
-
-function _walk(val: unknown): string {
+function _walk(val: unknown, seen: Set<object>): string {
   if (val === null) return 'null';
   if (typeof val !== 'object') return String(val);
 
-  if (_activePath.has(val)) {
+  if (seen.has(val)) {
     return '[Circular]';
   }
 
-  _activePath.add(val);
+  seen.add(val);
 
   let out: string;
   if (Array.isArray(val)) {
-    out = `[${val.map(_walk).join(',')}]`;
+    out = `[${val.map((v) => _walk(v, seen)).join(',')}]`;
   } else if (val instanceof Date) {
     out = `Date:${val.toISOString()}`;
   } else {
     const entries = Object.entries(val as Record<string, unknown>)
       .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-      .map(([k, v]) => `${k}:${_walk(v)}`);
+      .map(([k, v]) => `${k}:${_walk(v, seen)}`);
     out = `{${entries.join(',')}}`;
   }
 
-  _activePath.delete(val);
+  seen.delete(val);
   return out;
 }
 
 function stableSerialize(value: unknown): string {
-  try {
-    return _walk(value);
-  } finally {
-    _activePath.clear();
-  }
+  return _walk(value, new Set<object>());
 }
