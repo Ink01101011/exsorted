@@ -2,6 +2,23 @@
 
 Versioned release notes.
 
+## 1.2.1 - 2026-05-08
+
+### Added
+
+- `SKILL.md`
+  - Added contributor guide covering how to implement a new sorting algorithm end-to-end: source file conventions, barrel exports, `package.json` subpath entries, test checklist, README update points, and quality gates.
+
+### Changed
+
+- `src/utils/defaultCompareFn.ts`
+  - Replaced module-level `_activePath` Set with a call-local `seen` parameter threaded through `_walk`. Each `stableSerialize` call now owns its own `Set`, eliminating shared mutable state and making the function re-entrant safe and multi-threaded runtime safe.
+  - Removed the `try/finally` cleanup block — no longer needed since the `Set` is garbage-collected when each call returns.
+- `README.md`
+  - Fixed missing `comb` entry in the `exsorted/<name>` single-algorithm subpaths list.
+  - Added **Contributing** section linking to `SKILL.md`, `DEVELOP.md`, and the issue tracker.
+  - Added `Contributing` entry to the Table of Contents.
+
 ## 1.2.0 - 2026-05-01
 
 ### Added
