@@ -21,6 +21,7 @@ npm install exsorted
 - [Import Paths](#import-paths)
 - [API Reference](#api-reference)
 - [Compatibility](#compatibility)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -222,7 +223,7 @@ import { combSort } from 'exsorted/comb';
 - `exsorted/parallel`: cycleSort, bitonicSort, cocktailShakerSort, circleSort, combSort
 - `exsorted/helper`: compareBy, defaultCompareFn
 - `exsorted/types`: CompareFn, KeySelector, SortedArray, SelectorFn
-- `exsorted/<name>`: Single algorithm subpaths: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail, circle
+- `exsorted/<name>`: Single algorithm subpaths: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail, circle, comb
 
 ## API Reference
 
@@ -334,6 +335,12 @@ To preserve the original array with an in-place algorithm: `algorithm([...arr])`
 - **Runtime**: Node.js (see CI badge for tested versions)
 - **Language**: TypeScript and JavaScript
 - **Modules**: ESM and CommonJS via package exports
+
+## Contributing
+
+- [SKILL.md](SKILL.md) — step-by-step guide for adding a new algorithm (implementation, tests, exports, docs)
+- [DEVELOP.md](DEVELOP.md) — build, test, lint, and format commands
+- Bug reports and PRs: [github.com/Ink01101011/exsorted/issues](https://github.com/Ink01101011/exsorted/issues)
 
 ## License
 
