@@ -222,7 +222,7 @@
   ],
   "author": "Ink01101011",
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Ink01101011/exsorted/issues"
   },
