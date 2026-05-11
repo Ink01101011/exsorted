@@ -15,7 +15,7 @@
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
     "typecheck": "tsc --noEmit",
-    "release:check": "pnpm run lint && pnpm run typecheck && pnpm exec jest --ci && pnpm run test:integration",
+    "release:check": "pnpm run lint && pnpm run typecheck && pnpm exec jest --ci --watchman=false && pnpm run test:integration",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky",
