@@ -229,7 +229,9 @@
   "homepage": "https://github.com/Ink01101011/exsorted#readme",
   "pnpm": {
     "overrides": {
-      "esbuild": ">=0.28.1"
+      "esbuild": ">=0.28.1",
+      "js-yaml": "^4.2.0",
+      "@babel/core": "^7.29.6"
     }
   },
   "devDependencies": {
