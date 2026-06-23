@@ -1,6 +1,6 @@
 {
   "name": "exsorted",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A lightweight, fully-typed TypeScript sorting library with 20 algorithms: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -227,6 +227,11 @@
     "url": "https://github.com/Ink01101011/exsorted/issues"
   },
   "homepage": "https://github.com/Ink01101011/exsorted#readme",
+  "pnpm": {
+    "overrides": {
+      "esbuild": ">=0.28.1"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^25.5.0",
