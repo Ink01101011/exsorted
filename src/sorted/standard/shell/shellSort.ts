@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Sorts an array using the Shell Sort algorithm.
@@ -30,7 +30,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * shellSort(words, (a, b) => a.localeCompare(b)); // ['apple', 'banana', 'zebra']
  * ```
  */
-export function shellSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function shellSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
 
   const n = arr.length;

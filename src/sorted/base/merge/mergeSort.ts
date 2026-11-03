@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Merge Sort
@@ -15,7 +15,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns A new sorted array
  */
-export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function mergeSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
 
   return _mergeSort(arr, compareFn);

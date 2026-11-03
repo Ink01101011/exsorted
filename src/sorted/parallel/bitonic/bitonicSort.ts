@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Bitonic Sort
@@ -51,7 +51,7 @@ function bitonicSortHelper(idx: number[], lo: number, cnt: number, dir: boolean,
   }
 }
 
-export function bitonicSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function bitonicSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
 
   const n = arr.length;

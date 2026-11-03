@@ -225,4 +225,37 @@ function runBenchmarks() {
   console.table(rows);
 }
 
+// Default comparator on non-numeric data (#65): objects and strings vs native sort.
+function runDefaultComparatorBenchmarks() {
+  const objectSize = Number(process.env.BENCH_OBJECT_SIZE || 50000);
+  const stringSize = Number(process.env.BENCH_STRING_SIZE || 200000);
+  const objects = Array.from({ length: objectSize }, (_, i) => ({
+    id: randomInt(objectSize),
+    name: `n${i}`,
+    tags: ['a', 'b', 'c'],
+    meta: { x: i, y: { z: i } },
+  }));
+  const strings = Array.from({ length: stringSize }, () => String(randomInt(1e9)));
+
+  const time = (fn) => {
+    const start = performance.now();
+    fn();
+    return Number((performance.now() - start).toFixed(1));
+  };
+
+  console.log('');
+  console.log('Default comparator (non-numeric data):');
+  console.table([
+    {
+      case: `native sort, ${objectSize} objects, (a,b)=>a.id-b.id`,
+      ms: time(() => objects.slice().sort((a, b) => a.id - b.id)),
+    },
+    { case: `quickSort, ${objectSize} objects, default comparator`, ms: time(() => quickSort(objects.slice())) },
+    { case: `timSort, ${objectSize} objects, default comparator`, ms: time(() => timSort(objects.slice())) },
+    { case: `native sort(), ${stringSize} strings`, ms: time(() => strings.slice().sort()) },
+    { case: `quickSort, ${stringSize} strings, default comparator`, ms: time(() => quickSort(strings.slice())) },
+  ]);
+}
+
 runBenchmarks();
+runDefaultComparatorBenchmarks();
