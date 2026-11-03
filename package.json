@@ -1,7 +1,7 @@
 {
   "name": "exsorted",
-  "version": "1.2.3",
-  "description": "A lightweight, fully-typed TypeScript sorting library with 20 algorithms: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
+  "version": "1.3.0",
+  "description": "A lightweight, fully-typed TypeScript sorting library with 20 algorithms (plus 4 meme sorts: bogo, stalin, sleep, stooge): bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort. Supports ESM and CJS, tree-shakeable, zero dependencies.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
     "typecheck": "tsc --noEmit",
-    "release:check": "pnpm run lint && pnpm run typecheck && pnpm exec jest --ci --watchman=false && pnpm run test:integration",
+    "release:check": "pnpm audit --audit-level high && pnpm run lint && pnpm run typecheck && pnpm exec jest --ci --watchman=false && pnpm run test:integration",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "prepare": "husky",
@@ -162,6 +162,26 @@
       "types": "./dist/sorted/parallel/comb/index.d.ts",
       "import": "./dist/sorted/parallel/comb/index.mjs",
       "require": "./dist/sorted/parallel/comb/index.cjs"
+    },
+    "./bogo": {
+      "types": "./dist/sorted/meme/bogo/index.d.ts",
+      "import": "./dist/sorted/meme/bogo/index.mjs",
+      "require": "./dist/sorted/meme/bogo/index.cjs"
+    },
+    "./stalin": {
+      "types": "./dist/sorted/meme/stalin/index.d.ts",
+      "import": "./dist/sorted/meme/stalin/index.mjs",
+      "require": "./dist/sorted/meme/stalin/index.cjs"
+    },
+    "./sleep": {
+      "types": "./dist/sorted/meme/sleep/index.d.ts",
+      "import": "./dist/sorted/meme/sleep/index.mjs",
+      "require": "./dist/sorted/meme/sleep/index.cjs"
+    },
+    "./stooge": {
+      "types": "./dist/sorted/meme/stooge/index.d.ts",
+      "import": "./dist/sorted/meme/stooge/index.mjs",
+      "require": "./dist/sorted/meme/stooge/index.cjs"
     }
   },
   "sideEffects": false,
@@ -218,7 +238,12 @@
     "bitonic-sort",
     "cocktail-shaker-sort",
     "circle-sort",
-    "comb-sort"
+    "comb-sort",
+    "bogo-sort",
+    "stalin-sort",
+    "sleep-sort",
+    "stooge-sort",
+    "meme-sort"
   ],
   "author": "Ink01101011",
   "license": "MIT",
@@ -230,8 +255,12 @@
   "pnpm": {
     "overrides": {
       "esbuild": ">=0.28.1",
-      "js-yaml": "^4.2.0",
-      "@babel/core": "^7.29.6"
+      "js-yaml@4": "^4.3.2",
+      "@babel/core": "^7.29.6",
+      "handlebars": ">=4.7.10",
+      "brace-expansion@1": "^1.1.21",
+      "browserslist": ">=4.28.7",
+      "baseline-browser-mapping": ">=2.11.0"
     }
   },
   "devDependencies": {

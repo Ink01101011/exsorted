@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Performs a gnome sort on an array.
@@ -21,7 +21,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * // Returns: [11, 12, 22, 25, 34, 64, 90]
  * ```
  */
-export function gnomeSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function gnomeSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
 
   let index = 0;

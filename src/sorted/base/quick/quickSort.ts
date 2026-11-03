@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Quick Sort
@@ -23,7 +23,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @param compareFn - Optional comparator; defaults to ascending numeric/lexicographic order
  * @returns The sorted array
  */
-export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function quickSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
   if (arr.length < 2) return arr;
   const maxDepth = Math.floor(Math.log2(arr.length)) * 2;

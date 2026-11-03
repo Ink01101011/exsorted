@@ -67,4 +67,17 @@ describe('pigeonholeSort', () => {
   it('throws a pigeonhole-specific range error when the key range is too large', () => {
     expect(() => pigeonholeSort([0, 1_000_000])).toThrow(ERROR_MESSAGES.PIGEONHOLE_SORT_RANGE_TOO_LARGE(1_000_000));
   });
+
+  it('handles 200k+ duplicate keys without exceeding the call stack (#63)', () => {
+    const input = new Array<number>(250_000).fill(1);
+    const result = pigeonholeSort(input);
+    expect(result).toHaveLength(250_000);
+    expect(result.every((v) => v === 1)).toBe(true);
+
+    const objects = Array.from({ length: 200_000 }, (_, i) => ({ id: i, key: i === 0 ? 2 : 1 }));
+    const sortedObjects = pigeonholeSort(objects, (item) => item.key);
+    expect(sortedObjects).toHaveLength(200_000);
+    expect(sortedObjects[0].id).toBe(1);
+    expect(sortedObjects[199_999].id).toBe(0);
+  });
 });

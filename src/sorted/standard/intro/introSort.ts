@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 import { INTRO_INSERTION_SORT_THRESHOLD } from '../../../constants';
 
 /**
@@ -24,7 +24,7 @@ export function introSort<T>(arr: T[], compareFn: CompareFn<T>, threshold?: numb
 export function introSort<T>(arr: T[], compareOrThreshold?: CompareFn<T> | number, threshold?: number): SortedArray<T> {
   assertArrayInput(arr);
 
-  const compareFn = typeof compareOrThreshold === 'function' ? compareOrThreshold : defaultCompareFn;
+  const compareFn = typeof compareOrThreshold === 'function' ? compareOrThreshold : createSortCompareFn<T>();
   const resolvedThreshold =
     typeof compareOrThreshold === 'number' ? compareOrThreshold : (threshold ?? INTRO_INSERTION_SORT_THRESHOLD);
 

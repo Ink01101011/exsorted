@@ -1,6 +1,6 @@
 import { CompareFn, SortedArray } from '../../../types/function-type';
 import { assertArrayInput } from '../../../utils/assertion';
-import { defaultCompareFn } from '../../../utils/defaultCompareFn';
+import { createSortCompareFn } from '../../../utils/defaultCompareFn';
 
 /**
  * Sorts an array using a TimSort-style hybrid algorithm.
@@ -25,7 +25,7 @@ import { defaultCompareFn } from '../../../utils/defaultCompareFn';
  * @param compareFn - Optional comparator using Array.prototype.sort semantics.
  * @returns The same input array reference, now sorted.
  */
-export function timSort<T>(arr: T[], compareFn: CompareFn<T> = defaultCompareFn): SortedArray<T> {
+export function timSort<T>(arr: T[], compareFn: CompareFn<T> = createSortCompareFn<T>()): SortedArray<T> {
   assertArrayInput(arr);
 
   const n = arr.length;

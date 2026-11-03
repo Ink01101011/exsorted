@@ -11,6 +11,11 @@ export const ERROR_MESSAGES = {
     'The bucket key offset cannot be represented safely. Use a smaller key range for bucketSort.',
   PIGEONHOLE_SORT_RANGE_TOO_LARGE: (threshold: number) =>
     `The pigeonhole key range is too large to be efficient (recommended max range: ${threshold})`,
+  BOGO_SORT_GAVE_UP: (maxShuffles: number) =>
+    `bogoSort gave up after ${maxShuffles} shuffles without finding a sorted permutation. Raise options.maxShuffles or use a real sorting algorithm.`,
+  SLEEP_SORT_INVALID_KEY: 'sleepSort keys must be finite, non-negative numbers.',
+  SLEEP_SORT_DELAY_TOO_LARGE: (maxDelay: number) =>
+    `sleepSort delay exceeds the maximum timer delay of ${maxDelay} ms. Use smaller keys or a smaller options.msPerUnit.`,
   KEY_NOT_INTEGER: `The key must be a safe integer (between ${Number.MIN_SAFE_INTEGER} and ${Number.MAX_SAFE_INTEGER}) for sorting to work correctly`,
 } as const;
 
@@ -19,3 +24,6 @@ export const RADIX_SORT_THRESHOLD_DIGITS = 10;
 export const PIGEONHOLE_SORT_THRESHOLD_RANGE = 1e6;
 export const COUNTING_SORT_THRESHOLD_RANGE = 1e6;
 export const BUCKET_SORT_THRESHOLD_RANGE = 1e6;
+export const BOGO_SORT_DEFAULT_MAX_SHUFFLES = 1e6;
+/** Largest delay setTimeout honours; larger values overflow and fire immediately. */
+export const SLEEP_SORT_MAX_DELAY_MS = 2_147_483_647;

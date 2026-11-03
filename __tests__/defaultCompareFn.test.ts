@@ -1,4 +1,5 @@
-import { defaultCompareFn } from '../src/utils/defaultCompareFn';
+import { createSortCompareFn, defaultCompareFn } from '../src/utils/defaultCompareFn';
+import { quickSort } from '../src/sorted/base/quick/quickSort';
 
 // ---------------------------------------------------------------------------
 // Basic graph handling — shared refs vs genuine cycles
@@ -170,5 +171,139 @@ describe('defaultCompareFn: mixed shared references and cycles', () => {
 
     expect(() => defaultCompareFn(head, head)).not.toThrow();
     expect(defaultCompareFn(head, head)).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Regression: #64 — nested invalid Date, deep nesting, Map/Set, type collisions
+// ---------------------------------------------------------------------------
+
+describe('defaultCompareFn: robustness on nested values (#64)', () => {
+  it('does not throw on an invalid Date nested in an array or object', () => {
+    expect(() => defaultCompareFn([new Date(NaN)], [new Date(0)])).not.toThrow();
+    expect(() => defaultCompareFn({ d: new Date(NaN) }, { d: new Date(0) })).not.toThrow();
+  });
+
+  it('sorts nested invalid Dates after valid ones, like top-level Dates', () => {
+    expect(defaultCompareFn([new Date(NaN)], [new Date(0)])).toBeGreaterThan(0);
+    expect(defaultCompareFn([new Date(0)], [new Date(NaN)])).toBeLessThan(0);
+    expect(defaultCompareFn([new Date(NaN)], [new Date(NaN)])).toBe(0);
+  });
+
+  it('sorts arrays containing invalid Dates with quickSort', () => {
+    const input = [[new Date(NaN)], [new Date(0)]];
+    expect(() => quickSort(input)).not.toThrow();
+    expect(input[0][0].getTime()).toBe(0);
+  });
+
+  it('handles very deep nesting without exceeding the call stack', () => {
+    let deep: unknown[] = [];
+    for (let i = 0; i < 20_000; i++) deep = [deep];
+    let deepObj: Record<string, unknown> = {};
+    for (let i = 0; i < 20_000; i++) deepObj = { next: deepObj };
+
+    expect(() => defaultCompareFn(deep, [1])).not.toThrow();
+    expect(() => defaultCompareFn(deepObj, { next: 1 })).not.toThrow();
+    expect(defaultCompareFn(deep, deep)).toBe(0);
+  });
+
+  it('distinguishes Maps and Sets by their contents', () => {
+    expect(defaultCompareFn(new Map([[1, 1]]), new Map([[2, 2]]))).not.toBe(0);
+    expect(defaultCompareFn(new Map([[1, 1]]), new Map([[1, 1]]))).toBe(0);
+    expect(defaultCompareFn(new Set([1]), new Set([2]))).not.toBe(0);
+    expect(defaultCompareFn(new Set([1, 2]), new Set([1, 2]))).toBe(0);
+  });
+
+  it('distinguishes primitives of different types inside objects', () => {
+    expect(defaultCompareFn({ a: BigInt(1) }, { a: 1 })).not.toBe(0);
+    expect(defaultCompareFn({ a: '1' }, { a: 1 })).not.toBe(0);
+    expect(defaultCompareFn({ a: 'true' }, { a: true })).not.toBe(0);
+    expect(defaultCompareFn([null], ['null'])).not.toBe(0);
+  });
+
+  it('is antisymmetric on the new cases', () => {
+    const pairs: [unknown, unknown][] = [
+      [{ a: BigInt(1) }, { a: 1 }],
+      [new Map([[1, 1]]), new Map([[2, 2]])],
+      [[new Date(NaN)], [new Date(0)]],
+    ];
+    for (const [a, b] of pairs) {
+      expect(Math.sign(defaultCompareFn(a, b))).toBe(-Math.sign(defaultCompareFn(b, a)));
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// #65 — string fast path and per-sort cached comparator
+// ---------------------------------------------------------------------------
+
+describe('defaultCompareFn: string fast path (#65)', () => {
+  it('compares top-level strings by raw UTF-16 code units', () => {
+    // A quote (0x22) sorts before 'a'; JSON-escaping would not change this, but a backslash would.
+    expect(defaultCompareFn('"', 'a')).toBeLessThan(0);
+    expect(defaultCompareFn('\\', ']')).toBeLessThan(0);
+    expect(defaultCompareFn('B', 'a')).toBeLessThan(0);
+    expect(defaultCompareFn('same', 'same')).toBe(0);
+  });
+});
+
+describe('createSortCompareFn (#65)', () => {
+  const samples: unknown[] = [
+    undefined,
+    null,
+    true,
+    false,
+    0,
+    -1,
+    NaN,
+    BigInt(2),
+    'a',
+    'b"',
+    new Date(0),
+    new Date(NaN),
+    [1, 2],
+    [1, '2'],
+    { a: 1 },
+    { a: '1' },
+    { b: [1, { c: 2 }] },
+    new Map([[1, 1]]),
+    new Set([1]),
+  ];
+
+  it('orders every pair exactly like defaultCompareFn', () => {
+    const cached = createSortCompareFn<unknown>();
+    for (const a of samples) {
+      for (const b of samples) {
+        expect(Math.sign(cached(a, b))).toBe(Math.sign(defaultCompareFn(a, b)));
+      }
+    }
+  });
+
+  it('serializes each object at most once per instance', () => {
+    const cached = createSortCompareFn<{ id: number }>();
+    let reads = 0;
+    const make = (id: number) => {
+      const obj = {} as { id: number };
+      Object.defineProperty(obj, 'id', {
+        enumerable: true,
+        get: () => {
+          reads++;
+          return id;
+        },
+      });
+      return obj;
+    };
+    const a = make(1);
+    const b = make(2);
+    for (let i = 0; i < 10; i++) cached(a, b);
+    expect(reads).toBe(2);
+  });
+
+  it('uses a fresh cache for each sort call, so mutation between sorts is respected', () => {
+    const a = { v: 1 };
+    const b = { v: 2 };
+    expect(quickSort([b, a])).toEqual([{ v: 1 }, { v: 2 }]);
+    a.v = 3;
+    expect(quickSort([a, b])).toEqual([{ v: 2 }, { v: 3 }]);
   });
 });

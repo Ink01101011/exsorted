@@ -40,9 +40,14 @@ export function pigeonholeSort<T>(arr: T[], keySelector?: KeySelector<T>): Sorte
     holes[key - min].push(input[i]);
   }
 
-  const result: SortedArray<T> = [];
+  // Write by index instead of `push(...hole)`: spreading a large hole as call
+  // arguments exceeds the engine's argument limit and throws RangeError.
+  const result: SortedArray<T> = new Array<T>(input.length);
+  let w = 0;
   for (const hole of holes) {
-    result.push(...hole);
+    for (let j = 0; j < hole.length; j++) {
+      result[w++] = hole[j];
+    }
   }
 
   return result;
