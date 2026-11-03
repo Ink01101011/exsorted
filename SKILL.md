@@ -17,6 +17,7 @@ src/
     standard/      # tim, gnome, shell, intro, block
     non-compare/   # counting, radix, bucket, pigeonhole
     parallel/      # cycle, bitonic, cocktail, circle, comb
+    meme/          # bogo, stalin, sleep, stooge (joke algorithms)
   types/           # CompareFn, KeySelector, SortedArray, SelectorFn
   utils/           # compareBy, defaultCompareFn, assertion helpers
 ```

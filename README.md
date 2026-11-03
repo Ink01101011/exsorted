@@ -1,4 +1,4 @@
-# exsorted — TypeScript Sorting Library with 20 Algorithms
+# exsorted — TypeScript Sorting Library with 20 Algorithms (+4 Meme Sorts)
 
 [![npm version](https://img.shields.io/npm/v/exsorted.svg)](https://www.npmjs.com/package/exsorted)
 [![npm downloads](https://img.shields.io/npm/dm/exsorted.svg)](https://www.npmjs.com/package/exsorted)
@@ -7,7 +7,7 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/exsorted)](https://bundlephobia.com/package/exsorted)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A lightweight, fully-typed TypeScript sorting library with **20 algorithms** — ready to drop into any TypeScript or JavaScript project.
+A lightweight, fully-typed TypeScript sorting library with **20 algorithms** (plus 4 meme sorts) — ready to drop into any TypeScript or JavaScript project.
 
 ```bash
 npm install exsorted
@@ -27,6 +27,7 @@ npm install exsorted
 ## Features
 
 - **20 sorting algorithms** — bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail shaker, comb sort and circle sort
+- **4 meme sorts 🃏** — bogo, stalin, sleep and stooge sort, for fun and teaching (not for production)
 - **Fully typed** — complete TypeScript generics with `CompareFn`, `KeySelector`, and `SortedArray` types
 - **Tree-shakeable** — import only what you need via per-algorithm subpaths
 - **Dual module support** — ships as both ESM and CommonJS
@@ -58,6 +59,15 @@ npm install exsorted
 | Circle Sort     | O(n²)         | O(n²)       | O(log n) | ❌     | ✅       |
 | Comb Sort       | O(n²)         | O(n²)       | O(1)     | ❌     | ✅       |
 
+#### Meme sorts 🃏
+
+| Algorithm   | Average Time    | Worst Time      | Space    | Stable | In-place | Note                             |
+| ----------- | --------------- | --------------- | -------- | ------ | -------- | -------------------------------- |
+| Bogo Sort   | O(n · n!)       | unbounded       | O(1)     | ❌     | ✅       | gives up after `maxShuffles`     |
+| Stalin Sort | O(n)            | O(n)            | O(n)     | ✅     | ❌       | **lossy**: drops unordered items |
+| Sleep Sort  | O(n + max · ms) | O(n + max · ms) | O(n)     | ✅     | ❌       | async, returns a `Promise`       |
+| Stooge Sort | O(n^2.71)       | O(n^2.71)       | O(log n) | ❌     | ✅       | correct, just very slow          |
+
 > Counting Sort, Radix Sort, Bucket Sort, and Pigeonhole Sort operate on integer keys. _k_ = key range, _d_ = number of digits, _b_ = radix base.
 
 \* Shell Sort average complexity depends on the chosen gap sequence.
@@ -72,6 +82,7 @@ npm install exsorted
 - **Learning/comparison**: `bubbleSort`, `insertionSort`, `selectionSort` — simple to trace and understand
 - **Minimum writes**: `cycleSort` — minimises array writes; useful when write cost is expensive
 - **Predictable sorting network**: `bitonicSort` — fixed compare/swap structure with support for non-power-of-2 lengths
+- **Jokes, demos and teaching**: `bogoSort`, `stalinSort`, `sleepSort`, `stoogeSort` — never in production
 
 ## Quick Start
 
@@ -196,6 +207,7 @@ import { bubbleSort, mergeSort } from 'exsorted/base';
 import { timSort, gnomeSort, shellSort, introSort, blockSort } from 'exsorted/standard';
 import { countingSort, radixSort, bucketSort, pigeonholeSort } from 'exsorted/non-compare';
 import { cycleSort, bitonicSort, cocktailShakerSort, combSort, circleSort } from 'exsorted/parallel';
+import { bogoSort, stalinSort, sleepSort, stoogeSort } from 'exsorted/meme';
 import { compareBy, defaultCompareFn } from 'exsorted/helper';
 import type { CompareFn, SortedArray } from 'exsorted/types';
 ```
@@ -212,6 +224,7 @@ import { bitonicSort } from 'exsorted/bitonic';
 import { cocktailShakerSort } from 'exsorted/cocktail';
 import { circleSort } from 'exsorted/circle';
 import { combSort } from 'exsorted/comb';
+import { stoogeSort } from 'exsorted/stooge';
 // ...and so on for each algorithm
 ```
 
@@ -221,9 +234,10 @@ import { combSort } from 'exsorted/comb';
 - `exsorted/standard`: timSort, gnomeSort, shellSort, introSort, blockSort
 - `exsorted/non-compare`: countingSort, radixSort, bucketSort, pigeonholeSort
 - `exsorted/parallel`: cycleSort, bitonicSort, cocktailShakerSort, circleSort, combSort
+- `exsorted/meme`: bogoSort, stalinSort, sleepSort, stoogeSort
 - `exsorted/helper`: compareBy, defaultCompareFn
 - `exsorted/types`: CompareFn, KeySelector, SortedArray, SelectorFn
-- `exsorted/<name>`: Single algorithm subpaths: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail, circle, comb
+- `exsorted/<name>`: Single algorithm subpaths: bubble, insertion, selection, merge, quick, heap, tim, gnome, shell, intro, block, counting, radix, bucket, pigeonhole, cycle, bitonic, cocktail, circle, comb, bogo, stalin, sleep, stooge
 
 ## API Reference
 
@@ -277,6 +291,22 @@ circleSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 combSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
 ```
 
+#### Meme sorts 🃏
+
+```typescript
+bogoSort<T>(arr: T[], compareFn?: CompareFn<T>, options?: { maxShuffles?: number; random?: () => number }): T[]
+stalinSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]   // returns new, possibly shorter array
+stoogeSort<T>(arr: T[], compareFn?: CompareFn<T>): T[]
+
+sleepSort<T extends number>(arr: T[], keySelector?: undefined, options?: { msPerUnit?: number }): Promise<T[]>
+sleepSort<T>(arr: T[], keySelector: (item: T) => number, options?: { msPerUnit?: number }): Promise<T[]>
+```
+
+```typescript
+stalinSort([1, 2, 5, 3, 4, 7, 6]); // [1, 2, 5, 7] — 3, 4 and 6 were sent to the gulag
+await sleepSort([3, 1, 2]); // [1, 2, 3] after ~3 ms
+```
+
 ### Non-comparison algorithms
 
 These operate on integer keys and always return a new array:
@@ -308,8 +338,8 @@ defaultCompareFn(a: unknown, b: unknown): number
 
 ### Mutation Behavior
 
-- In-place: all algorithms except mergeSort, countingSort, radixSort, bucketSort, and pigeonholeSort
-- New array: mergeSort, countingSort, radixSort, bucketSort, pigeonholeSort
+- In-place: all algorithms except mergeSort, countingSort, radixSort, bucketSort, pigeonholeSort, stalinSort, and sleepSort
+- New array: mergeSort, countingSort, radixSort, bucketSort, pigeonholeSort, stalinSort, sleepSort (via `Promise`)
 
 To preserve the original array with an in-place algorithm: `algorithm([...arr])`.
 
@@ -323,12 +353,19 @@ To preserve the original array with an in-place algorithm: `algorithm([...arr])`
 - **Counting Sort** — optimal for small, dense integer ranges. Avoid sparse ranges > 1,000,000.
 - **Radix Sort** — efficient for integer data with bounded digit length; supports negative integers.
 - **Bucket Sort** — range-based integer buckets with per-bucket insertion sort; best for well-distributed data.
+- **Bitonic Sort (performance)** — padding to the next power of two means a length just above 2^k does nearly twice the work, and it is typically 3–4× slower than other O(n log n) sorts.
+- **Bucket Sort (clustered keys)** — keys clustered in a narrow part of a wide range (e.g. many small keys plus one large outlier) land in one bucket and fall back to insertion sort.
 - **Pigeonhole Sort** — best for dense integer key ranges; memory usage scales with key range size.
+- **Bogo Sort** 🃏 — shuffles until sorted; throws a `RangeError` after `maxShuffles` (default 1,000,000) so it cannot hang forever.
+- **Stalin Sort** 🃏 — single pass that drops every element smaller than the last kept one; the output is sorted but usually shorter.
+- **Sleep Sort** 🃏 — one timer per element, delayed by its key; keys must be finite and non-negative. Close keys can come out of order because of timer resolution; raise `msPerUnit` to spread them.
+- **Stooge Sort** 🃏 — recursively sorts the first 2/3, last 2/3, then first 2/3 again.
 
 ### Tips
 
 - For stable ordering of equal keys, use a stable algorithm: bubbleSort, insertionSort, mergeSort, timSort, gnomeSort, blockSort, countingSort, radixSort, bucketSort, or pigeonholeSort.
 - For objects, pass an explicit comparator or use `compareBy` for domain-specific ordering.
+- The default comparator on arrays/objects is a **deterministic fallback, not a fast path**: it compares a structural serialization of each value (cached once per element for the duration of a sort). An explicit comparator such as `compareBy((p) => p.id)` is much faster. Strings and numbers take a direct fast path.
 
 ## Compatibility
 

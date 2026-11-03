@@ -2,6 +2,45 @@
 
 Versioned release notes.
 
+## 1.3.0 - 2026-11-03
+
+### Added
+
+- Meme sorts 🃏 (#11: #23, #31, #32, #33), exported from `exsorted`, `exsorted/meme`, and per-algorithm subpaths `exsorted/bogo`, `exsorted/stalin`, `exsorted/sleep`, `exsorted/stooge`:
+  - `src/sorted/meme/bogo/bogoSort.ts` — in-place Bogo Sort with comparator support; `options.maxShuffles` (default 1,000,000) makes it throw a `RangeError` instead of hanging, and `options.random` lets callers inject a random source.
+  - `src/sorted/meme/stalin/stalinSort.ts` — lossy, stable Stalin Sort that returns a new array.
+  - `src/sorted/meme/sleep/sleepSort.ts` — async Sleep Sort returning a `Promise`; optional `keySelector` and `options.msPerUnit`; rejects negative/non-finite keys and delays above the `setTimeout` limit before starting any timer.
+  - `src/sorted/meme/stooge/stoogeSort.ts` — in-place Stooge Sort with comparator support.
+- `__tests__/memeSorts.test.ts` — coverage for all four meme sorts.
+- `.github/dependabot.yml` — weekly updates for GitHub Actions.
+
+### Fixed
+
+- `pigeonholeSort` no longer throws `RangeError: Maximum call stack size exceeded` when a single key holds ~150k+ items. Holes are copied by index instead of `push(...hole)` (#63).
+- `defaultCompareFn` (#64):
+  - No longer throws on an invalid `Date` nested in an array or object; nested invalid Dates sort after valid ones, like top-level Dates.
+  - Serializes nested values iteratively, so deeply nested input (20k+ levels) no longer overflows the call stack.
+  - `Map` and `Set` now compare by their entries instead of always comparing equal.
+  - Nested primitives are tagged by type, so `1n` vs `1`, `'1'` vs `1`, and `'null'` vs `null` no longer collide inside objects.
+  - Note: the internal serialization format changed. Relative order of objects/arrays whose nested values differ only in type, or that contain strings needing JSON escaping, may differ from 1.2.x.
+- Security workflow (#66): added/updated pnpm overrides for `handlebars`, `js-yaml@4`, `brace-expansion@1`, `browserslist`, and `baseline-browser-mapping`. `pnpm audit --audit-level high` is clean again (remaining: 1 moderate `minimatch` via jest's `glob`, 1 low `deepmerge` with no fix; both dev-only).
+
+### Performance
+
+- Default comparator (#65):
+  - String/string and number/number comparisons take a direct fast path. Strings compare by raw UTF-16 code units, as before.
+  - Every comparison sort now defaults to a per-call comparator (`createSortCompareFn`, internal) that caches each object's serialization by identity for the duration of that sort. That means O(n) serializations instead of O(n log n). Measured on 50k nested objects: `quickSort` 1501 → 114 ms, `timSort` 1176 → 105 ms. On 200k strings: `quickSort` 170 → 86 ms. The exported `defaultCompareFn` keeps the same ordering and stays uncached.
+  - `scripts/benchmark.cjs` adds default-comparator cases for objects and strings.
+  - `README.md` documents the default comparator on objects as a deterministic fallback, plus the performance notes for `bitonicSort` and `bucketSort` with clustered keys.
+
+### Changed
+
+- `release:check` now runs `pnpm audit --audit-level high` first, so the release gate matches CI.
+- `.github/workflows/ci.yml` — added top-level `permissions: contents: read`.
+- `.github/workflows/ci.yml`, `.github/workflows/cve.yml` — actions pinned to commit SHAs (v4.4.0).
+- `scripts/integration.cjs` — CJS/ESM checks for the meme entry and the new subpaths.
+- `README.md`, `package.json` — documented the meme sorts and added their subpath exports.
+
 ## 1.2.1 - 2026-05-08
 
 ### Added
